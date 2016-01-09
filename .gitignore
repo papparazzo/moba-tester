@@ -52,3 +52,4 @@ Makefile.in
 /libtool
 /config.h
 /config.status
+/moba-tester
