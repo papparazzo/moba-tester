@@ -1,0 +1,5 @@
+bin_PROGRAMS = moba-tester
+moba_tester_SOURCES = src/main.cpp
+moba_tester_LDADD = -lMoBaCommon
+LDFLAGS += -L/usr/local/lib
+
