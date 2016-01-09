@@ -155,13 +155,14 @@ int main(int argc, char* argv[]) {
       groups->push_back(toJsonStringPtr("SERV"));
       groups->push_back(toJsonStringPtr("SYSTEM"));
 
-      long appId = msgHandler.registerApp(
+      msgHandler.registerApp(
           appData.appName,
           Version(appData.version),
           groups
       );
-    } catch(...) {
-    
+    } catch(MsgHandlerException &e) {
+        std::cerr << e.what() << std::endl;
+        return (EXIT_FAILURE);
     }
 
     while(1) {
