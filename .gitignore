@@ -53,3 +53,5 @@ Makefile.in
 /config.h
 /config.status
 /moba-tester
+/core
+/response.log
