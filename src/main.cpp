@@ -68,6 +68,9 @@ namespace {
         {Message::MT_SET_GLOBAL_TIMER,        "SET_GLOBAL_TIMER"       },
         {Message::MT_GET_ENVIRONMENT,         "GET_ENVIRONMENT"        },
         {Message::MT_SET_ENVIRONMENT,         "SET_ENVIRONMENT"        },
+        {Message::MT_GET_AMBIENCE,            "GET_AMBIENCE"           },
+        {Message::MT_SET_AMBIENCE,            "SET_AMBIENCE"           },
+        {Message::MT_GET_AUTO_MODE,           "GET_AUTO_MODE"          },
         {Message::MT_SET_AUTO_MODE,           "SET_AUTO_MODE"          },
         {Message::MT_GET_COLOR_THEME,         "GET_COLOR_THEME"        },
         {Message::MT_SET_COLOR_THEME,         "SET_COLOR_THEME"        },
@@ -117,7 +120,6 @@ void prettyPrint(JsonItemPtr ptr, std::ofstream &out) {
 }
 
 void printCommands() {
-    system("clear");
     int size =
         sizeof(msgEnumClearTextStruct) / sizeof(msgEnumClearTextStruct[0]);
 
@@ -169,14 +171,32 @@ bool getBool(const std::string &s) {
 
 JsonThreeState::ThreeState getThreeState(const std::string &s) {
     std::string str;
-    getData(s + "[on|off|auto]", str);
+    getData(s + "[on|off|unset]", str);
     if(str == "on") {
         return JsonThreeState::ON;
     }
     if(str == "off") {
         return JsonThreeState::OFF;
     }
-    return JsonThreeState::AUTO;
+    return JsonThreeState::UNSET;
+}
+
+JsonSwitch::Switch getSwitchState(const std::string &s) {
+    std::string str;
+    getData(s + "[on|off|auto|unset|trigger]", str);
+    if(str == "on") {
+        return JsonSwitch::ON;
+    }
+    if(str == "off") {
+        return JsonSwitch::OFF;
+    }
+    if(str == "auto") {
+        return JsonSwitch::AUTO;
+    }
+    if(str == "trigger") {
+        return JsonSwitch::TRIGGER;
+    }
+    return JsonSwitch::UNSET;
 }
 
 int main(int argc, char* argv[]) {
@@ -313,16 +333,33 @@ int main(int argc, char* argv[]) {
 
                 case Message::MT_SET_ENVIRONMENT:
                     msgHandler.sendSetEnvironment(
-                        getThreeState("thunder"),
-                        getThreeState("wind"),
-                        getThreeState("rain"),
-                        getBool("curtainUp"),
-                        getBool("mainLightON"),
-                        getThreeState("aux01"),
-                        getThreeState("aux02"),
-                        getThreeState("aux03")
+                        getSwitchState("thunder"),
+                        getSwitchState("wind"),
+                        getSwitchState("rain"),
+                        getSwitchState("environmentSound"),
+                        getSwitchState("aux01"),
+                        getSwitchState("aux02"),
+                        getSwitchState("aux03")
                     );
                     break;
+
+                case Message::MT_GET_AMBIENCE: {
+                    msgHandler.sendGetAmbience();
+                    break;
+                }
+
+                case Message::MT_SET_AMBIENCE: {
+                    msgHandler.sendSetAmbience(
+                        getThreeState("curtainUp"),
+                        getThreeState("mainLightOn")
+                    );
+                    break;
+                }
+
+                case Message::MT_GET_AUTO_MODE: {
+                    msgHandler.sendGetAutoMode();
+                    break;
+                }
 
                 case Message::MT_SET_AUTO_MODE: {
                     msgHandler.sendSetAutoMode(getBool(""));
