@@ -74,6 +74,8 @@ namespace {
         {Message::MT_SET_AUTO_MODE,           "SET_AUTO_MODE"          },
         {Message::MT_GET_COLOR_THEME,         "GET_COLOR_THEME"        },
         {Message::MT_SET_COLOR_THEME,         "SET_COLOR_THEME"        },
+        {Message::MT_GET_AMBIENT_LIGHT,       "GET_AMBIENT_LIGHT"      },
+        {Message::MT_SET_AMBIENT_LIGHT,       "SET_AMBIENT_LIGHT"      },
 
         {Message::MT_EMERGENCY_STOP,          "EMERGENCY_STOP"         },
         {Message::MT_EMERGENCY_STOP_CLEARING, "EMERGENCY_STOP_CLEARING"},
@@ -353,6 +355,24 @@ int main(int argc, char* argv[]) {
                         getThreeState("curtainUp"),
                         getThreeState("mainLightOn")
                     );
+                    break;
+                }
+
+                case Message::MT_GET_AMBIENT_LIGHT: {
+                    msgHandler.sendGetAmbientLight();
+                    break;
+                }
+
+                case Message::MT_SET_AMBIENT_LIGHT: {
+                    std::vector<MsgHandler::AmbientLightData> v;
+                    MsgHandler::AmbientLightData ald;
+                    for(int i = 0; i < 3; ++i) {
+                        getData("red", ald.red);
+                        getData("blue", ald.blue);
+                        getData("white", ald.white);
+                        v.push_back(ald);
+                    }
+                    msgHandler.sendSetAmbientLight(v);
                     break;
                 }
 
