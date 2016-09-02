@@ -173,14 +173,29 @@ bool getBool(const std::string &s) {
 
 JsonThreeState::ThreeState getThreeState(const std::string &s) {
     std::string str;
-    getData(s + "[on|off|unset]", str);
+    getData(s + "[on|off|auto|unset]", str);
     if(str == "on") {
         return JsonThreeState::ON;
     }
     if(str == "off") {
         return JsonThreeState::OFF;
     }
+    if(str == "auto") {
+        return JsonThreeState::AUTO;
+    }
     return JsonThreeState::UNSET;
+}
+
+JsonToggleState::ToggleState getToggleState(const std::string &s) {
+    std::string str;
+    getData(s + "[on|off|unset]", str);
+    if(str == "on") {
+        return JsonToggleState::ON;
+    }
+    if(str == "off") {
+        return JsonToggleState::OFF;
+    }
+    return JsonToggleState::UNSET;
 }
 
 JsonSwitch::Switch getSwitchState(const std::string &s) {
@@ -352,8 +367,8 @@ int main(int argc, char* argv[]) {
 
                 case Message::MT_SET_AMBIENCE: {
                     msgHandler.sendSetAmbience(
-                        getThreeState("curtainUp"),
-                        getThreeState("mainLightOn")
+                        getToggleState("curtainUp"),
+                        getToggleState("mainLightOn")
                     );
                     break;
                 }
@@ -394,7 +409,8 @@ int main(int argc, char* argv[]) {
                 case Message::MT_SET_COLOR_THEME: {
                     msgHandler.sendSetColorTheme(
                         getString("dimTime [hh:mm]"),
-                        getString("brightTime [hh:mm]")
+                        getString("brightTime [hh:mm]"),
+                        getThreeState("condition")
                     );
                     break;
                 }
