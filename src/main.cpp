@@ -1,10 +1,7 @@
 /*
- *  Project:    Client-Application
+ *  Project:    moba-tester
  *
- *  Version:    1.0.0
- *  History:    V1.0    15/10/2013  SP - created
- *
- *  Copyright (C) 2013 Stefan Paproth <pappi-@gmx.de>
+ *  Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -37,6 +34,8 @@
 #include <thread>
 #include <mutex>
 
+#include <config.h>
+
 #include <moba/log.h>
 #include <moba/msghandler.h>
 #include <moba/helper.h>
@@ -47,8 +46,8 @@
 
 namespace {
     moba::AppData appData = {
-        "",
-        moba::Version(1, 0, 0),
+        PACKAGE_NAME,
+        moba::Version(PACKAGE_VERSION),
         __DATE__,
         __TIME__,
         "localhost",
@@ -220,18 +219,12 @@ moba::JsonSwitch::Switch getSwitchState(const std::string &s) {
 }
 
 int main(int argc, char* argv[]) {
-
-    std::cerr << moba::baseName("/bima/buu");
-
     switch(argc) {
         case 3:
             appData.port = atoi(argv[2]);
 
         case 2:
             appData.host = std::string(argv[1]);
-
-        case 1:
-            appData.appName = basename(argv[0]);
 
         default:
             break;
@@ -254,7 +247,7 @@ int main(int argc, char* argv[]) {
 
         msgHandler.registerApp(
             appData.appName,
-            moba::Version(appData.version),
+            appData.version,
             groups
         );
         myfile << "######################################################" << std::endl;
