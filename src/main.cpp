@@ -38,6 +38,8 @@
 
 #include <moba/log.h>
 #include <moba/msghandler.h>
+#include <moba/environmenthandler.h>
+#include <moba/systemhandler.h>
 #include <moba/helper.h>
 
 #include <moba/version.h>
@@ -54,83 +56,59 @@ namespace {
         7000
     };
 
-    struct MsgEnumClearTextStruct {
-        moba::Message::MessageType type;
-        std::string msg;
-    } msgEnumClearTextStruct[] = {
-        {moba::Message::MT_VOID,                    "VOID"                   },
-        {moba::Message::MT_ECHO_REQ,                "ECHO_REQ"               },
+    moba::Message::MessageType type[] = {
 
-        {moba::Message::MT_RESET_CLIENT,            "RESET_CLIENT"           },
-        {moba::Message::MT_SERVER_INFO_REQ,         "SERVER_INFO_REQ"        },
-        {moba::Message::MT_CON_CLIENTS_REQ,         "CON_CLIENTS_REQ"        },
-        {moba::Message::MT_SELF_TESTING_CLIENT,     "SELF_TESTING_CLIENT"    },
+        moba::Message::MT_VOID,
+        moba::Message::MT_ECHO_REQ,
 
-        {moba::Message::MT_GET_GLOBAL_TIMER,        "GET_GLOBAL_TIMER"       },
-        {moba::Message::MT_SET_GLOBAL_TIMER,        "SET_GLOBAL_TIMER"       },
-        {moba::Message::MT_GET_ENVIRONMENT,         "GET_ENVIRONMENT"        },
-        {moba::Message::MT_SET_ENVIRONMENT,         "SET_ENVIRONMENT"        },
-        {moba::Message::MT_GET_AMBIENCE,            "GET_AMBIENCE"           },
-        {moba::Message::MT_SET_AMBIENCE,            "SET_AMBIENCE"           },
-        {moba::Message::MT_GET_AUTO_MODE,           "GET_AUTO_MODE"          },
-        {moba::Message::MT_SET_AUTO_MODE,           "SET_AUTO_MODE"          },
-        {moba::Message::MT_GET_COLOR_THEME,         "GET_COLOR_THEME"        },
-        {moba::Message::MT_SET_COLOR_THEME,         "SET_COLOR_THEME"        },
-        {moba::Message::MT_GET_AMBIENT_LIGHT,       "GET_AMBIENT_LIGHT"      },
-        {moba::Message::MT_SET_AMBIENT_LIGHT,       "SET_AMBIENT_LIGHT"      },
+        moba::Message::MT_RESET_CLIENT,
+        moba::Message::MT_SERVER_INFO_REQ,
+        moba::Message::MT_CON_CLIENTS_REQ,
+        moba::Message::MT_SELF_TESTING_CLIENT,
 
-        {moba::Message::MT_EMERGENCY_STOP,          "EMERGENCY_STOP"         },
-        {moba::Message::MT_EMERGENCY_STOP_CLEARING, "EMERGENCY_STOP_CLEARING"},
-        {moba::Message::MT_GET_HARDWARE_STATE,      "GET_HARDWARE_STATE"     },
-        {moba::Message::MT_SET_HARDWARE_STATE,      "SET_HARDWARE_STATE"     },
-        {moba::Message::MT_HARDWARE_SHUTDOWN,       "HARDWARE_SHUTDOWN"      },
-        {moba::Message::MT_HARDWARE_RESET,          "HARDWARE_RESET"         },
-        {moba::Message::MT_HARDWARE_SWITCH_STANDBY, "HARDWARE_SWITCH_STANDBY"},
+        moba::Message::MT_GET_GLOBAL_TIMER,
+        moba::Message::MT_SET_GLOBAL_TIMER,
+        moba::Message::MT_GET_ENVIRONMENT,
+        moba::Message::MT_SET_ENVIRONMENT,
+        moba::Message::MT_GET_AMBIENCE,
+        moba::Message::MT_SET_AMBIENCE,
+        moba::Message::MT_GET_AUTO_MODE,
+        moba::Message::MT_SET_AUTO_MODE,
+        moba::Message::MT_GET_COLOR_THEME,
+        moba::Message::MT_SET_COLOR_THEME,
+        moba::Message::MT_GET_AMBIENT_LIGHT,
+        moba::Message::MT_SET_AMBIENT_LIGHT,
+
+        moba::Message::MT_EMERGENCY_STOP,
+        moba::Message::MT_EMERGENCY_STOP_CLEARING,
+        moba::Message::MT_GET_HARDWARE_STATE,
+        moba::Message::MT_SET_HARDWARE_STATE,
+        moba::Message::MT_HARDWARE_SHUTDOWN,
+        moba::Message::MT_HARDWARE_RESET,
+        moba::Message::MT_HARDWARE_SWITCH_STANDBY,
+
+        moba::Message::MT_GET_LAYOUTS_REQ,
+
+
+
+/*
+        moba::Message::MT_DEL_LAYOUT,
+        moba::Message::MT_CREATE_LAYOUT_REQ,
+        moba::Message::MT_UPDATE_LAYOUT,
+        moba::Message::MT_UNLOCK_LAYOUT,
+        moba::Message::MT_GET_LAYOUT_REQ
+ */
     };
 }
 
-void prettyPrint(moba::JsonItemPtr ptr, std::ofstream &out) {
 
-    if(!ptr) {
-        out << "{}";
-        return;
-    }
-
-    std::string str = ptr->getJsonString();
-    unsigned int indent = 0;
-
-    for(size_t i = 0; i < str.length(); ++i) {
-        switch(str[i]) {
-            case '{':
-            case '[':
-                out << str[i] << std::endl << std::setw(++indent * 4);
-                break;
-
-            case ',':
-                out << str[i] << std::endl << std::setw(indent * 4);
-                break;
-
-            case '}':
-            case ']':
-                out << std::endl << std::setw(--indent * 4) << str[i];
-                break;
-
-            default:
-                out << str[i];
-        }
-    }
-    out << std::endl;
-    return;
-}
 
 void printCommands() {
     int size =
-        sizeof(msgEnumClearTextStruct) / sizeof(msgEnumClearTextStruct[0]);
+        sizeof(type) / sizeof(type[0]);
 
     for(int i = 0; i < size; ++i) {
-        std::cout <<
-            msgEnumClearTextStruct[i].type << ": " <<
-            msgEnumClearTextStruct[i].msg << std::endl;
+        std::cout << type[i] << ": " << *moba::Message::convertToString(type[i]) << std::endl;
     }
     std::cout << "98: Puffer leeren" << std::endl;
     std::cout << "99: Programmende" << std::endl;
@@ -232,20 +210,22 @@ int main(int argc, char* argv[]) {
     printAppData(appData);
     moba::setCoreFileSizeToULimit();
 
-    moba::MsgHandler msgHandler;
+    moba::MsgHandlerPtr msgHandler(new moba::MsgHandler());
+    moba::EnvironmentHandler envHandler(msgHandler);
+    moba::SystemHandler sysHandler(msgHandler);
     moba::MessagePtr msg;
     std::ofstream myfile;
     myfile.open("response.log", std::ios::app);
 
     try {
-        msgHandler.connect(appData.host, appData.port);
+        msgHandler->connect(appData.host, appData.port);
         moba::JsonArrayPtr groups(new moba::JsonArray());
         groups->push_back(moba::toJsonStringPtr("BASE"));
         groups->push_back(moba::toJsonStringPtr("ENV"));
         groups->push_back(moba::toJsonStringPtr("SERV"));
         groups->push_back(moba::toJsonStringPtr("SYSTEM"));
 
-        msgHandler.registerApp(
+        msgHandler->registerApp(
             appData.appName,
             appData.version,
             groups
@@ -265,11 +245,11 @@ int main(int argc, char* argv[]) {
     std::thread t([&] {
         while(running) {
             myMutex.lock();
-            moba::MessagePtr msg = msgHandler.recieveMsg();
+            moba::MessagePtr msg = msgHandler->recieveMsg();
             if(msg) {
                 printTimeStamp(myfile);
                 myfile << " Response: " << msg->msgTypeAsString() << std::endl;
-                prettyPrint(msg->getData(), myfile);
+                moba::prettyPrint(msg->getData(), myfile);
                 myfile << "******************************************************" << std::endl;
             }
             myMutex.unlock();
@@ -294,42 +274,42 @@ int main(int argc, char* argv[]) {
 
             switch(cmd) {
                 case moba::Message::MT_VOID:
-                    msgHandler.sendVoid();
+                    msgHandler->sendVoid();
                     break;
 
                 case moba::Message::MT_ECHO_REQ: {
                     std::string str;
                     getData("Data", str);
-                    msgHandler.sendEchoReq(str);
+                    msgHandler->sendEchoReq(str);
                     break;
                 }
 
                 case moba::Message::MT_RESET_CLIENT: {
                     int id = 0;
                     getData("AppId", id);
-                    msgHandler.sendResetClient(id);
+                    msgHandler->sendResetClient(id);
                     break;
                 }
 
                 case moba::Message::MT_SELF_TESTING_CLIENT: {
                     int id = 0;
                     getData("AppId", id);
-                    msgHandler.sendSelfTestingClient(id);
+                    msgHandler->sendSelfTestingClient(id);
                     break;
                 }
 
                 case moba::Message::MT_SERVER_INFO_REQ: {
-                    msgHandler.sendServerInfoReq();
+                    msgHandler->sendServerInfoReq();
                     break;
                 }
 
                 case moba::Message::MT_CON_CLIENTS_REQ: {
-                    msgHandler.sendConClientsReq();
+                    msgHandler->sendConClientsReq();
                     break;
                 }
 
                 case moba::Message::MT_GET_GLOBAL_TIMER: {
-                    msgHandler.sendGetGlobalTimer();
+                    envHandler.sendGetGlobalTimer();
                     break;
                 }
 
@@ -339,16 +319,16 @@ int main(int argc, char* argv[]) {
                     getData("Seconds (modulo 5)", intervall);
                     unsigned int multiplicator = 0;
                     getData("Multiplicator (realtime * multiplicator = modeltime)", multiplicator);
-                    msgHandler.sendSetGlobalTimer(date, intervall, multiplicator);
+                    envHandler.sendSetGlobalTimer(date, intervall, multiplicator);
                     break;
                 }
 
                 case moba::Message::MT_GET_ENVIRONMENT:
-                    msgHandler.sendGetEnvironment();
+                    envHandler.sendGetEnvironment();
                     break;
 
                 case moba::Message::MT_SET_ENVIRONMENT:
-                    msgHandler.sendSetEnvironment(
+                    envHandler.sendSetEnvironment(
                         getSwitchState("thunder"),
                         getSwitchState("wind"),
                         getSwitchState("rain"),
@@ -360,12 +340,12 @@ int main(int argc, char* argv[]) {
                     break;
 
                 case moba::Message::MT_GET_AMBIENCE: {
-                    msgHandler.sendGetAmbience();
+                    envHandler.sendGetAmbience();
                     break;
                 }
 
                 case moba::Message::MT_SET_AMBIENCE: {
-                    msgHandler.sendSetAmbience(
+                    envHandler.sendSetAmbience(
                         getToggleState("curtainUp"),
                         getToggleState("mainLightOn")
                     );
@@ -373,40 +353,40 @@ int main(int argc, char* argv[]) {
                 }
 
                 case moba::Message::MT_GET_AMBIENT_LIGHT: {
-                    msgHandler.sendGetAmbientLight();
+                    envHandler.sendGetAmbientLight();
                     break;
                 }
 
                 case moba::Message::MT_SET_AMBIENT_LIGHT: {
-                    std::vector<moba::MsgHandler::AmbientLightData> v;
-                    moba::MsgHandler::AmbientLightData ald;
+                    std::vector<moba::EnvironmentHandler::AmbientLightData> v;
+                    moba::EnvironmentHandler::AmbientLightData ald;
                     for(int i = 0; i < 3; ++i) {
                         getData("red", ald.red);
                         getData("blue", ald.blue);
                         getData("white", ald.white);
                         v.push_back(ald);
                     }
-                    msgHandler.sendSetAmbientLight(v);
+                    envHandler.sendSetAmbientLight(v);
                     break;
                 }
 
                 case moba::Message::MT_GET_AUTO_MODE: {
-                    msgHandler.sendGetAutoMode();
+                    envHandler.sendGetAutoMode();
                     break;
                 }
 
                 case moba::Message::MT_SET_AUTO_MODE: {
-                    msgHandler.sendSetAutoMode(getBool(""));
+                    envHandler.sendSetAutoMode(getBool(""));
                     break;
                 }
 
                 case moba::Message::MT_GET_COLOR_THEME: {
-                    msgHandler.sendGetColorTheme();
+                    envHandler.sendGetColorTheme();
                     break;
                 }
 
                 case moba::Message::MT_SET_COLOR_THEME: {
-                    msgHandler.sendSetColorTheme(
+                    envHandler.sendSetColorTheme(
                         getString("dimTime [hh:mm]"),
                         getString("brightTime [hh:mm]"),
                         getThreeState("condition")
@@ -415,47 +395,47 @@ int main(int argc, char* argv[]) {
                 }
 
                 case moba::Message::MT_EMERGENCY_STOP: {
-                    msgHandler.sendEmergencyStop();
+                    sysHandler.sendEmergencyStop();
                     break;
                 }
 
                 case moba::Message::MT_EMERGENCY_STOP_CLEARING: {
-                    msgHandler.sendEmergencyStopClearing();
+                    sysHandler.sendEmergencyStopClearing();
                     break;
                 }
 
                 case moba::Message::MT_GET_HARDWARE_STATE: {
-                    msgHandler.sendGetHardwareState();
+                    sysHandler.sendGetHardwareState();
                     break;
                 }
 
                 case moba::Message::MT_SET_HARDWARE_STATE: {
-                    moba::MsgHandler::HardwareState hs = moba::MsgHandler::HS_ERROR;
+                    moba::SystemHandler::HardwareState hs = moba::SystemHandler::HS_ERROR;
                     std::string s;
                     getData("ready, error, standby, power off [r|e|s|p]", s);
                     if(s == "r") {
-                        hs = moba::MsgHandler::HS_READY;
+                        hs = moba::SystemHandler::HS_READY;
                     } else if(s == "s") {
-                        hs = moba::MsgHandler::HS_STANDBY;
+                        hs = moba::SystemHandler::HS_STANDBY;
                     } else if(s == "p") {
-                        hs = moba::MsgHandler::HS_POWER_OFF;
+                        hs = moba::SystemHandler::HS_POWER_OFF;
                     }
-                    msgHandler.sendSetHardwareState(hs);
+                    sysHandler.sendSetHardwareState(hs);
                     break;
                 }
 
                 case moba::Message::MT_HARDWARE_SHUTDOWN: {
-                    msgHandler.sendHardwareShutdown();
+                    sysHandler.sendHardwareShutdown();
                     break;
                 }
 
                 case moba::Message::MT_HARDWARE_RESET: {
-                    msgHandler.sendHardwareReset();
+                    sysHandler.sendHardwareReset();
                     break;
                 }
 
                 case moba::Message::MT_HARDWARE_SWITCH_STANDBY: {
-                    msgHandler.sendHardwareSwitchStandby();
+                    sysHandler.sendHardwareSwitchStandby();
                     break;
                 }
 
@@ -464,7 +444,7 @@ int main(int argc, char* argv[]) {
                 }
 
                 case 99: {
-                    msgHandler.sendClientClose();
+                    msgHandler->sendClientClose();
                     myMutex.unlock();
                     running = false;
                     t.join();
