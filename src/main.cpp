@@ -18,29 +18,15 @@
  *
  */
 
-#include "helper.h"
-#include "environmenthandler.h"
-#include "systemhandler.h"
-#include "basehandler.h"
-#include "layouthandler.h"
-
-#include <string>
-#include <iomanip>
-#include <iostream>
-#include <fstream>
-
-#include <ctime>
-#include <sys/timeb.h>
-
 #include <config.h>
+#include <iostream>
 
-#include <moba/message.h>
+#include <gtkmm/application.h>
+
 #include <moba/helper.h>
+#include <moba/msgendpoint.h>
 
-#include <moba/msghandler.h>
-
-#include <thread>
-#include <mutex>
+#include "frmmain.h"
 
 namespace {
     moba::AppData appData = {
@@ -51,169 +37,30 @@ namespace {
         "localhost",
         7000
     };
-
-    moba::Message::MessageType type[] = {
-
-        moba::Message::MT_VOID,
-        moba::Message::MT_ECHO_REQ,
-
-        moba::Message::MT_RESET_CLIENT,
-        moba::Message::MT_SERVER_INFO_REQ,
-        moba::Message::MT_CON_CLIENTS_REQ,
-        moba::Message::MT_SELF_TESTING_CLIENT,
-
-        moba::Message::MT_GET_GLOBAL_TIMER,
-        moba::Message::MT_SET_GLOBAL_TIMER,
-        moba::Message::MT_GET_ENVIRONMENT,
-        moba::Message::MT_SET_ENVIRONMENT,
-        moba::Message::MT_GET_AMBIENCE,
-        moba::Message::MT_SET_AMBIENCE,
-        moba::Message::MT_GET_AUTO_MODE,
-        moba::Message::MT_SET_AUTO_MODE,
-        moba::Message::MT_GET_COLOR_THEME,
-        moba::Message::MT_SET_COLOR_THEME,
-        moba::Message::MT_GET_AMBIENT_LIGHT,
-        moba::Message::MT_SET_AMBIENT_LIGHT,
-
-        moba::Message::MT_EMERGENCY_STOP,
-        moba::Message::MT_EMERGENCY_STOP_CLEARING,
-        moba::Message::MT_GET_HARDWARE_STATE,
-        moba::Message::MT_SET_HARDWARE_STATE,
-        moba::Message::MT_HARDWARE_SHUTDOWN,
-        moba::Message::MT_HARDWARE_RESET,
-        moba::Message::MT_HARDWARE_SWITCH_STANDBY,
-
-        moba::Message::MT_GET_LAYOUTS_REQ,
-
-        moba::Message::MT_DEL_LAYOUT,
-        moba::Message::MT_CREATE_LAYOUT_REQ,
-        moba::Message::MT_UPDATE_LAYOUT,
-        moba::Message::MT_UNLOCK_LAYOUT,
-        moba::Message::MT_GET_LAYOUT_REQ
-
-    };
 }
 
-void printCommands() {
-    int size =
-        sizeof(type) / sizeof(type[0]);
-
-    for(int i = 0; i < size; ++i) {
-        std::cout << type[i] << ": " << *moba::Message::convertToString(type[i]) << std::endl;
-    }
-    std::cout << "99: Programmende" << std::endl;
-    std::cout << "?";
-}
-
-void printTimeStamp(std::ofstream &out) {
-    char buffer[25] = "";
-    timeb sTimeB;
-
-    ftime(&sTimeB);
-
-    strftime(buffer, 21, "%d.%m.%Y %H:%M:%S.", localtime(&sTimeB.time));
-    out <<
-        buffer << std::setw(4) << std::setfill('0') <<
-        sTimeB.millitm << std::setfill(' ');
-}
-
-int main(int argc, char* argv[]) {
-    switch(argc) {
-        case 3:
-            appData.port = atoi(argv[2]);
-
-        case 2:
-            appData.host = std::string(argv[1]);
-
-        default:
-            break;
-    }
-    printAppData(appData);
+int main(int argc, char *argv[]) {
     moba::setCoreFileSizeToULimit();
 
-    moba::MsgHandlerPtr msgHandler(new moba::MsgHandler());
-
-    moba::MessagePtr msg;
-    std::ofstream myfile;
-    myfile.open("response.log", std::ios::app);
+    moba::MsgEndpointPtr msgEndpoint(new moba::MsgEndpoint(appData.host, appData.port));
 
     try {
-        msgHandler->connect(appData.host, appData.port);
-        moba::JsonArrayPtr groups(new moba::JsonArray());
-        groups->push_back(moba::toJsonStringPtr("BASE"));
-        groups->push_back(moba::toJsonStringPtr("ENV"));
-        groups->push_back(moba::toJsonStringPtr("SERV"));
-        groups->push_back(moba::toJsonStringPtr("SYSTEM"));
-
-        msgHandler->registerApp(
+        msgEndpoint->connect(
             appData.appName,
             appData.version,
-            groups
+            moba::JsonArrayPtr{new moba::JsonArray()}
         );
-        myfile << "######################################################" << std::endl;
-        myfile << "######             Application start            ######" << std::endl;
-        myfile << "######################################################" << std::endl;
-    } catch(moba::MsgHandlerException &e) {
+    } catch(moba::MsgEndpointException &e) {
         std::cerr << e.what() << std::endl;
         return (EXIT_FAILURE);
     }
 
-    bool running = true;
+    auto app = Gtk::Application::create(argc, argv, "org.moba.tester");
 
-    std::mutex myMutex;
+    FrmMain frmMain(msgEndpoint);
+    frmMain.set_title(appData.appName);
+    frmMain.set_border_width(10);
+    frmMain.set_default_size(400, 200);
 
-    std::thread t([&] {
-        while(running) {
-            myMutex.lock();
-            moba::MessagePtr msg = msgHandler->recieveMsg();
-            if(msg) {
-                printTimeStamp(myfile);
-                myfile << " Response: " << msg->msgTypeAsString() << std::endl;
-                moba::prettyPrint(msg->getData(), myfile);
-                myfile << "******************************************************" << std::endl;
-            }
-            myMutex.unlock();
-            usleep(250);
-        }
-    });
-
-    EnvironmentHandler envHandler(msgHandler);
-    SystemHandler      sysHandler(msgHandler);
-    BaseHandler        basHandler(msgHandler);
-    LayoutHandler      tloHandler(msgHandler);
-
-    while(1) {
-        try {
-            printCommands();
-
-            int in = 0;
-            std::cin >> in;
-            moba::Message::MessageType cmd = static_cast<moba::Message::MessageType>(in);
-            myMutex.lock();
-
-            if(cmd == 99) {
-                msgHandler->sendClientClose();
-                myMutex.unlock();
-                running = false;
-                t.join();
-                return EXIT_SUCCESS;
-            }
-
-            printTimeStamp(myfile);
-            myfile <<
-                " Request: " <<
-                *moba::Message::convertToString(static_cast<moba::Message::MessageType>(cmd)) <<
-                std::endl;
-            myfile << "******************************************************" << std::endl;
-
-            envHandler.handle(cmd);
-            sysHandler.handle(cmd);
-            basHandler.handle(cmd);
-            tloHandler.handle(cmd);
-            myMutex.unlock();
-        } catch(std::exception &e) {
-            std::cerr << e.what() << std::endl;
-            return (EXIT_FAILURE);
-        }
-    }
- }
+    return app->run(frmMain);
+}

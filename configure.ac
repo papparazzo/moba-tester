@@ -1,25 +1,21 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
-
 AC_PREREQ([2.68])
 AC_INIT([moba-tester], [0.1.0-0000], [pappi-@gmx.de])
-AM_INIT_AUTOMAKE([foreign])
-AC_CONFIG_SRCDIR([src/main.cpp])
+
+AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
+
+AM_INIT_AUTOMAKE([foreign])
 
 # Checks for programs.
 AC_PROG_CXX
 
-# Checks for libraries.
+PKG_CHECK_MODULES([GTKMM], [gtkmm-3.0])
 
-# Checks for header files.
-AC_CHECK_HEADERS([stdlib.h unistd.h])
+AX_CXX_COMPILE_STDCXX_11()
 
-# Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
-AC_TYPE_SIZE_T
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+])
 
-# Checks for library functions.
-
-AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

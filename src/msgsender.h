@@ -21,20 +21,31 @@
 #pragma once
 
 #include <moba/message.h>
-#include <moba/msghandler.h>
+#include <moba/msgendpoint.h>
 
-class BaseHandler {
+#include "gtkmm.h"
+#include "string"
+
+class MsgSender {
     public:
-        BaseHandler(moba::MsgHandlerPtr mhp) : baseHandler(mhp) {
-        }
+        MsgSender(moba::MsgEndpointPtr msgep);
+        virtual ~MsgSender();
 
-        void handle(moba::Message::MessageType cmd);
-
-        virtual ~BaseHandler() {
-
-        }
+        void sendActiveMessage();
+        void setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container);
 
     protected:
-        moba::MsgHandlerPtr baseHandler;
-};
+        moba::Message::MessageType activeMessage;
+        moba::MsgEndpointPtr msgep;
 
+        void setInputbox(const std::string &caption, Gtk::ScrolledWindow &container);
+        void setCheckbox(const std::string &caption, Gtk::ScrolledWindow &container);
+
+        // String / Int
+        Gtk::Box m_HBox;
+        Gtk::Entry m_Entry;
+        Gtk::Label m_Label;
+
+        // Bool
+        Gtk::CheckButton m_Check;
+};

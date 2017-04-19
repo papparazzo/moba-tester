@@ -65,11 +65,12 @@ Makefile.in
 /configure.scan
 /autoscan.log
 /response.log
-/moba-tester
+/src/moba-tester
 /src/.deps/
-/core
+/src/core
 
 # misc
 
 .deps/
 .dirstamp
+/src/Makefile
