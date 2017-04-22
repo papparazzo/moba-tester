@@ -20,31 +20,34 @@
 
 #pragma once
 
-#include <moba/message.h>
-#include <moba/msgendpoint.h>
-
 #include <gtkmm.h>
-#include <string>
 
-#include "ctrlstring.h"
-#include "ctrlbool.h"
-#include "ctrlglobaltimer.h"
-#include "ctrlcolortheme.h"
+#include <moba/jsonabstractitem.h>
 
-class MsgSender {
+class CtrlColorTheme {
     public:
-        MsgSender(moba::MsgEndpointPtr msgep);
-        virtual ~MsgSender();
+        CtrlColorTheme() ;
 
-        void sendActiveMessage();
-        void setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container);
+        virtual ~CtrlColorTheme();
+
+        void init(Gtk::ScrolledWindow &container);
+
+        moba::JsonItemPtr get_value() const;
 
     protected:
-        moba::Message::MessageType activeMessage;
-        moba::MsgEndpointPtr msgep;
+        Gtk::Box m_VBox;
+        Gtk::Box m_HBox_DimTime;
+        Gtk::Box m_HBox_BrightTime;
+        Gtk::Box m_HBox_Condition;
 
-        CtrlString m_CtrlString;
-        CtrlBool m_CtrlBool;
-        CtrlGlobalTimer m_CtrlGlobalTimer;
-        CtrlColorTheme m_CtrlColorTheme;
+        Gtk::Label m_Label_DimTime;
+        Gtk::Entry m_Entry_DimTime;
+
+        Gtk::Label m_Label_BrightTime;
+        Gtk::Entry m_Entry_BrightTime;
+
+        Gtk::Label m_Label_Condition;
+        Gtk::ComboBoxText m_Combo_Condition;
+
+        moba::JsonThreeStatePtr getThreeState() const;
 };

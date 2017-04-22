@@ -21,12 +21,7 @@
 #include "msgsender.h"
 #include <moba/jsonabstractitem.h>
 
-MsgSender::MsgSender(moba::MsgEndpointPtr msgep) : msgep{msgep},
-    m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6}
-{
-    m_HBox.pack_start(m_Check, Gtk::PACK_SHRINK);
-    //m_HBox.pack_start(m_Label, Gtk::PACK_SHRINK);
-    //m_HBox.pack_end(m_Entry, Gtk::PACK_SHRINK);
+MsgSender::MsgSender(moba::MsgEndpointPtr msgep) : msgep{msgep} {
 }
 
 MsgSender::~MsgSender() {
@@ -40,15 +35,23 @@ void MsgSender::sendActiveMessage() {
         case moba::Message::MT_DEL_LAYOUT:
         case moba::Message::MT_UNLOCK_LAYOUT:
         case moba::Message::MT_GET_LAYOUT_REQ:
-            msgep->sendMsg(activeMessage, moba::toJsonNumberPtr(std::stoi(m_Entry.get_text())));
+            msgep->sendMsg(activeMessage, m_CtrlString.get_jsonInt());
             break;
 
         case moba::Message::MT_ECHO_REQ:
-            msgep->sendMsg(activeMessage, m_Entry.get_text());
+            msgep->sendMsg(activeMessage, m_CtrlString.get_text());
             break;
 
         case moba::Message::MT_SET_AUTO_MODE:
-            msgep->sendMsg(activeMessage, moba::toJsonBoolPtr(m_Check.get_active()));
+            msgep->sendMsg(activeMessage, m_CtrlBool.get_value());
+            break;
+
+        case moba::Message::MT_SET_GLOBAL_TIMER:
+            msgep->sendMsg(activeMessage, m_CtrlGlobalTimer.get_value());
+            break;
+
+        case moba::Message::MT_SET_COLOR_THEME:
+            msgep->sendMsg(activeMessage, m_CtrlColorTheme.get_value());
             break;
 
         default:
@@ -62,30 +65,29 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
     activeMessage = cmd;
 
     switch(cmd) {
-        // int
         case moba::Message::MT_RESET_CLIENT:
         case moba::Message::MT_SELF_TESTING_CLIENT:
         case moba::Message::MT_DEL_LAYOUT:
         case moba::Message::MT_UNLOCK_LAYOUT:
         case moba::Message::MT_GET_LAYOUT_REQ:
-            setInputbox("Id", container);
+            m_CtrlString.init("Id", container);
             return;
 
-        // string
         case moba::Message::MT_ECHO_REQ:
-            setInputbox("Data", container);
+            m_CtrlString.init("Data", container);
             return;
 
-        // Bool
         case moba::Message::MT_SET_AUTO_MODE:
-            setCheckbox("AutoMode", container);
+            m_CtrlBool.init("AutoMode", container);
             break;
 
-        // GlobalTimerData
         case moba::Message::MT_SET_GLOBAL_TIMER:
+            m_CtrlGlobalTimer.init(container);
+            break;
 
-        //ColorThemeData
         case moba::Message::MT_SET_COLOR_THEME:
+            m_CtrlColorTheme.init(container);
+            break;
 
         //EnvironmentData
         case moba::Message::MT_SET_ENVIRONMENT:
@@ -106,21 +108,7 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
     }
 }
 
-void MsgSender::setInputbox(const std::string &caption, Gtk::ScrolledWindow &container) {
-   /*
-    container.add(m_HBox);
-    m_Entry.set_text("");
-    m_Label.set_label(caption);
-    container.show_all_children();
-    */
-}
-
-void MsgSender::setCheckbox(const std::string &caption, Gtk::ScrolledWindow &container) {
-    container.add(m_HBox);
-    m_Check.set_label(caption);
-    container.show_all_children();
-}
-            /*
+/*
 
         case moba::Message::MT_SET_HARDWARE_STATE: {
             moba::SystemHandler::HardwareState hs = moba::SystemHandler::HS_ERROR;
@@ -216,20 +204,7 @@ void MsgSender::setCheckbox(const std::string &caption, Gtk::ScrolledWindow &con
  *
  *
 
-moba::JsonThreeState::ThreeState getThreeState(const std::string &s) {
-    std::string str;
-    getData(s + "[on|off|auto|unset]", str);
-    if(str == "on") {
-        return moba::JsonThreeState::ON;
-    }
-    if(str == "off") {
-        return moba::JsonThreeState::OFF;
-    }
-    if(str == "auto") {
-        return moba::JsonThreeState::AUTO;
-    }
-    return moba::JsonThreeState::UNSET;
-}
+
 
 moba::JsonToggleState::ToggleState getToggleState(const std::string &s) {
     std::string str;

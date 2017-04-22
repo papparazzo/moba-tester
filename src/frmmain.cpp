@@ -373,7 +373,11 @@ void FrmMain::initOutgoing() {
 }
 
 void FrmMain::on_button_send_clicked() {
-    msgSender.sendActiveMessage();
+    try {
+        msgSender.sendActiveMessage();
+    } catch(std::exception &e) {
+        std::cout << e.what() << std::endl; // TODO: Make it better
+    }
 }
 
 void FrmMain::on_button_about_clicked() {

@@ -20,31 +20,24 @@
 
 #pragma once
 
-#include <moba/message.h>
-#include <moba/msgendpoint.h>
-
 #include <gtkmm.h>
-#include <string>
 
-#include "ctrlstring.h"
-#include "ctrlbool.h"
-#include "ctrlglobaltimer.h"
-#include "ctrlcolortheme.h"
+#include <moba/jsonabstractitem.h>
 
-class MsgSender {
+class CtrlString {
     public:
-        MsgSender(moba::MsgEndpointPtr msgep);
-        virtual ~MsgSender();
+        CtrlString() ;
 
-        void sendActiveMessage();
-        void setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container);
+        virtual ~CtrlString();
+
+        void init(const std::string &caption, Gtk::ScrolledWindow &container);
+
+        Glib::ustring get_text() const;
+        moba::JsonIntPtr get_jsonInt() const;
+        moba::JsonFloatPtr get_jsonFloat() const;
 
     protected:
-        moba::Message::MessageType activeMessage;
-        moba::MsgEndpointPtr msgep;
-
-        CtrlString m_CtrlString;
-        CtrlBool m_CtrlBool;
-        CtrlGlobalTimer m_CtrlGlobalTimer;
-        CtrlColorTheme m_CtrlColorTheme;
+        Gtk::Box   m_HBox_String;
+        Gtk::Entry m_Entry_String;
+        Gtk::Label m_Label_String;
 };
