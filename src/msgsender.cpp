@@ -54,6 +54,18 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlColorTheme.get_value());
             break;
 
+         case moba::Message::MT_SET_ENVIRONMENT:
+            msgep->sendMsg(activeMessage, m_CtrlEnvironment.get_value());
+            break;
+
+        case moba::Message::MT_SET_AMBIENCE:
+            msgep->sendMsg(activeMessage, m_CtrlAmbience.get_value());
+            break;
+
+        case moba::Message::MT_SET_AMBIENT_LIGHT:
+            msgep->sendMsg(activeMessage, m_CtrlAmbientLight.get_value());
+            break;
+
         default:
             msgep->sendMsg(activeMessage);
             break;
@@ -89,14 +101,17 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             m_CtrlColorTheme.init(container);
             break;
 
-        //EnvironmentData
         case moba::Message::MT_SET_ENVIRONMENT:
+            m_CtrlEnvironment.init(container);
+            break;
 
-        //AmbienceData
         case moba::Message::MT_SET_AMBIENCE:
+            m_CtrlAmbience.init(container);
+            break;
 
-        //AmbientLightData
         case moba::Message::MT_SET_AMBIENT_LIGHT:
+            m_CtrlAmbientLight.init(container);
+            break;
 
         //HardwareState
         case moba::Message::MT_SET_HARDWARE_STATE:
@@ -144,41 +159,6 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             break;
         }
 
-
- * switch(cmd) {
-
-        case moba::Message::MT_SET_GLOBAL_TIMER: {
-            std::string date = "Sa 10:00";  // FIXME getString("DD hh:mm (e.g. Sa 10:00)");
-            unsigned int intervall = 0;
-            getData("Seconds (modulo 5)", intervall);
-            unsigned int multiplicator = 0;
-            getData("Multiplicator (realtime * multiplicator = modeltime)", multiplicator);
-            this->envHandler.sendSetGlobalTimer(date, intervall, multiplicator);
-            break;
-        }
-
-
-        case moba::Message::MT_SET_ENVIRONMENT:
-            this->envHandler.sendSetEnvironment(
-                getSwitchState("thunder"),
-                getSwitchState("wind"),
-                getSwitchState("rain"),
-                getSwitchState("environmentSound"),
-                getSwitchState("aux01"),
-                getSwitchState("aux02"),
-                getSwitchState("aux03")
-            );
-            break;
-
-
-        case moba::Message::MT_SET_AMBIENCE: {
-            this->envHandler.sendSetAmbience(
-                getToggleState("curtainUp"),
-                getToggleState("mainLightOn")
-            );
-            break;
-        }
-
         case moba::Message::MT_SET_AMBIENT_LIGHT: {
             std::vector<moba::EnvironmentHandler::AmbientLightData> v;
             moba::EnvironmentHandler::AmbientLightData ald;
@@ -191,50 +171,4 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             this->envHandler.sendSetAmbientLight(v);
             break;
         }
-
-        case moba::Message::MT_SET_COLOR_THEME: {
-            this->envHandler.sendSetColorTheme(
-                getString("dimTime [hh:mm]"),
-                getString("brightTime [hh:mm]"),
-                getThreeState("condition")
-            );
-            break;
-        }
-    }
- *
- *
-
-
-
-moba::JsonToggleState::ToggleState getToggleState(const std::string &s) {
-    std::string str;
-    getData(s + "[on|off|unset]", str);
-    if(str == "on") {
-        return moba::JsonToggleState::ON;
-    }
-    if(str == "off") {
-        return moba::JsonToggleState::OFF;
-    }
-    return moba::JsonToggleState::UNSET;
-}
-
-moba::JsonSwitch::Switch getSwitchState(const std::string &s) {
-    std::string str;
-    getData(s + "[on|off|auto|unset|trigger]", str);
-    if(str == "on") {
-        return moba::JsonSwitch::ON;
-    }
-    if(str == "off") {
-        return moba::JsonSwitch::OFF;
-    }
-    if(str == "auto") {
-        return moba::JsonSwitch::AUTO;
-    }
-    if(str == "trigger") {
-        return moba::JsonSwitch::TRIGGER;
-    }
-    return moba::JsonSwitch::UNSET;
-}
-
- *
  */

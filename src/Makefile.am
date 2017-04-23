@@ -8,6 +8,9 @@ moba_tester_SOURCES = \
     ctrlbool.cpp \
     ctrlglobaltimer.cpp \
     ctrlcolortheme.cpp \
+    ctrlenvironment.cpp \
+    ctrlambience.cpp \
+    ctrlambientlight.cpp \
     frmmain.cpp
 
 
