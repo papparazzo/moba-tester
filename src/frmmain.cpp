@@ -75,7 +75,7 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) :
     m_Button_Emegerency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emegency_clicked));
     m_Button_Emegerency.set_label("Nothalt");
 
-    m_HPaned.set_position(150);
+    m_HPaned.set_position(400);
     initAboutDialog();
     initTreeModel();
     initOutgoing();
