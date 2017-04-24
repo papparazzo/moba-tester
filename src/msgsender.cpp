@@ -70,6 +70,11 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlHardwarestate.get_value());
             break;
 
+        case moba::Message::MT_CREATE_LAYOUT_REQ:
+        case moba::Message::MT_UPDATE_LAYOUT:
+            msgep->sendMsg(activeMessage, m_CtrlTrackLayout.get_value());
+            break;
+
         default:
             msgep->sendMsg(activeMessage);
             break;
@@ -121,10 +126,13 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             m_CtrlHardwarestate.init(container);
             break;
 
-        //TrackLayoutData
         case moba::Message::MT_CREATE_LAYOUT_REQ:
+            m_CtrlTrackLayout.init(false, container);
+            break;
+
         case moba::Message::MT_UPDATE_LAYOUT:
-            return;
+            m_CtrlTrackLayout.init(true, container);
+            break;
     }
 }
 
@@ -146,19 +154,6 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             getData("name", name);
             getData("desc", desc);
             this->tloHandler.sendUpdateLayout(id, name, desc);
-            break;
-        }
-
-        case moba::Message::MT_SET_AMBIENT_LIGHT: {
-            std::vector<moba::EnvironmentHandler::AmbientLightData> v;
-            moba::EnvironmentHandler::AmbientLightData ald;
-            for(int i = 0; i < 3; ++i) {
-                getData("red", ald.red);
-                getData("blue", ald.blue);
-                getData("white", ald.white);
-                v.push_back(ald);
-            }
-            this->envHandler.sendSetAmbientLight(v);
             break;
         }
  */
