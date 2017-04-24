@@ -2,7 +2,10 @@
 
 #include <string>
 
-CtrlBool::CtrlBool() : m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6} {
+CtrlBool::CtrlBool() :
+    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}, m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6}
+{
+    m_VBox.pack_start(m_HBox_Bool, Gtk::PACK_SHRINK);
     m_HBox_Bool.pack_start(m_Check_Bool, Gtk::PACK_SHRINK);
 }
 
@@ -16,6 +19,6 @@ moba::JsonBoolPtr CtrlBool::get_value() const {
 void CtrlBool::init(const std::string &caption, Gtk::ScrolledWindow &container) {
     m_Check_Bool.set_label(caption);
     m_Check_Bool.set_active(false);
-    container.add(m_HBox_Bool);
+    container.add(m_VBox);
     container.show_all_children();
 }

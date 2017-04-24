@@ -2,7 +2,10 @@
 
 #include <string>
 
-CtrlString::CtrlString() : m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6} {
+CtrlString::CtrlString() :
+    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}, m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6}
+{
+    m_VBox.pack_start(m_HBox_String, Gtk::PACK_SHRINK);
     m_HBox_String.pack_start(m_Label_String, Gtk::PACK_SHRINK);
     m_HBox_String.pack_end(m_Entry_String, Gtk::PACK_SHRINK);
 }
@@ -17,7 +20,7 @@ Glib::ustring CtrlString::get_text() const {
 void CtrlString::init(const std::string &caption, Gtk::ScrolledWindow &container) {
     m_Entry_String.set_text("");
     m_Label_String.set_label(caption);
-    container.add(m_HBox_String);
+    container.add(m_VBox);
     container.show_all_children();
 }
 

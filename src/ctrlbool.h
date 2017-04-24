@@ -35,6 +35,7 @@ class CtrlBool {
         moba::JsonBoolPtr get_value() const;
 
     protected:
+        Gtk::Box m_VBox;
         Gtk::Box m_HBox_Bool;
         Gtk::CheckButton m_Check_Bool;
 };
