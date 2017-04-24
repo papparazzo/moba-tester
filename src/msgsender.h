@@ -33,6 +33,7 @@
 #include "ctrlenvironment.h"
 #include "ctrlambience.h"
 #include "ctrlambientlight.h"
+#include "ctrlhardwarestate.h"
 
 class MsgSender {
     public:
@@ -46,11 +47,12 @@ class MsgSender {
         moba::Message::MessageType activeMessage;
         moba::MsgEndpointPtr msgep;
 
-        CtrlString       m_CtrlString;
-        CtrlBool         m_CtrlBool;
-        CtrlGlobalTimer  m_CtrlGlobalTimer;
-        CtrlColorTheme   m_CtrlColorTheme;
-        CtrlEnvironment  m_CtrlEnvironment;
-        CtrlAmbience     m_CtrlAmbience;
-        CtrlAmbientLight m_CtrlAmbientLight;
+        CtrlString        m_CtrlString;
+        CtrlBool          m_CtrlBool;
+        CtrlGlobalTimer   m_CtrlGlobalTimer;
+        CtrlColorTheme    m_CtrlColorTheme;
+        CtrlEnvironment   m_CtrlEnvironment;
+        CtrlAmbience      m_CtrlAmbience;
+        CtrlAmbientLight  m_CtrlAmbientLight;
+        CtrlHardwarestate m_CtrlHardwarestate;
 };

@@ -11,6 +11,7 @@ moba_tester_SOURCES = \
     ctrlenvironment.cpp \
     ctrlambience.cpp \
     ctrlambientlight.cpp \
+    ctrlhardwarestate.cpp \
     frmmain.cpp
 
 

@@ -66,6 +66,10 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlAmbientLight.get_value());
             break;
 
+        case moba::Message::MT_SET_HARDWARE_STATE:
+            msgep->sendMsg(activeMessage, m_CtrlHardwarestate.get_value());
+            break;
+
         default:
             msgep->sendMsg(activeMessage);
             break;
@@ -113,8 +117,9 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             m_CtrlAmbientLight.init(container);
             break;
 
-        //HardwareState
         case moba::Message::MT_SET_HARDWARE_STATE:
+            m_CtrlHardwarestate.init(container);
+            break;
 
         //TrackLayoutData
         case moba::Message::MT_CREATE_LAYOUT_REQ:
@@ -122,21 +127,6 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             return;
     }
 }
-
-/*
-
-        case moba::Message::MT_SET_HARDWARE_STATE: {
-            moba::SystemHandler::HardwareState hs = moba::SystemHandler::HS_ERROR;
-            std::string s;
-            getData("ready, error, standby, power off [r|e|s|p]", s);
-            if(s == "r") {
-                hs = moba::SystemHandler::HS_READY;
-            } else if(s == "s") {
-                hs = moba::SystemHandler::HS_STANDBY;
-            } else if(s == "p") {
-                hs = moba::SystemHandler::HS_POWER_OFF;
-            }
-            this->sysHandler.sendSetHardwareState(hs);*/
 
 /*
          case moba::Message::MT_CREATE_LAYOUT_REQ: {
