@@ -35,8 +35,8 @@ class CtrlHardwarestate {
         moba::JsonStringPtr get_value() const;
 
     protected:
-        Gtk::Box m_VBox;
-        Gtk::Box m_HBox;
+        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Box m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6};
         Gtk::Label m_Label;
         Gtk::ComboBoxText m_Combo;
 };

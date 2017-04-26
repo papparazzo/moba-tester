@@ -34,33 +34,31 @@
 class FrmMain : public Gtk::Window {
     public:
         FrmMain(moba::MsgEndpointPtr mhp);
-        virtual ~FrmMain() {
-        }
+        virtual ~FrmMain();
 
     protected:
-        Gtk::Box m_VBox;
-        Gtk::Paned m_HPaned;
+        Gtk::Box       m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Paned     m_HPaned{Gtk::ORIENTATION_HORIZONTAL};
         Gtk::ButtonBox m_ButtonBox;
-        Gtk::Button m_Button_Emegerency;
-        Gtk::Box m_HBox;
-        Gtk::Label m_Label_Connectivity;
+        Gtk::Button    m_Button_Emegerency;
+        Gtk::Box       m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Label     m_Label_Connectivity{" \xe2\x8f\xb9"};
 
         // about
-        Gtk::Button m_Button_About;
-        Gtk::Button m_Button_About_aaaa;
+        Gtk::Button      m_Button_About{"About..."};
         Gtk::AboutDialog m_Dialog;
 
         // Outgoing
-        Gtk::Paned m_VPaned_Outgoing;
+        Gtk::Paned          m_VPaned_Outgoing{Gtk::ORIENTATION_VERTICAL};
         Gtk::ScrolledWindow m_ScrolledWindow_Outgoing;
 
-        Gtk::TreeView m_TreeView_Outgoing;
+        Gtk::TreeView                m_TreeView_Outgoing;
         Glib::RefPtr<Gtk::TreeStore> m_refTreeModel_Outgoing;
 
         Gtk::ScrolledWindow m_ScrolledWindow_Outgoing_Data;
-        Gtk::Box m_VBox_Outgoing;
-        Gtk::ButtonBox m_ButtonBox_Outgoing;
-        Gtk::Button m_Button_Send;
+        Gtk::Box            m_VBox_Outgoing{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::ButtonBox      m_ButtonBox_Outgoing;
+        Gtk::Button         m_Button_Send{"Senden..."};
 
         class ModelColumnsMessages : public Gtk::TreeModelColumnRecord {
             public:
@@ -72,24 +70,24 @@ class FrmMain : public Gtk::Window {
 
                 Gtk::TreeModelColumn<Glib::ustring> m_col_name;
                 Gtk::TreeModelColumn<Glib::ustring> m_col_id;
-                Gtk::TreeModelColumn<int> m_col_msg_id;
+                Gtk::TreeModelColumn<int>           m_col_msg_id;
         };
 
         ModelColumnsMessages m_Columns_Messages;
 
-        // Incomming
-        Gtk::Paned m_VPaned_Incomming;
-        Gtk::ScrolledWindow m_ScrolledWindow_Incomming;
-        Gtk::TreeView m_TreeView_Incomming;
+        // Incoming
+        Gtk::Paned                   m_VPaned_Incomming{Gtk::ORIENTATION_VERTICAL};
+        Gtk::ScrolledWindow          m_ScrolledWindow_Incomming;
+        Gtk::TreeView                m_TreeView_Incomming;
         Glib::RefPtr<Gtk::ListStore> m_refTreeModel_Incomming;
 
-        Gtk::Label m_Label_Data;
+        Gtk::Label          m_Label_Data;
         Gtk::ScrolledWindow m_ScrolledWindow_Data;
 
-        Gtk::Box m_VBox_Incomming;
-        Gtk::ButtonBox m_ButtonBox_Incomming;
-        Gtk::Button m_Button_ClearIncomming;
-        Gtk::Box m_HBox_CheckRow;
+        Gtk::Box         m_VBox_Incomming{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::ButtonBox   m_ButtonBox_Incomming;
+        Gtk::Button      m_Button_ClearIncomming{"Leeren"};
+        Gtk::Box         m_HBox_CheckRow{Gtk::ORIENTATION_HORIZONTAL, 6};
         Gtk::CheckButton m_Button_AutoCheckLast;
 
         class ModelColumnsIncomming : public Gtk::TreeModel::ColumnRecord {

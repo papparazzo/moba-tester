@@ -2,10 +2,7 @@
 
 #include <string>
 
-CtrlHardwarestate::CtrlHardwarestate() :
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6},
-    m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6}
-{
+CtrlHardwarestate::CtrlHardwarestate() {
     m_VBox.pack_start(m_HBox, Gtk::PACK_SHRINK);
     m_HBox.pack_start(m_Label, Gtk::PACK_SHRINK);
     m_HBox.pack_end(m_Combo, Gtk::PACK_SHRINK);

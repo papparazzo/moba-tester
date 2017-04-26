@@ -37,8 +37,8 @@ class CtrlString {
         moba::JsonFloatPtr get_jsonFloat() const;
 
     protected:
-        Gtk::Box   m_VBox;
-        Gtk::Box   m_HBox_String;
+        Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Box   m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6};
         Gtk::Entry m_Entry_String;
         Gtk::Label m_Label_String;
 };

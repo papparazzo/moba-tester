@@ -2,9 +2,7 @@
 
 #include <string>
 
-CtrlBool::CtrlBool() :
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}, m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6}
-{
+CtrlBool::CtrlBool() {
     m_VBox.pack_start(m_HBox_Bool, Gtk::PACK_SHRINK);
     m_HBox_Bool.pack_start(m_Check_Bool, Gtk::PACK_SHRINK);
 }

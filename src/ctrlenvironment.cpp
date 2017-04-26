@@ -2,9 +2,7 @@
 
 #include <string>
 
-CtrlEnvironment::CtrlEnvironment() :
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}
-{
+CtrlEnvironment::CtrlEnvironment() {
     for(int i = 0; i < LAST_ENTRY; ++i) {
         m_HBox[i].set_orientation(Gtk::ORIENTATION_HORIZONTAL);
         m_HBox[i].pack_start(m_Label[i], Gtk::PACK_SHRINK);

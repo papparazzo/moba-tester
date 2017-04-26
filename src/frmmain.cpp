@@ -47,14 +47,7 @@ namespace {
         "along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.";
 }
 
-FrmMain::FrmMain(moba::MsgEndpointPtr mhp) :
-    msgEndpoint(mhp), msgSender(mhp), m_VBox(Gtk::ORIENTATION_VERTICAL, 6),
-    m_HPaned(Gtk::ORIENTATION_HORIZONTAL), m_Label_Connectivity(" \xe2\x8f\xb9"),
-    m_VBox_Outgoing(Gtk::ORIENTATION_VERTICAL, 6), m_Button_About("About..."), m_Button_Send("Senden..."),
-    m_VPaned_Incomming(Gtk::ORIENTATION_VERTICAL), m_VPaned_Outgoing(Gtk::ORIENTATION_VERTICAL),
-    m_VBox_Incomming(Gtk::ORIENTATION_VERTICAL, 6), m_Button_ClearIncomming("Leeren"),
-    m_HBox(Gtk::ORIENTATION_HORIZONTAL, 6), m_HBox_CheckRow(Gtk::ORIENTATION_HORIZONTAL, 6)
-{
+FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
     sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
     add(m_VBox);
@@ -84,6 +77,10 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) :
     m_Button_Send.set_sensitive(false);
     msgEndpoint->sendMsg(moba::Message::MT_GET_EMERGENCY_STOP_STATE);
     show_all_children();
+}
+
+FrmMain::~FrmMain() {
+
 }
 
 void FrmMain::initAboutDialog() {

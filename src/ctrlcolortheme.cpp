@@ -2,12 +2,7 @@
 
 #include <string>
 
-CtrlColorTheme::CtrlColorTheme() :
-    m_HBox_DimTime{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_HBox_BrightTime{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_HBox_Condition{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}
-{
+CtrlColorTheme::CtrlColorTheme() {
     m_VBox.pack_start(m_HBox_DimTime, Gtk::PACK_SHRINK);
     m_VBox.pack_start(m_HBox_BrightTime, Gtk::PACK_SHRINK);
     m_VBox.pack_start(m_HBox_Condition, Gtk::PACK_SHRINK);

@@ -135,25 +135,3 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             break;
     }
 }
-
-/*
-         case moba::Message::MT_CREATE_LAYOUT_REQ: {
-            std::string name;
-            std::string desc;
-            getData("name", name);
-            getData("desc", desc);
-            this->tloHandler.sendCreateLayout(name, desc);
-            break;
-        }
-
-        case moba::Message::MT_UPDATE_LAYOUT: {
-            int id = 0;
-            std::string name;
-            std::string desc;
-            getData("LayoutId", id);
-            getData("name", name);
-            getData("desc", desc);
-            this->tloHandler.sendUpdateLayout(id, name, desc);
-            break;
-        }
- */

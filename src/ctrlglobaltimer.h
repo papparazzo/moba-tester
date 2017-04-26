@@ -35,9 +35,9 @@ class CtrlGlobalTimer {
         moba::JsonItemPtr get_value() const;
 
     protected:
-        Gtk::Box m_VBox;
-        Gtk::Box m_HBox_CurModelTime;
-        Gtk::Box m_HBox_Multiplicator;
+        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Box m_HBox_CurModelTime{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box m_HBox_Multiplicator{Gtk::ORIENTATION_HORIZONTAL, 6};
 
         Gtk::Entry m_Entry_CurModelTime;
         Gtk::Label m_Label_CurModelTime;

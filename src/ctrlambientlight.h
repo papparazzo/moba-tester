@@ -43,7 +43,7 @@ class CtrlAmbientLight {
             LAST_ENTRY
         };
 
-        Gtk::Box m_VBox;
+        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
         Gtk::Box m_HBox[LAST_ENTRY];
         Gtk::Label m_Label[LAST_ENTRY];
         Gtk::Entry m_Entry[LAST_ENTRY];

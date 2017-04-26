@@ -2,12 +2,7 @@
 
 #include <string>
 
-CtrlTrackLayout::CtrlTrackLayout() :
-    m_HBox_Id{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_HBox_Description{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_HBox_Caption{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}
-{
+CtrlTrackLayout::CtrlTrackLayout() {
     m_VBox.pack_start(m_HBox_Id, Gtk::PACK_SHRINK);
     m_VBox.pack_start(m_HBox_Caption, Gtk::PACK_SHRINK);
     m_VBox.pack_start(m_HBox_Description, Gtk::PACK_SHRINK);

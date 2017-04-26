@@ -46,7 +46,7 @@ class CtrlEnvironment {
             LAST_ENTRY
         };
 
-        Gtk::Box m_VBox;
+        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
         Gtk::Box m_HBox[LAST_ENTRY];
         Gtk::Label m_Label[LAST_ENTRY];
         Gtk::ComboBoxText m_Combo[LAST_ENTRY];

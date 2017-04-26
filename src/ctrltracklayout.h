@@ -35,10 +35,10 @@ class CtrlTrackLayout {
         moba::JsonItemPtr get_value() const;
 
     protected:
-        Gtk::Box m_VBox;
-        Gtk::Box m_HBox_Id;
-        Gtk::Box m_HBox_Caption;
-        Gtk::Box m_HBox_Description;
+        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Box m_HBox_Id{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box m_HBox_Caption{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box m_HBox_Description{Gtk::ORIENTATION_HORIZONTAL, 6};
 
         Gtk::Label m_Label_Id;
         Gtk::Entry m_Entry_Id;

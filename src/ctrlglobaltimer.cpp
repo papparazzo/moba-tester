@@ -2,11 +2,7 @@
 
 #include <string>
 
-CtrlGlobalTimer::CtrlGlobalTimer() :
-    m_HBox_CurModelTime{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_HBox_Multiplicator{Gtk::ORIENTATION_HORIZONTAL, 6},
-    m_VBox{Gtk::ORIENTATION_VERTICAL, 6}
-{
+CtrlGlobalTimer::CtrlGlobalTimer() {
     m_VBox.pack_start(m_HBox_CurModelTime, Gtk::PACK_SHRINK);
     m_VBox.pack_start(m_HBox_Multiplicator, Gtk::PACK_SHRINK);
 
