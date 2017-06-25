@@ -12,8 +12,8 @@ CtrlAmbience::CtrlAmbience() {
         m_Combo[i].append("off");
         m_Combo[i].append("unset");
     }
-    m_Label[CURTAIN_UP   ].set_label("Rollo rauf / runter");
-    m_Label[MAIN_LIGHT_ON].set_label("Hauptlicht an / aus");
+    m_Label[CURTAIN_UP   ].set_label("curtain (down = off)");
+    m_Label[MAIN_LIGHT_ON].set_label("main-light");
 }
 
 CtrlAmbience::~CtrlAmbience() {
