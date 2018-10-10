@@ -23,7 +23,7 @@
 #include <gtkmm.h>
 
 #include <moba/msgendpoint.h>
-#include <moba/systemhandler.h>
+#include <moba/msgsystemhandler.h>
 
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
@@ -42,7 +42,8 @@ class FrmMain : public Gtk::Window {
         Gtk::ButtonBox m_ButtonBox;
         Gtk::Button    m_Button_Emegerency;
         Gtk::Box       m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Label     m_Label_Connectivity{" \xe2\x8f\xb9"};
+        Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
+        Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
 
         // about
         Gtk::Button      m_Button_About{"About..."};
@@ -111,6 +112,8 @@ class FrmMain : public Gtk::Window {
         void initTreeModel();
         void initIncomming();
         void initOutgoing();
+
+        void setHardwareState(moba::JsonItemPtr data);
 
         moba::MsgEndpointPtr msgEndpoint;
         MsgSender            msgSender;

@@ -33,8 +33,8 @@
 #include "ctrlenvironment.h"
 #include "ctrlambience.h"
 #include "ctrlambientlight.h"
-#include "ctrlhardwarestate.h"
 #include "ctrltracklayout.h"
+#include "ctrlconnectivity.h"
 
 class MsgSender {
     public:
@@ -55,6 +55,6 @@ class MsgSender {
         CtrlEnvironment   m_CtrlEnvironment;
         CtrlAmbience      m_CtrlAmbience;
         CtrlAmbientLight  m_CtrlAmbientLight;
-        CtrlHardwarestate m_CtrlHardwarestate;
+        CtrlConnectivity  m_CtrlConnectivity;
         CtrlTrackLayout   m_CtrlTrackLayout;
 };

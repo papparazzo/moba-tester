@@ -26,6 +26,8 @@
 #include <sys/timeb.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
+#include <moba/message.h>
+#include <moba/jsonabstractitem.h>
 
 namespace {
     const char license[] =
@@ -56,9 +58,15 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     // about-dialog
     m_VBox.pack_start(m_HBox, Gtk::PACK_SHRINK);
     m_HBox.pack_end(m_ButtonBox, Gtk::PACK_SHRINK);
-    m_HBox.pack_start(m_Label_Connectivity, Gtk::PACK_SHRINK);
-    m_Label_Connectivity.set_justify(Gtk::JUSTIFY_LEFT);
-    m_Label_Connectivity.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+    m_HBox.pack_start(m_Label_Connectivity_HW, Gtk::PACK_SHRINK);
+    m_Label_Connectivity_HW.set_justify(Gtk::JUSTIFY_LEFT);
+    m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+    m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
+
+    m_HBox.pack_start(m_Label_Connectivity_SW, Gtk::PACK_SHRINK);
+    m_Label_Connectivity_SW.set_justify(Gtk::JUSTIFY_LEFT);
+    m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+    m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
     m_ButtonBox.pack_start(m_Button_About, Gtk::PACK_EXPAND_WIDGET, 5);
     m_ButtonBox.set_layout(Gtk::BUTTONBOX_END);
@@ -75,7 +83,7 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initIncomming();
 
     m_Button_Send.set_sensitive(false);
-    msgEndpoint->sendMsg(moba::Message::MT_GET_EMERGENCY_STOP_STATE);
+    msgEndpoint->sendMsg(moba::Message::MT_GET_HARDWARE_STATE);
     show_all_children();
 }
 
@@ -174,16 +182,6 @@ void FrmMain::initTreeModel(){
     childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_GLOBAL_TIMER);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_AUTO_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "4.4";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_AUTO_MODE);
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_AUTO_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "4.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_AUTO_MODE);
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_COLOR_THEME;
     childrow[m_Columns_Messages.m_col_id] = "4.6";
     childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_COLOR_THEME);
@@ -231,47 +229,47 @@ void FrmMain::initTreeModel(){
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = -1;
     row[m_Columns_Messages.m_col_id] = "6";
+    row[m_Columns_Messages.m_col_name] = "Interface";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_CONNECTIVITY;
+    childrow[m_Columns_Messages.m_col_id] = "6.1";
+    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_CONNECTIVITY);
+
+    row = *(m_refTreeModel_Outgoing->append());
+    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_id] = "7";
     row[m_Columns_Messages.m_col_name] = "System";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_EMERGENCY_STOP_STATE;
-    childrow[m_Columns_Messages.m_col_id] = "6.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_EMERGENCY_STOP_STATE);
+    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_AUTOMATIC_MODE;
+    childrow[m_Columns_Messages.m_col_id] = "7.1";
+    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_AUTOMATIC_MODE);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_EMERGENCY_STOP;
-    childrow[m_Columns_Messages.m_col_id] = "6.2";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_EMERGENCY_STOP);
+    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_EMERGENCY_STOP;
+    childrow[m_Columns_Messages.m_col_id] = "7.2";
+    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_EMERGENCY_STOP);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_EMERGENCY_STOP_CLEARING;
-    childrow[m_Columns_Messages.m_col_id] = "6.3";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_EMERGENCY_STOP_CLEARING);
+    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_STANDBY_MODE;
+    childrow[m_Columns_Messages.m_col_id] = "7.3";
+    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_STANDBY_MODE);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_HARDWARE_STATE;
-    childrow[m_Columns_Messages.m_col_id] = "6.4";
+    childrow[m_Columns_Messages.m_col_id] = "7.4";
     childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_HARDWARE_STATE);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_HARDWARE_STATE;
-    childrow[m_Columns_Messages.m_col_id] = "6.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_HARDWARE_STATE);
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_HARDWARE_SHUTDOWN;
-    childrow[m_Columns_Messages.m_col_id] = "6.7";
+    childrow[m_Columns_Messages.m_col_id] = "7.6";
     childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_HARDWARE_SHUTDOWN);
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_HARDWARE_RESET;
-    childrow[m_Columns_Messages.m_col_id] = "6.8";
+    childrow[m_Columns_Messages.m_col_id] = "7.7";
     childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_HARDWARE_RESET);
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_HARDWARE_SWITCH_STANDBY;
-    childrow[m_Columns_Messages.m_col_id] = "6.9";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_HARDWARE_SWITCH_STANDBY);
 
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = -1;
@@ -384,9 +382,9 @@ void FrmMain::on_button_about_clicked() {
 
 void FrmMain::on_button_emegency_clicked() {
     if(m_Button_Emegerency.get_label() == "Nothalt") {
-        msgEndpoint->sendMsg(moba::Message::MT_EMERGENCY_STOP);
+        msgEndpoint->sendMsg(moba::Message::MT_SET_EMERGENCY_STOP, moba::toJsonBoolPtr(true));
     } else {
-        msgEndpoint->sendMsg(moba::Message::MT_EMERGENCY_STOP_CLEARING);
+        msgEndpoint->sendMsg(moba::Message::MT_SET_EMERGENCY_STOP, moba::toJsonBoolPtr(false));
     }
 }
 
@@ -401,14 +399,20 @@ bool FrmMain::on_timeout(int) {
     try {
         if(!connected) {
             msgEndpoint->connect();
-            m_Label_Connectivity.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
+            m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
             connected = true;
             return true;
         }
         msg = msgEndpoint->recieveMsg();
     } catch(std::exception &e) {
         if(connected) {
-            m_Label_Connectivity.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
+            m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
             Gtk::MessageDialog dialog(
                 *this,
                 "msg-handler exception:",
@@ -428,12 +432,8 @@ bool FrmMain::on_timeout(int) {
     }
 
     switch(msg->getMsgType()) {
-        case moba::Message::MT_EMERGENCY_STOP:
-            m_Button_Emegerency.set_label("Freigabe");
-            break;
-
-        case moba::Message::MT_EMERGENCY_STOP_CLEARING:
-            m_Button_Emegerency.set_label("Nothalt");
+        case moba::Message::MT_HARDWARE_STATE_CHANGED:
+            setHardwareState(msg->getData());
             break;
     }
 
@@ -501,4 +501,42 @@ void FrmMain::on_selection_changed_outgoing() {
 
 void FrmMain::on_button_clear_incomming_clicked() {
     m_refTreeModel_Incomming->clear();
+}
+
+void FrmMain::setHardwareState(moba::JsonItemPtr data) {
+    std::string status = moba::castToString(data);
+    if(status == "ERROR") {
+        m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
+        m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
+        m_Button_Emegerency.set_sensitive(false);
+        return;
+    }
+    m_Button_Emegerency.set_sensitive(true);
+    if(status == "EMERGENCY_STOP") {
+        m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
+        m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
+        m_Button_Emegerency.set_label("Freigabe");
+        return;
+    }
+    m_Button_Emegerency.set_label("Nothalt");
+    if(status == "STANDBY") {
+        m_Label_Connectivity_HW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
+        m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
+    } else if(status == "MANUEL") {
+        m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> manuell");
+        m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> manuell");
+    } else if(status == "AUTOMATIC") {
+        m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_SW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> automatisch");
+        m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> automatisch");
+    }
 }

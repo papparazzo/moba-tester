@@ -24,11 +24,11 @@
 
 #include <moba/jsonabstractitem.h>
 
-class CtrlHardwarestate {
+class CtrlConnectivity {
     public:
-        CtrlHardwarestate() ;
+        CtrlConnectivity() ;
 
-        virtual ~CtrlHardwarestate();
+        virtual ~CtrlConnectivity();
 
         void init(Gtk::ScrolledWindow &container);
 
@@ -36,7 +36,7 @@ class CtrlHardwarestate {
 
     protected:
         Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box m_HBox;
         Gtk::Label m_Label;
         Gtk::ComboBoxText m_Combo;
 };

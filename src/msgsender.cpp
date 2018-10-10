@@ -42,10 +42,6 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlString.get_text());
             break;
 
-        case moba::Message::MT_SET_AUTO_MODE:
-            msgep->sendMsg(activeMessage, m_CtrlBool.get_value());
-            break;
-
         case moba::Message::MT_SET_GLOBAL_TIMER:
             msgep->sendMsg(activeMessage, m_CtrlGlobalTimer.get_value());
             break;
@@ -66,8 +62,8 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlAmbientLight.get_value());
             break;
 
-        case moba::Message::MT_SET_HARDWARE_STATE:
-            msgep->sendMsg(activeMessage, m_CtrlHardwarestate.get_value());
+        case moba::Message::MT_SET_CONNECTIVITY:
+            msgep->sendMsg(activeMessage, m_CtrlConnectivity.get_value());
             break;
 
         case moba::Message::MT_CREATE_LAYOUT_REQ:
@@ -98,10 +94,6 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             m_CtrlString.init("Data", container);
             return;
 
-        case moba::Message::MT_SET_AUTO_MODE:
-            m_CtrlBool.init("AutoMode", container);
-            break;
-
         case moba::Message::MT_SET_GLOBAL_TIMER:
             m_CtrlGlobalTimer.init(container);
             break;
@@ -122,8 +114,8 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
             m_CtrlAmbientLight.init(container);
             break;
 
-        case moba::Message::MT_SET_HARDWARE_STATE:
-            m_CtrlHardwarestate.init(container);
+        case moba::Message::MT_SET_CONNECTIVITY:
+            m_CtrlConnectivity.init(container);
             break;
 
         case moba::Message::MT_CREATE_LAYOUT_REQ:
