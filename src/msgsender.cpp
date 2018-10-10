@@ -38,6 +38,12 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage, m_CtrlString.get_jsonInt());
             break;
 
+        case moba::Message::MT_SET_AUTOMATIC_MODE:
+        case moba::Message::MT_SET_EMERGENCY_STOP:
+        case moba::Message::MT_SET_STANDBY_MODE:
+            msgep->sendMsg(activeMessage, m_CtrlBool.get_value());
+            break;
+
         case moba::Message::MT_ECHO_REQ:
             msgep->sendMsg(activeMessage, m_CtrlString.get_text());
             break;
@@ -89,6 +95,12 @@ void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWi
         case moba::Message::MT_GET_LAYOUT_REQ:
             m_CtrlString.init("Id", container);
             return;
+
+        case moba::Message::MT_SET_AUTOMATIC_MODE:
+        case moba::Message::MT_SET_EMERGENCY_STOP:
+        case moba::Message::MT_SET_STANDBY_MODE:
+            m_CtrlBool.init("aktiv", container);
+            break;
 
         case moba::Message::MT_ECHO_REQ:
             m_CtrlString.init("Data", container);
