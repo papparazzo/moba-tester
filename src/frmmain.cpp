@@ -33,7 +33,7 @@ namespace {
     const char license[] =
         "Project:    moba-systemmanager\n"
         "\n"
-        "Copyright (C) 2016 Stefan Paproth <pappi-@gmx.de>\n"
+        "Copyright (C) 2018 Stefan Paproth <pappi-@gmx.de>\n"
         "\n"
         "This program is free software: you can redistribute it and/or modify\n"
         "it under the terms of the GNU Affero General Public License as\n"
@@ -112,7 +112,7 @@ void FrmMain::initAboutDialog() {
     m_Button_About.grab_focus();
 }
 
-void FrmMain::initTreeModel(){
+void FrmMain::initTreeModel() {
     m_refTreeModel_Outgoing = Gtk::TreeStore::create(m_Columns_Messages);
     m_TreeView_Outgoing.set_model(m_refTreeModel_Outgoing);
 
