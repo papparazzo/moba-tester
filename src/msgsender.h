@@ -20,8 +20,7 @@
 
 #pragma once
 
-#include <moba/message.h>
-#include <moba/msgendpoint.h>
+#include "moba/endpoint.h"
 
 #include <gtkmm.h>
 #include <string>
@@ -38,15 +37,18 @@
 
 class MsgSender {
     public:
-        MsgSender(moba::MsgEndpointPtr msgep);
-        virtual ~MsgSender();
+        MsgSender(EndpointPtr msgep) : msgep{msgep} {
+        }
+
+        virtual ~MsgSender() {
+        }
 
         void sendActiveMessage();
         void setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container);
 
     protected:
         moba::Message::MessageType activeMessage;
-        moba::MsgEndpointPtr msgep;
+        EndpointPtr msgep;
 
         CtrlString        m_CtrlString;
         CtrlBool          m_CtrlBool;

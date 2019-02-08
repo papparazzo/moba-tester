@@ -18,15 +18,16 @@
  *
  */
 
-#include <config.h>
 #include <iostream>
 
 #include <gtkmm/application.h>
 
 #include <moba/helper.h>
-#include <moba/msgendpoint.h>
 
 #include "frmmain.h"
+#include "config.h"
+#include "moba/endpoint.h"
+#include "moba/socket.h"
 
 namespace {
     moba::AppData appData = {
@@ -42,21 +43,22 @@ namespace {
 int main(int argc, char *argv[]) {
     moba::setCoreFileSizeToULimit();
 
-    moba::MsgEndpointPtr msgEndpoint(new moba::MsgEndpoint(appData.host, appData.port));
+    SocketPtr   socket(new Socket{appData.host, appData.port});
+    EndpointPtr endpoint(new Endpoint{socket});
 
     try {
-        msgEndpoint->connect(
+        endpoint->connect(
             appData.appName,
             appData.version,
             moba::JsonArrayPtr{new moba::JsonArray()}
         );
-    } catch(moba::MsgEndpointException &e) {
+    } catch(SocketException &e) {
         std::cerr << e.what() << std::endl;
     }
 
     auto app = Gtk::Application::create(argc, argv, "org.moba.tester");
 
-    FrmMain frmMain(msgEndpoint);
+    FrmMain frmMain{endpoint};
     frmMain.set_title(appData.appName);
     frmMain.set_border_width(10);
     frmMain.set_default_size(800, 600);

@@ -18,16 +18,18 @@
  *
  */
 
-#include "frmmain.h"
-
-#include "config.h"
+#include <iostream>
 
 #include <ctime>
 #include <sys/timeb.h>
-#include <iostream>
+
 #include <boost/algorithm/string.hpp>
-#include <moba/message.h>
+
+#include "moba/systemhandler.h"
 #include <moba/jsonabstractitem.h>
+
+#include "frmmain.h"
+#include "config.h"
 
 namespace {
     const char license[] =
@@ -49,7 +51,7 @@ namespace {
         "along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.";
 }
 
-FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
+FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
     sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
     add(m_VBox);
@@ -58,16 +60,18 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     // about-dialog
     m_VBox.pack_start(m_HBox, Gtk::PACK_SHRINK);
     m_HBox.pack_end(m_ButtonBox, Gtk::PACK_SHRINK);
+
     m_HBox.pack_start(m_Label_Connectivity_HW, Gtk::PACK_SHRINK);
     m_Label_Connectivity_HW.set_justify(Gtk::JUSTIFY_LEFT);
-    m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+    m_Label_Connectivity_HW.override_color(Gdk::RGBA("Gray"), Gtk::STATE_FLAG_NORMAL);
     m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
     m_HBox.pack_start(m_Label_Connectivity_SW, Gtk::PACK_SHRINK);
     m_Label_Connectivity_SW.set_justify(Gtk::JUSTIFY_LEFT);
-    m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+    m_Label_Connectivity_SW.override_color(Gdk::RGBA("Gray"), Gtk::STATE_FLAG_NORMAL);
     m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
+    // about-dialog
     m_ButtonBox.pack_start(m_Button_About, Gtk::PACK_EXPAND_WIDGET, 5);
     m_ButtonBox.set_layout(Gtk::BUTTONBOX_END);
     m_Button_About.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_about_clicked));
@@ -82,13 +86,12 @@ FrmMain::FrmMain(moba::MsgEndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initOutgoing();
     initIncomming();
 
+    registry.registerHandler<SystemHardwareStateChanged>(std::bind(&FrmMain::setHardwareState, this, std::placeholders::_1));
+    registry.registerDefaultHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1));
+
     m_Button_Send.set_sensitive(false);
-    msgEndpoint->sendMsg(moba::Message::MT_GET_HARDWARE_STATE);
+    msgEndpoint->sendMsg(SystemGetHardwareState{});
     show_all_children();
-}
-
-FrmMain::~FrmMain() {
-
 }
 
 void FrmMain::initAboutDialog() {
@@ -382,9 +385,9 @@ void FrmMain::on_button_about_clicked() {
 
 void FrmMain::on_button_emegency_clicked() {
     if(m_Button_Emegerency.get_label() == "Nothalt") {
-        msgEndpoint->sendMsg(moba::Message::MT_SET_EMERGENCY_STOP, moba::toJsonBoolPtr(true));
+        msgEndpoint->sendMsg(SystemSetEmergencyStop{true});
     } else {
-        msgEndpoint->sendMsg(moba::Message::MT_SET_EMERGENCY_STOP, moba::toJsonBoolPtr(false));
+        msgEndpoint->sendMsg(SystemSetEmergencyStop{false});
     }
 }
 
@@ -393,8 +396,7 @@ void FrmMain::on_about_dialog_response(int) {
 }
 
 bool FrmMain::on_timeout(int) {
-   static bool connected = true;
-    moba::MessagePtr msg;
+    static bool connected = true;
 
     try {
         if(!connected) {
@@ -406,7 +408,8 @@ bool FrmMain::on_timeout(int) {
             connected = true;
             return true;
         }
-        msg = msgEndpoint->recieveMsg();
+        registry.handleMsg(msgEndpoint->recieveMsg());
+
     } catch(std::exception &e) {
         if(connected) {
             m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
@@ -426,37 +429,28 @@ bool FrmMain::on_timeout(int) {
         }
         return true;
     }
+}
 
-    if(!msg) {
-        return true;
-    }
-
-    switch(msg->getMsgType()) {
-        case moba::Message::MT_HARDWARE_STATE_CHANGED:
-            setHardwareState(msg->getData());
-            break;
-    }
-
+void FrmMain::msgHandler(moba::JsonItemPtr data) {
     std::stringstream ss;
     timeb sTimeB;
     char buffer[25] = "";
 
     ftime(&sTimeB);
     strftime(buffer, 21, "%d.%m.%Y %H:%M:%S", localtime(&sTimeB.time));
-    moba::prettyPrint(msg->getData(), ss);
+    moba::prettyPrint(data, ss);
 
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
     row[m_Columns_Incomming.m_col_timestamp] = std::string(buffer);
-    row[m_Columns_Incomming.m_col_id       ] = msg->getMsgType();
-    row[m_Columns_Incomming.m_col_name     ] = msg->msgTypeAsString();
+    row[m_Columns_Incomming.m_col_id       ] = 1; //msg->getMsgType();
+    row[m_Columns_Incomming.m_col_name     ] = ""; //msg->msgTypeAsString();
     row[m_Columns_Incomming.m_col_data     ] = ss.str();
 
     if(m_Button_AutoCheckLast.get_active()) {
         Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
         selection->select(iter);
     }
-    return true;
 }
 
 void FrmMain::on_selection_changed_incomming() {
@@ -503,9 +497,8 @@ void FrmMain::on_button_clear_incomming_clicked() {
     m_refTreeModel_Incomming->clear();
 }
 
-void FrmMain::setHardwareState(moba::JsonItemPtr data) {
-    std::string status = moba::castToString(data);
-    if(status == "ERROR") {
+void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
+    if(data.hardwareState == SystemHardwareStateChanged::HardwareState::ERROR) {
         m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
@@ -514,7 +507,7 @@ void FrmMain::setHardwareState(moba::JsonItemPtr data) {
         return;
     }
     m_Button_Emegerency.set_sensitive(true);
-    if(status == "EMERGENCY_STOP") {
+    if(data.hardwareState == SystemHardwareStateChanged::HardwareState::EMERGENCY_STOP) {
         m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
@@ -523,17 +516,17 @@ void FrmMain::setHardwareState(moba::JsonItemPtr data) {
         return;
     }
     m_Button_Emegerency.set_label("Nothalt");
-    if(status == "STANDBY") {
+    if(data.hardwareState == SystemHardwareStateChanged::HardwareState::STANDBY) {
         m_Label_Connectivity_HW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
-    } else if(status == "MANUEL") {
+    } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::MANUEL) {
         m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> manuell");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> manuell");
-    } else if(status == "AUTOMATIC") {
+    } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::AUTOMATIC) {
         m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_SW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> automatisch");

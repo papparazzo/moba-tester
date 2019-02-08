@@ -17,13 +17,15 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
  *
  */
-
 #pragma once
 
 #include <gtkmm.h>
 
-#include <moba/msgendpoint.h>
-#include <moba/msgsystemhandler.h>
+#include "moba/endpoint.h"
+#include <moba/jsonabstractitem.h>
+
+#include "moba/systemhandler.h"
+#include "moba/registry.h"
 
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
@@ -33,8 +35,9 @@
 
 class FrmMain : public Gtk::Window {
     public:
-        FrmMain(moba::MsgEndpointPtr mhp);
-        virtual ~FrmMain();
+        FrmMain(EndpointPtr mhp);
+        virtual ~FrmMain() {
+        }
 
     protected:
         Gtk::Box       m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
@@ -113,10 +116,13 @@ class FrmMain : public Gtk::Window {
         void initIncomming();
         void initOutgoing();
 
-        void setHardwareState(moba::JsonItemPtr data);
+        void setHardwareState(const SystemHardwareStateChanged &data);
 
-        moba::MsgEndpointPtr msgEndpoint;
-        MsgSender            msgSender;
+        EndpointPtr msgEndpoint;
+        MsgSender   msgSender;
+        Registry    registry;
+
+        void msgHandler(moba::JsonItemPtr data);
 
         // Signal handlers:
         bool on_timeout(int timer_number);
@@ -128,4 +134,3 @@ class FrmMain : public Gtk::Window {
         void on_about_dialog_response(int response_id);
         void on_selection_changed_outgoing();
 };
-

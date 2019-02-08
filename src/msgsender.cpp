@@ -21,14 +21,8 @@
 #include "msgsender.h"
 #include <moba/jsonabstractitem.h>
 
-MsgSender::MsgSender(moba::MsgEndpointPtr msgep) : msgep{msgep} {
-}
-
-MsgSender::~MsgSender() {
-}
-
 void MsgSender::sendActiveMessage() {
-
+/*
     switch(activeMessage) {
         case moba::Message::MT_RESET_CLIENT:
         case moba::Message::MT_SELF_TESTING_CLIENT:
@@ -81,6 +75,7 @@ void MsgSender::sendActiveMessage() {
             msgep->sendMsg(activeMessage);
             break;
     }
+ * */
 }
 
 void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container) {
