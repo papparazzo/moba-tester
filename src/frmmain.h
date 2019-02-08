@@ -122,7 +122,7 @@ class FrmMain : public Gtk::Window {
         MsgSender   msgSender;
         Registry    registry;
 
-        void msgHandler(moba::JsonItemPtr data);
+        void msgHandler(const std::string &msgName, moba::JsonItemPtr data);
 
         // Signal handlers:
         bool on_timeout(int timer_number);

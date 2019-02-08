@@ -87,7 +87,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initIncomming();
 
     registry.registerHandler<SystemHardwareStateChanged>(std::bind(&FrmMain::setHardwareState, this, std::placeholders::_1));
-    registry.registerDefaultHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1));
+    registry.registerDefaultHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2));
 
     m_Button_Send.set_sensitive(false);
     msgEndpoint->sendMsg(SystemGetHardwareState{});
@@ -431,7 +431,7 @@ bool FrmMain::on_timeout(int) {
     }
 }
 
-void FrmMain::msgHandler(moba::JsonItemPtr data) {
+void FrmMain::msgHandler(const std::string &msgName, moba::JsonItemPtr data) {
     std::stringstream ss;
     timeb sTimeB;
     char buffer[25] = "";
@@ -444,7 +444,7 @@ void FrmMain::msgHandler(moba::JsonItemPtr data) {
     Gtk::TreeModel::Row row = *iter;
     row[m_Columns_Incomming.m_col_timestamp] = std::string(buffer);
     row[m_Columns_Incomming.m_col_id       ] = 1; //msg->getMsgType();
-    row[m_Columns_Incomming.m_col_name     ] = ""; //msg->msgTypeAsString();
+    row[m_Columns_Incomming.m_col_name     ] = msgName;
     row[m_Columns_Incomming.m_col_data     ] = ss.str();
 
     if(m_Button_AutoCheckLast.get_active()) {
