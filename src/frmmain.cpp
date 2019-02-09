@@ -426,8 +426,8 @@ bool FrmMain::on_timeout(int) {
             dialog.run();
             connected = false;
         }
-        return true;
     }
+    return true;
 }
 
 void FrmMain::msgHandler(const std::string &msgName, moba::JsonItemPtr data) {
