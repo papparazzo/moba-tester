@@ -98,13 +98,11 @@ class FrmMain : public Gtk::Window {
             public:
                 ModelColumnsIncomming() {
                     add(m_col_timestamp);
-                    add(m_col_id);
                     add(m_col_name);
                     add(m_col_data);
                 }
 
                 Gtk::TreeModelColumn<Glib::ustring> m_col_timestamp;
-                Gtk::TreeModelColumn<int>           m_col_id;
                 Gtk::TreeModelColumn<Glib::ustring> m_col_name;
                 Gtk::TreeModelColumn<std::string>   m_col_data;
         };

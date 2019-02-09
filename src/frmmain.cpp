@@ -327,7 +327,6 @@ void FrmMain::initIncomming() {
     m_TreeView_Incomming.set_model(m_refTreeModel_Incomming);
 
     m_TreeView_Incomming.append_column("Timestamp", m_Columns_Incomming.m_col_timestamp);
-    m_TreeView_Incomming.append_column("ID",        m_Columns_Incomming.m_col_id);
     m_TreeView_Incomming.append_column("Name",      m_Columns_Incomming.m_col_name);
 
     m_VPaned_Incomming.add2(m_ScrolledWindow_Data);
@@ -443,7 +442,6 @@ void FrmMain::msgHandler(const std::string &msgName, moba::JsonItemPtr data) {
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
     row[m_Columns_Incomming.m_col_timestamp] = std::string(buffer);
-    row[m_Columns_Incomming.m_col_id       ] = 1; //msg->getMsgType();
     row[m_Columns_Incomming.m_col_name     ] = msgName;
     row[m_Columns_Incomming.m_col_data     ] = ss.str();
 
