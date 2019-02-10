@@ -11,10 +11,6 @@ CtrlString::CtrlString() {
 CtrlString::~CtrlString() {
 }
 
-Glib::ustring CtrlString::get_text() const {
-    return m_Entry_String.get_text();
-}
-
 void CtrlString::init(const std::string &caption, Gtk::ScrolledWindow &container) {
     m_Entry_String.set_text("");
     m_Label_String.set_label(caption);
@@ -28,4 +24,8 @@ moba::JsonIntPtr CtrlString::get_jsonInt() const {
 
 moba::JsonFloatPtr CtrlString::get_jsonFloat() const {
     return moba::toJsonNumberPtr(std::stof(m_Entry_String.get_text()));
+}
+
+moba::JsonStringPtr CtrlString::get_jsonText() const {
+    return moba::toJsonStringPtr(std::string(m_Entry_String.get_text()));
 }

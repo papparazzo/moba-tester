@@ -32,9 +32,9 @@ class CtrlString {
 
         void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
-        Glib::ustring get_text() const;
         moba::JsonIntPtr get_jsonInt() const;
         moba::JsonFloatPtr get_jsonFloat() const;
+        moba::JsonStringPtr get_jsonText() const;
 
     protected:
         Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
