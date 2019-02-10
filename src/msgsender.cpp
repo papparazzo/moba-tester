@@ -20,116 +20,106 @@
 
 #include "msgsender.h"
 #include <moba/jsonabstractitem.h>
+#include "moba/basemessage.h"
 
 void MsgSender::sendActiveMessage() {
-/*
+
     switch(activeMessage) {
-        case moba::Message::MT_RESET_CLIENT:
-        case moba::Message::MT_SELF_TESTING_CLIENT:
-        case moba::Message::MT_DEL_LAYOUT:
-        case moba::Message::MT_UNLOCK_LAYOUT:
-        case moba::Message::MT_GET_LAYOUT_REQ:
-            msgep->sendMsg(activeMessage, m_CtrlString.get_jsonInt());
-            break;
+        case MessageType::SERVER_RESET_CLIENT:
+        case MessageType::SERVER_SELF_TESTING_CLIENT:
+        case MessageType::LAYOUTS_DEL_LAYOUT:
+        case MessageType::LAYOUTS_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_GET_LAYOUT_REQ:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlString.get_jsonInt()});
 
-        case moba::Message::MT_SET_AUTOMATIC_MODE:
-        case moba::Message::MT_SET_EMERGENCY_STOP:
-        case moba::Message::MT_SET_STANDBY_MODE:
-            msgep->sendMsg(activeMessage, m_CtrlBool.get_value());
-            break;
+        case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
+        case MessageType::SYSTEM_SET_EMERGENCY_STOP:
+        case MessageType::SYSTEM_SET_STANDBY_MODE:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlBool.get_value()});
 
-        case moba::Message::MT_ECHO_REQ:
-            msgep->sendMsg(activeMessage, m_CtrlString.get_text());
-            break;
+        case MessageType::CLIENT_ECHO_REQ:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlString.get_jsonText()});
 
-        case moba::Message::MT_SET_GLOBAL_TIMER:
-            msgep->sendMsg(activeMessage, m_CtrlGlobalTimer.get_value());
-            break;
+        case MessageType::TIMER_SET_GLOBAL_TIMER:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlGlobalTimer.get_value()});
 
-        case moba::Message::MT_SET_COLOR_THEME:
-            msgep->sendMsg(activeMessage, m_CtrlColorTheme.get_value());
-            break;
+        case MessageType::TIMER_SET_COLOR_THEME:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlColorTheme.get_value()});
 
-         case moba::Message::MT_SET_ENVIRONMENT:
-            msgep->sendMsg(activeMessage, m_CtrlEnvironment.get_value());
-            break;
+        case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlEnvironment.get_value()});
 
-        case moba::Message::MT_SET_AMBIENCE:
-            msgep->sendMsg(activeMessage, m_CtrlAmbience.get_value());
-            break;
+        case MessageType::ENVIRONMENT_SET_AMBIENCE:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlAmbience.get_value()});
 
-        case moba::Message::MT_SET_AMBIENT_LIGHT:
-            msgep->sendMsg(activeMessage, m_CtrlAmbientLight.get_value());
-            break;
+        case MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlAmbientLight.get_value()});
 
-        case moba::Message::MT_SET_CONNECTIVITY:
-            msgep->sendMsg(activeMessage, m_CtrlConnectivity.get_value());
-            break;
+        case MessageType::INTERFACE_SET_CONNECTIVITY:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlConnectivity.get_value()});
 
-        case moba::Message::MT_CREATE_LAYOUT_REQ:
-        case moba::Message::MT_UPDATE_LAYOUT:
-            msgep->sendMsg(activeMessage, m_CtrlTrackLayout.get_value());
-            break;
+        case MessageType::LAYOUTS_CREATE_LAYOUT_REQ:
+        case MessageType::LAYOUTS_UPDATE_LAYOUT:
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlTrackLayout.get_value()});
 
         default:
-            msgep->sendMsg(activeMessage);
-            break;
-    }
- * */
+            return msgep->sendMsg(DispatchGenericMessage{activeMessageName});
+      }
 }
 
-void MsgSender::setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container) {
+void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::ScrolledWindow &container) {
     container.remove_with_viewport();
     activeMessage = cmd;
+    activeMessageName = name;
 
     switch(cmd) {
-        case moba::Message::MT_RESET_CLIENT:
-        case moba::Message::MT_SELF_TESTING_CLIENT:
-        case moba::Message::MT_DEL_LAYOUT:
-        case moba::Message::MT_UNLOCK_LAYOUT:
-        case moba::Message::MT_GET_LAYOUT_REQ:
+        case MessageType::SERVER_RESET_CLIENT:
+        case MessageType::SERVER_SELF_TESTING_CLIENT:
+        case MessageType::LAYOUTS_DEL_LAYOUT:
+        case MessageType::LAYOUTS_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_GET_LAYOUT_REQ:
             m_CtrlString.init("Id", container);
             return;
 
-        case moba::Message::MT_SET_AUTOMATIC_MODE:
-        case moba::Message::MT_SET_EMERGENCY_STOP:
-        case moba::Message::MT_SET_STANDBY_MODE:
+        case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
+        case MessageType::SYSTEM_SET_EMERGENCY_STOP:
+        case MessageType::SYSTEM_SET_STANDBY_MODE:
             m_CtrlBool.init("aktiv", container);
             break;
 
-        case moba::Message::MT_ECHO_REQ:
+        case MessageType::CLIENT_ECHO_REQ:
             m_CtrlString.init("Data", container);
             return;
 
-        case moba::Message::MT_SET_GLOBAL_TIMER:
+        case MessageType::TIMER_SET_GLOBAL_TIMER:
             m_CtrlGlobalTimer.init(container);
             break;
 
-        case moba::Message::MT_SET_COLOR_THEME:
+        case MessageType::TIMER_SET_COLOR_THEME:
             m_CtrlColorTheme.init(container);
             break;
 
-        case moba::Message::MT_SET_ENVIRONMENT:
+        case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
             m_CtrlEnvironment.init(container);
             break;
 
-        case moba::Message::MT_SET_AMBIENCE:
+        case MessageType::ENVIRONMENT_SET_AMBIENCE:
             m_CtrlAmbience.init(container);
             break;
 
-        case moba::Message::MT_SET_AMBIENT_LIGHT:
+        case MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT:
             m_CtrlAmbientLight.init(container);
             break;
 
-        case moba::Message::MT_SET_CONNECTIVITY:
+        case MessageType::INTERFACE_SET_CONNECTIVITY:
             m_CtrlConnectivity.init(container);
             break;
 
-        case moba::Message::MT_CREATE_LAYOUT_REQ:
+        case MessageType::LAYOUTS_CREATE_LAYOUT_REQ:
             m_CtrlTrackLayout.init(false, container);
             break;
 
-        case moba::Message::MT_UPDATE_LAYOUT:
+        case MessageType::LAYOUTS_UPDATE_LAYOUT:
             m_CtrlTrackLayout.init(true, container);
             break;
     }

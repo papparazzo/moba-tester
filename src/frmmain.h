@@ -72,9 +72,9 @@ class FrmMain : public Gtk::Window {
                     add(m_col_msg_id);
                 }
 
-                Gtk::TreeModelColumn<Glib::ustring> m_col_name;
+                Gtk::TreeModelColumn<std::string> m_col_name;
                 Gtk::TreeModelColumn<Glib::ustring> m_col_id;
-                Gtk::TreeModelColumn<int>           m_col_msg_id;
+                Gtk::TreeModelColumn<MessageType>   m_col_msg_id;
         };
 
         ModelColumnsMessages m_Columns_Messages;

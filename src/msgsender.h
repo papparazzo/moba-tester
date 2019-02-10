@@ -35,6 +35,49 @@
 #include "ctrltracklayout.h"
 #include "ctrlconnectivity.h"
 
+enum class MessageType {
+    UNSET,
+
+    CLIENT_VOID,
+    CLIENT_ECHO_REQ,
+    CLIENT_START,
+    CLIENT_CLOSE,
+
+    SERVER_RESET_CLIENT,
+    SERVER_INFO_REQ,
+    SERVER_CON_CLIENTS_REQ,
+    SERVER_SELF_TESTING_CLIENT,
+
+    TIMER_GET_GLOBAL_TIMER,
+    TIMER_SET_GLOBAL_TIMER,
+    TIMER_GET_COLOR_THEME,
+    TIMER_SET_COLOR_THEME,
+
+    ENVIRONMENT_GET_ENVIRONMENT,
+    ENVIRONMENT_SET_ENVIRONMENT,
+    ENVIRONMENT_GET_AMBIENCE,
+    ENVIRONMENT_SET_AMBIENCE,
+    ENVIRONMENT_GET_AMBIENT_LIGHT,
+    ENVIRONMENT_SET_AMBIENT_LIGHT,
+
+    INTERFACE_SET_CONNECTIVITY,
+
+    SYSTEM_SET_AUTOMATIC_MODE,
+    SYSTEM_SET_EMERGENCY_STOP,
+    SYSTEM_SET_STANDBY_MODE,
+    SYSTEM_GET_HARDWARE_STATE,
+    SYSTEM_HARDWARE_SHUTDOWN,
+    SYSTEM_HARDWARE_RESET,
+
+    LAYOUTS_GET_LAYOUTS_REQ,
+    LAYOUTS_DEL_LAYOUT,
+    LAYOUTS_CREATE_LAYOUT_REQ,
+    LAYOUTS_UPDATE_LAYOUT,
+    LAYOUTS_UNLOCK_LAYOUT,
+
+    LAYOUT_GET_LAYOUT_REQ,
+};
+
 class MsgSender {
     public:
         MsgSender(EndpointPtr msgep) : msgep{msgep} {
@@ -44,10 +87,11 @@ class MsgSender {
         }
 
         void sendActiveMessage();
-        void setActiveMessage(moba::Message::MessageType cmd, Gtk::ScrolledWindow &container);
+        void setActiveMessage(MessageType cmd, const std::string &name, Gtk::ScrolledWindow &container);
 
     protected:
-        moba::Message::MessageType activeMessage;
+        std::string activeMessageName;
+        MessageType activeMessage;
         EndpointPtr msgep;
 
         CtrlString        m_CtrlString;

@@ -120,199 +120,199 @@ void FrmMain::initTreeModel() {
     m_TreeView_Outgoing.set_model(m_refTreeModel_Outgoing);
 
     Gtk::TreeModel::Row row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "2";
     row[m_Columns_Messages.m_col_name] = "Client";
 
     Gtk::TreeModel::Row childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_VOID;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_VOID;
     childrow[m_Columns_Messages.m_col_id] = "2.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_VOID);
+    childrow[m_Columns_Messages.m_col_name] = "CLIENT_VOID";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_ECHO_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_ECHO_REQ;
     childrow[m_Columns_Messages.m_col_id] = "2.2";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_ECHO_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "CLIENT_ECHO_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_CLIENT_START;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_START;
     childrow[m_Columns_Messages.m_col_id] = "2.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_CLIENT_START);
+    childrow[m_Columns_Messages.m_col_name] = "CLIENT_START";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_CLIENT_CLOSE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_CLOSE;
     childrow[m_Columns_Messages.m_col_id] = "2.7";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_CLIENT_CLOSE);
+    childrow[m_Columns_Messages.m_col_name] = "CLIENT_CLOSE";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
     row[m_Columns_Messages.m_col_id] = "3";
     row[m_Columns_Messages.m_col_name] = "Server";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_RESET_CLIENT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_RESET_CLIENT;
     childrow[m_Columns_Messages.m_col_id] = "3.4";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_RESET_CLIENT);
+    childrow[m_Columns_Messages.m_col_name] = "SERVER_RESET_CLIENT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SERVER_INFO_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_INFO_REQ;
     childrow[m_Columns_Messages.m_col_id] = "3.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SERVER_INFO_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "SERVER_INFO_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_CON_CLIENTS_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_CON_CLIENTS_REQ;
     childrow[m_Columns_Messages.m_col_id] = "3.7";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_CON_CLIENTS_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "SERVER_CON_CLIENTS_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SELF_TESTING_CLIENT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_SELF_TESTING_CLIENT;
     childrow[m_Columns_Messages.m_col_id] = "3.9";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SELF_TESTING_CLIENT);
+    childrow[m_Columns_Messages.m_col_name] = "SERVER_SELF_TESTING_CLIENT";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
     row[m_Columns_Messages.m_col_id] = "4";
     row[m_Columns_Messages.m_col_name] = "Timer";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_GLOBAL_TIMER;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_GLOBAL_TIMER;
     childrow[m_Columns_Messages.m_col_id] = "4.2";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_GLOBAL_TIMER);
+    childrow[m_Columns_Messages.m_col_name] = "TIMER_GET_GLOBAL_TIMER";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_GLOBAL_TIMER;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_GLOBAL_TIMER;
     childrow[m_Columns_Messages.m_col_id] = "4.3";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_GLOBAL_TIMER);
+    childrow[m_Columns_Messages.m_col_name] = "TIMER_SET_GLOBAL_TIMER";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_COLOR_THEME;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_COLOR_THEME;
     childrow[m_Columns_Messages.m_col_id] = "4.6";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_COLOR_THEME);
+    childrow[m_Columns_Messages.m_col_name] = "TIMER_GET_COLOR_THEME";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_COLOR_THEME;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_COLOR_THEME;
     childrow[m_Columns_Messages.m_col_id] = "4.7";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_COLOR_THEME);
+    childrow[m_Columns_Messages.m_col_name] = "TIMER_SET_COLOR_THEME";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
     row[m_Columns_Messages.m_col_id] = "5";
-    row[m_Columns_Messages.m_col_name] = "Env";
+    row[m_Columns_Messages.m_col_name] = "Environment";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_ENVIRONMENT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_ENVIRONMENT;
     childrow[m_Columns_Messages.m_col_id] = "5.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_ENVIRONMENT);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_ENVIRONMENT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_ENVIRONMENT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_ENVIRONMENT;
     childrow[m_Columns_Messages.m_col_id] = "5.2";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_ENVIRONMENT);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_ENVIRONMENT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_AMBIENCE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_AMBIENCE;
     childrow[m_Columns_Messages.m_col_id] = "5.3";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_AMBIENCE);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_AMBIENCE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_AMBIENCE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENCE;
     childrow[m_Columns_Messages.m_col_id] = "5.4";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_AMBIENCE);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENCE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_AMBIENT_LIGHT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_AMBIENT_LIGHT;
     childrow[m_Columns_Messages.m_col_id] = "5.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_AMBIENT_LIGHT);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_AMBIENT_LIGHT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_AMBIENT_LIGHT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT;
     childrow[m_Columns_Messages.m_col_id] = "5.6";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_AMBIENT_LIGHT);
+    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENT_LIGHT";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
     row[m_Columns_Messages.m_col_id] = "6";
     row[m_Columns_Messages.m_col_name] = "Interface";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_CONNECTIVITY;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_CONNECTIVITY;
     childrow[m_Columns_Messages.m_col_id] = "6.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_CONNECTIVITY);
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_CONNECTIVITY";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "7";
     row[m_Columns_Messages.m_col_name] = "System";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_AUTOMATIC_MODE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_AUTOMATIC_MODE;
     childrow[m_Columns_Messages.m_col_id] = "7.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_AUTOMATIC_MODE);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_AUTOMATIC_MODE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_EMERGENCY_STOP;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_EMERGENCY_STOP;
     childrow[m_Columns_Messages.m_col_id] = "7.2";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_EMERGENCY_STOP);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_EMERGENCY_STOP";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_SET_STANDBY_MODE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_STANDBY_MODE;
     childrow[m_Columns_Messages.m_col_id] = "7.3";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_SET_STANDBY_MODE);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_STANDBY_MODE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_HARDWARE_STATE;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_GET_HARDWARE_STATE;
     childrow[m_Columns_Messages.m_col_id] = "7.4";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_HARDWARE_STATE);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_GET_HARDWARE_STATE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_HARDWARE_SHUTDOWN;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_SHUTDOWN;
     childrow[m_Columns_Messages.m_col_id] = "7.6";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_HARDWARE_SHUTDOWN);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_SHUTDOWN";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_HARDWARE_RESET;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_RESET;
     childrow[m_Columns_Messages.m_col_id] = "7.7";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_HARDWARE_RESET);
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_RESET";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "7";
     row[m_Columns_Messages.m_col_name] = "Layouts";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_LAYOUTS_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_GET_LAYOUTS_REQ;
     childrow[m_Columns_Messages.m_col_id] = "7.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_LAYOUTS_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_GET_LAYOUTS_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_DEL_LAYOUT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_DEL_LAYOUT;
     childrow[m_Columns_Messages.m_col_id] = "7.3";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_DEL_LAYOUT);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_DEL_LAYOUT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_CREATE_LAYOUT_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_CREATE_LAYOUT_REQ;
     childrow[m_Columns_Messages.m_col_id] = "7.5";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_CREATE_LAYOUT_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_CREATE_LAYOUT_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_UPDATE_LAYOUT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_UPDATE_LAYOUT;
     childrow[m_Columns_Messages.m_col_id] = "7.8";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_UPDATE_LAYOUT);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_UPDATE_LAYOUT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_UNLOCK_LAYOUT;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_UNLOCK_LAYOUT;
     childrow[m_Columns_Messages.m_col_id] = "7.10";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_UNLOCK_LAYOUT);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_UNLOCK_LAYOUT";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = -1;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "8";
     row[m_Columns_Messages.m_col_name] = "Layout";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = moba::Message::MT_GET_LAYOUT_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
     childrow[m_Columns_Messages.m_col_id] = "8.1";
-    childrow[m_Columns_Messages.m_col_name] = *moba::Message::convertToString(moba::Message::MT_GET_LAYOUT_REQ);
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_REQ";
 }
 
 void FrmMain::initIncomming() {
@@ -478,7 +478,7 @@ void FrmMain::on_selection_changed_outgoing() {
 
     Gtk::TreeModel::Row row = *iter;
 
-    if(row[m_Columns_Messages.m_col_msg_id] == -1) {
+    if(row[m_Columns_Messages.m_col_msg_id] == MessageType::UNSET) {
         m_ScrolledWindow_Outgoing_Data.remove_with_viewport();
         m_Button_Send.set_sensitive(false);
         return;
@@ -486,7 +486,8 @@ void FrmMain::on_selection_changed_outgoing() {
     }
     m_Button_Send.set_sensitive(true);
     msgSender.setActiveMessage(
-        static_cast<moba::Message::MessageType>((int)row[m_Columns_Messages.m_col_msg_id]),
+        static_cast<MessageType>(row[m_Columns_Messages.m_col_msg_id]),
+        std::string(row[m_Columns_Messages.m_col_name]),
         m_ScrolledWindow_Outgoing_Data
     );
 }
