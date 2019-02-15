@@ -122,5 +122,8 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::
         case MessageType::LAYOUTS_UPDATE_LAYOUT:
             m_CtrlTrackLayout.init(true, container);
             break;
+            
+        default:
+            break;
     }
 }

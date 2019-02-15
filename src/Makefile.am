@@ -19,6 +19,6 @@ moba_tester_SOURCES = \
 moba_tester_LDADD = -lMoBaCommon $(GTKMM_LIBS) $(srcdir)/../modules/lib-msghandling/src/moba/libmsghandling.a
 LDFLAGS += -L/usr/local/lib
 
-AM_CPPFLAGS = $(GTKMM_CFLAGS) -I$(srcdir)/../modules/lib-msghandling/src -ggdb -g3 -O0
+AM_CPPFLAGS = $(GTKMM_CFLAGS) -I$(srcdir)/../modules/lib-msghandling/src -ggdb -g3 -O3 -Wall
 
 CLEANFILES = *~
