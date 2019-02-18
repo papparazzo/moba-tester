@@ -235,9 +235,9 @@ void FrmMain::initTreeModel() {
     row[m_Columns_Messages.m_col_name] = "Interface";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_CONNECTIVITY;
-    childrow[m_Columns_Messages.m_col_id] = "6.1";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_CONNECTIVITY";
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONNECTIVITY_RES;
+    childrow[m_Columns_Messages.m_col_id] = "6.2";
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_RES";
 
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;

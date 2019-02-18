@@ -55,7 +55,7 @@ void MsgSender::sendActiveMessage() {
         case MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlAmbientLight.get_value()});
 
-        case MessageType::INTERFACE_SET_CONNECTIVITY:
+        case MessageType::INTERFACE_CONNECTIVITY_RES:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlConnectivity.get_value()});
 
         case MessageType::LAYOUTS_CREATE_LAYOUT_REQ:
@@ -111,7 +111,7 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::
             m_CtrlAmbientLight.init(container);
             break;
 
-        case MessageType::INTERFACE_SET_CONNECTIVITY:
+        case MessageType::INTERFACE_CONNECTIVITY_RES:
             m_CtrlConnectivity.init(container);
             break;
 
