@@ -87,7 +87,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initIncomming();
 
     registry.registerHandler<SystemHardwareStateChanged>(std::bind(&FrmMain::setHardwareState, this, std::placeholders::_1));
-    registry.registerDefaultHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2));
+    registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2));
 
     m_Button_Send.set_sensitive(false);
     msgEndpoint->sendMsg(SystemGetHardwareState{});
