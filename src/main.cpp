@@ -44,17 +44,7 @@ int main(int argc, char *argv[]) {
     moba::setCoreFileSizeToULimit();
 
     SocketPtr   socket(new Socket{appData.host, appData.port});
-    EndpointPtr endpoint(new Endpoint{socket});
-
-    try {
-        endpoint->connect(
-            appData.appName,
-            appData.version,
-            moba::JsonArrayPtr{new moba::JsonArray()}
-        );
-    } catch(SocketException &e) {
-        std::cerr << e.what() << std::endl;
-    }
+    EndpointPtr endpoint(new Endpoint{socket, appData.appName, appData.version, moba::JsonArrayPtr{new moba::JsonArray()}});
 
     auto app = Gtk::Application::create(argc, argv, "org.moba.tester");
 

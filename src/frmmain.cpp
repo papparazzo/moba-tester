@@ -90,7 +90,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2));
 
     m_Button_Send.set_sensitive(false);
-    msgEndpoint->sendMsg(SystemGetHardwareState{});
+    m_Button_Emegerency.set_sensitive(false);
     show_all_children();
 }
 
@@ -395,15 +395,17 @@ void FrmMain::on_about_dialog_response(int) {
 }
 
 bool FrmMain::on_timeout(int) {
-    static bool connected = true;
+    static bool connected = false;
 
     try {
         if(!connected) {
-            msgEndpoint->reconnect();
+            msgEndpoint->connect();
             m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
             m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
+
+            msgEndpoint->sendMsg(SystemGetHardwareState{});
             connected = true;
             return true;
         }
@@ -415,6 +417,7 @@ bool FrmMain::on_timeout(int) {
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
             m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
+            m_Button_Emegerency.set_sensitive(false);
             Gtk::MessageDialog dialog(
                 *this,
                 "msg-handler exception:",
