@@ -43,9 +43,8 @@ namespace {
 int main(int argc, char *argv[]) {
     moba::setCoreFileSizeToULimit();
 
-    SocketPtr   socket(new Socket{appData.host, appData.port});
-    EndpointPtr endpoint(new Endpoint{socket, appData.appName, appData.version, moba::JsonArrayPtr{new moba::JsonArray()}});
-
+    auto socket = std::make_shared<Socket>(appData.host, appData.port);
+    auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, appData.version);
     auto app = Gtk::Application::create(argc, argv, "org.moba.tester");
 
     FrmMain frmMain{endpoint};
