@@ -77,6 +77,7 @@ enum class MessageType {
     LAYOUT_LOCK_LAYOUT,
 
     LAYOUT_GET_LAYOUT_REQ,
+    LAYOUT_GET_LAYOUT_READ_ONLY_REQ
 };
 
 class MsgSender {

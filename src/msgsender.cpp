@@ -31,6 +31,7 @@ void MsgSender::sendActiveMessage() {
         case MessageType::LAYOUT_UNLOCK_LAYOUT:
         case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
+        case MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlString.get_jsonInt()});
 
         case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
@@ -80,6 +81,7 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::
         case MessageType::LAYOUT_UNLOCK_LAYOUT:
         case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
+        case MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ:
             m_CtrlString.init("Id", container);
             return;
 

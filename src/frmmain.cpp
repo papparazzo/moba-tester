@@ -313,6 +313,11 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
     childrow[m_Columns_Messages.m_col_id] = "8.13";
     childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_REQ";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "8.14";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_READ_ONLY_REQ";
 }
 
 void FrmMain::initIncomming() {
