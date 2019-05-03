@@ -276,42 +276,42 @@ void FrmMain::initTreeModel() {
 
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
-    row[m_Columns_Messages.m_col_id] = "7";
-    row[m_Columns_Messages.m_col_name] = "Layouts";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_GET_LAYOUTS_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "7.1";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_GET_LAYOUTS_REQ";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_DEL_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "7.3";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_DEL_LAYOUT";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_CREATE_LAYOUT_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "7.5";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_CREATE_LAYOUT_REQ";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_UPDATE_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "7.8";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_UPDATE_LAYOUT";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUTS_UNLOCK_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "7.10";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUTS_UNLOCK_LAYOUT";
-
-    row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "8";
     row[m_Columns_Messages.m_col_name] = "Layout";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUTS_REQ;
     childrow[m_Columns_Messages.m_col_id] = "8.1";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUTS_REQ";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_DEL_LAYOUT;
+    childrow[m_Columns_Messages.m_col_id] = "8.3";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_DELETE_LAYOUT";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_CREATE_LAYOUT_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "8.5";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_CREATE_LAYOUT";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UPDATE_LAYOUT;
+    childrow[m_Columns_Messages.m_col_id] = "8.7";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_UPDATE_LAYOUT";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UNLOCK_LAYOUT;
+    childrow[m_Columns_Messages.m_col_id] = "8.9";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_UNLOCK_LAYOUT";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_LOCK_LAYOUT;
+    childrow[m_Columns_Messages.m_col_id] = "8.11";
+    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_LOCK_LAYOUT";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "8.13";
     childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_REQ";
 }
 

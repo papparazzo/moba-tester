@@ -27,8 +27,9 @@ void MsgSender::sendActiveMessage() {
     switch(activeMessage) {
         case MessageType::SERVER_RESET_CLIENT:
         case MessageType::SERVER_SELF_TESTING_CLIENT:
-        case MessageType::LAYOUTS_DEL_LAYOUT:
-        case MessageType::LAYOUTS_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_DEL_LAYOUT:
+        case MessageType::LAYOUT_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlString.get_jsonInt()});
 
@@ -58,8 +59,8 @@ void MsgSender::sendActiveMessage() {
         case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlConnectivity.get_value()});
 
-        case MessageType::LAYOUTS_CREATE_LAYOUT_REQ:
-        case MessageType::LAYOUTS_UPDATE_LAYOUT:
+        case MessageType::LAYOUT_CREATE_LAYOUT_REQ:
+        case MessageType::LAYOUT_UPDATE_LAYOUT:
             return msgep->sendMsg(DispatchGenericMessage{activeMessageName, m_CtrlTrackLayout.get_value()});
 
         default:
@@ -75,8 +76,9 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::
     switch(cmd) {
         case MessageType::SERVER_RESET_CLIENT:
         case MessageType::SERVER_SELF_TESTING_CLIENT:
-        case MessageType::LAYOUTS_DEL_LAYOUT:
-        case MessageType::LAYOUTS_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_DEL_LAYOUT:
+        case MessageType::LAYOUT_UNLOCK_LAYOUT:
+        case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
             m_CtrlString.init("Id", container);
             return;
@@ -115,14 +117,14 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, Gtk::
             m_CtrlConnectivity.init(container);
             break;
 
-        case MessageType::LAYOUTS_CREATE_LAYOUT_REQ:
+        case MessageType::LAYOUT_CREATE_LAYOUT_REQ:
             m_CtrlTrackLayout.init(false, container);
             break;
 
-        case MessageType::LAYOUTS_UPDATE_LAYOUT:
+        case MessageType::LAYOUT_UPDATE_LAYOUT:
             m_CtrlTrackLayout.init(true, container);
             break;
-            
+
         default:
             break;
     }
