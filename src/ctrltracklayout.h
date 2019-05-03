@@ -39,6 +39,7 @@ class CtrlTrackLayout {
         Gtk::Box m_HBox_Id{Gtk::ORIENTATION_HORIZONTAL, 6};
         Gtk::Box m_HBox_Caption{Gtk::ORIENTATION_HORIZONTAL, 6};
         Gtk::Box m_HBox_Description{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box m_HBox_Active{Gtk::ORIENTATION_HORIZONTAL, 6};
 
         Gtk::Label m_Label_Id;
         Gtk::Entry m_Entry_Id;
@@ -48,4 +49,7 @@ class CtrlTrackLayout {
 
         Gtk::Label m_Label_Description;
         Gtk::Entry m_Entry_Description;
+
+        Gtk::Label m_Label_Active;
+        Gtk::CheckButton m_Check_Bool;
 };
