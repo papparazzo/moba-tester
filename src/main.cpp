@@ -22,7 +22,7 @@
 
 #include <gtkmm/application.h>
 
-#include <moba/helper.h>
+#include <moba-common/helper.h>
 
 #include "frmmain.h"
 #include "config.h"
@@ -30,9 +30,9 @@
 #include "moba/socket.h"
 
 namespace {
-    moba::AppData appData = {
+    moba::common::AppData appData = {
         PACKAGE_NAME,
-        moba::Version(PACKAGE_VERSION),
+        moba::common::Version(PACKAGE_VERSION),
         __DATE__,
         __TIME__,
         "::1",
@@ -41,7 +41,7 @@ namespace {
 }
 
 int main(int argc, char *argv[]) {
-    moba::setCoreFileSizeToULimit();
+    moba::common::setCoreFileSizeToULimit();
 
     auto socket = std::make_shared<Socket>(appData.host, appData.port);
     auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, appData.version);
