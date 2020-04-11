@@ -22,8 +22,6 @@
 
 #include <gtkmm.h>
 
-#include <moba/jsonabstractitem.h>
-
 class CtrlString {
     public:
         CtrlString() ;
@@ -32,9 +30,9 @@ class CtrlString {
 
         void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
-        moba::JsonIntPtr get_jsonInt() const;
-        moba::JsonFloatPtr get_jsonFloat() const;
-        moba::JsonStringPtr get_jsonText() const;
+        long get_integer() const;
+        float get_float() const;
+        std::string get_text() const;
 
     protected:
         Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};

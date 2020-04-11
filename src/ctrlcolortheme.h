@@ -21,8 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-
-#include <moba/jsonabstractitem.h>
+#include "moba/rapidjson/document.h"
 
 class CtrlColorTheme {
     public:
@@ -32,7 +31,7 @@ class CtrlColorTheme {
 
         void init(Gtk::ScrolledWindow &container);
 
-        moba::JsonItemPtr get_value() const;
+        void get_value(rapidjson::Document &d) const;
 
     protected:
         Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
@@ -49,5 +48,5 @@ class CtrlColorTheme {
         Gtk::Label m_Label_Condition;
         Gtk::ComboBoxText m_Combo_Condition;
 
-        moba::JsonThreeStatePtr getThreeState() const;
+        rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
 };

@@ -20,13 +20,12 @@ CtrlAmbientLight::CtrlAmbientLight() {
 CtrlAmbientLight::~CtrlAmbientLight() {
 }
 
-moba::JsonItemPtr CtrlAmbientLight::get_value() const {
-    moba::JsonObjectPtr obj(new moba::JsonObject());
-    (*obj)["red"  ] = moba::toJsonNumberPtr(m_SpinButton[RED  ].get_value_as_int());
-    (*obj)["blue" ] = moba::toJsonNumberPtr(m_SpinButton[BLUE ].get_value_as_int());
-    (*obj)["green"] = moba::toJsonNumberPtr(m_SpinButton[GREEN].get_value_as_int());
-    (*obj)["white"] = moba::toJsonNumberPtr(m_SpinButton[WHITE].get_value_as_int());
-    return obj;
+void CtrlAmbientLight::get_value(rapidjson::Document &d) const {
+    d.SetObject();
+    d.AddMember("red",   m_SpinButton[RED  ].get_value_as_int(), d.GetAllocator());
+    d.AddMember("blue",  m_SpinButton[BLUE ].get_value_as_int(), d.GetAllocator());
+    d.AddMember("green", m_SpinButton[GREEN].get_value_as_int(), d.GetAllocator());
+    d.AddMember("white", m_SpinButton[WHITE].get_value_as_int(), d.GetAllocator());
 }
 
 void CtrlAmbientLight::init(Gtk::ScrolledWindow &container) {

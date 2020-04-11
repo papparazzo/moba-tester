@@ -21,8 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-
-#include <moba/jsonabstractitem.h>
+#include "moba/rapidjson/document.h"
 
 class CtrlAmbientLight {
     public:
@@ -32,7 +31,7 @@ class CtrlAmbientLight {
 
         void init(Gtk::ScrolledWindow &container);
 
-        moba::JsonItemPtr get_value() const;
+        void get_value(rapidjson::Document &d) const;
 
     protected:
         enum Entries {

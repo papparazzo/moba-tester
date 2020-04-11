@@ -21,8 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-
-#include <moba/jsonabstractitem.h>
+#include "moba/rapidjson/document.h"
 
 class CtrlAmbience {
     public:
@@ -32,7 +31,7 @@ class CtrlAmbience {
 
         void init(Gtk::ScrolledWindow &container);
 
-        moba::JsonItemPtr get_value() const;
+        void get_value(rapidjson::Document &d) const;
 
     protected:
         enum Entries {
@@ -46,5 +45,5 @@ class CtrlAmbience {
         Gtk::Label m_Label[LAST_ENTRY];
         Gtk::ComboBoxText m_Combo[LAST_ENTRY];
 
-        moba::JsonToggleStatePtr getToggleState(Entries entry) const;
+        rapidjson::Value getToggleState(Entries entry, rapidjson::Document &d) const;
 };

@@ -10,8 +10,8 @@ CtrlBool::CtrlBool() {
 CtrlBool::~CtrlBool() {
 }
 
-moba::JsonBoolPtr CtrlBool::get_value() const {
-    return moba::toJsonBoolPtr(m_Check_Bool.get_active());
+bool CtrlBool::get_value() const {
+    return m_Check_Bool.get_active();
 }
 
 void CtrlBool::init(const std::string &caption, Gtk::ScrolledWindow &container) {

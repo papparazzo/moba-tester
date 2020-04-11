@@ -16,8 +16,9 @@ CtrlConnectivity::CtrlConnectivity() {
 CtrlConnectivity::~CtrlConnectivity() {
 }
 
-moba::JsonStringPtr CtrlConnectivity::get_value() const {
-    return moba::toJsonStringPtr(m_Combo.get_active_text());
+void CtrlConnectivity::get_value(rapidjson::Document &d) const {
+    std::string str = m_Combo.get_active_text();
+    d.SetString(str.c_str(), str.length());
 }
 
 void CtrlConnectivity::init(Gtk::ScrolledWindow &container) {

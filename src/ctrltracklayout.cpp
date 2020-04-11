@@ -29,15 +29,14 @@ CtrlTrackLayout::CtrlTrackLayout() {
 CtrlTrackLayout::~CtrlTrackLayout() {
 }
 
-moba::JsonItemPtr CtrlTrackLayout::get_value() const {
-    moba::JsonObjectPtr obj(new moba::JsonObject());
+void CtrlTrackLayout::get_value(rapidjson::Document &d) const {
+    d.SetObject();
     if(m_Entry_Id.get_visible()) {
-        (*obj)["id"         ] = moba::toJsonNumberPtr(std::stol(m_Entry_Id.get_text()));
+        d.AddMember("id", std::stol(m_Entry_Id.get_text()), d.GetAllocator());
     }
-    (*obj)["name"       ] = moba::toJsonStringPtr(m_Entry_Name.get_text());
-    (*obj)["description"] = moba::toJsonStringPtr(m_Entry_Description.get_text());
-    (*obj)["active"     ] = moba::toJsonBoolPtr(m_Check_Bool.get_active());
-    return obj;
+    d.AddMember("name", setText(m_Entry_Name.get_text(), d), d.GetAllocator());
+    d.AddMember("description", setText(m_Entry_Description.get_text(), d), d.GetAllocator());
+    d.AddMember("active", m_Check_Bool.get_active(), d.GetAllocator());
 }
 
 void CtrlTrackLayout::init(bool enableIdSetting, Gtk::ScrolledWindow &container) {
@@ -48,4 +47,8 @@ void CtrlTrackLayout::init(bool enableIdSetting, Gtk::ScrolledWindow &container)
     container.show_all_children();
     m_Entry_Id.set_visible(enableIdSetting);
     m_Label_Id.set_visible(enableIdSetting);
+}
+
+rapidjson::Value CtrlTrackLayout::setText(const std::string &value, rapidjson::Document &d) const {
+    return rapidjson::Value(value.c_str(), value.length(), d.GetAllocator());
 }

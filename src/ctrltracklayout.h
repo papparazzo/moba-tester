@@ -21,8 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-
-#include <moba/jsonabstractitem.h>
+#include "moba/rapidjson/document.h"
 
 class CtrlTrackLayout {
     public:
@@ -32,7 +31,7 @@ class CtrlTrackLayout {
 
         void init(bool enableIdSetting, Gtk::ScrolledWindow &container);
 
-        moba::JsonItemPtr get_value() const;
+        void get_value(rapidjson::Document &d) const;
 
     protected:
         Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
@@ -52,4 +51,6 @@ class CtrlTrackLayout {
 
         Gtk::Label m_Label_Active;
         Gtk::CheckButton m_Check_Bool;
+
+        rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
 };

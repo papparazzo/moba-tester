@@ -19,11 +19,11 @@ CtrlGlobalTimer::CtrlGlobalTimer() {
 CtrlGlobalTimer::~CtrlGlobalTimer() {
 }
 
-moba::JsonItemPtr CtrlGlobalTimer::get_value() const {
-    moba::JsonObjectPtr obj(new moba::JsonObject());
-    (*obj)["curModelTime" ] = moba::toJsonStringPtr(m_Entry_CurModelTime.get_text());
-    (*obj)["multiplicator"] = moba::toJsonNumberPtr(std::stol(m_Entry_Multiplicator.get_text()));
-    return obj;
+void CtrlGlobalTimer::get_value(rapidjson::Document &d) const {
+    std::string txt = m_Entry_CurModelTime.get_text();
+    d.SetObject();
+    d.AddMember("curModelTime", rapidjson::Value(txt.c_str(), txt.length(), d.GetAllocator()), d.GetAllocator());
+    d.AddMember("multiplicator", rapidjson::Value(std::stol(m_Entry_Multiplicator.get_text())), d.GetAllocator());
 }
 
 void CtrlGlobalTimer::init(Gtk::ScrolledWindow &container) {

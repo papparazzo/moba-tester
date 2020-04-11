@@ -89,12 +89,15 @@ class MsgSender {
         }
 
         void sendActiveMessage();
-        void setActiveMessage(MessageType cmd, const std::string &name, Gtk::ScrolledWindow &container);
+        void setActiveMessage(MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId, Gtk::ScrolledWindow &container);
 
     protected:
         std::string activeMessageName;
         MessageType activeMessage;
         EndpointPtr msgep;
+
+        std::uint32_t activeGrpId;
+        std::uint32_t activeMsgId;
 
         CtrlString        m_CtrlString;
         CtrlBool          m_CtrlBool;

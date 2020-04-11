@@ -20,21 +20,20 @@ CtrlColorTheme::CtrlColorTheme() {
     m_Label_BrightTime.set_label("Bright-Time (hh:mm)");
     m_Label_Condition.set_label("Condition");
 
-    m_Combo_Condition.append("on");
-    m_Combo_Condition.append("off");
-    m_Combo_Condition.append("auto");
-    m_Combo_Condition.append("unset");
+    m_Combo_Condition.append("ON");
+    m_Combo_Condition.append("OFF");
+    m_Combo_Condition.append("AUTO");
+    m_Combo_Condition.append("UNSET");
 }
 
 CtrlColorTheme::~CtrlColorTheme() {
 }
 
-moba::JsonItemPtr CtrlColorTheme::get_value() const {
-    moba::JsonObjectPtr obj(new moba::JsonObject());
-    (*obj)["dimTime"   ] = moba::toJsonStringPtr(m_Entry_DimTime.get_text());
-    (*obj)["brightTime"] = moba::toJsonStringPtr(m_Entry_BrightTime.get_text());
-    (*obj)["condition" ] = getThreeState();
-    return obj;
+void CtrlColorTheme::get_value(rapidjson::Document &d) const {
+    d.SetObject();
+    d.AddMember("dimTime", setText(m_Entry_DimTime.get_text(), d), d.GetAllocator());
+    d.AddMember("brightTime", setText(m_Entry_BrightTime.get_text(), d), d.GetAllocator());
+    d.AddMember("condition", setText(m_Combo_Condition.get_active_text(), d), d.GetAllocator());
 }
 
 void CtrlColorTheme::init(Gtk::ScrolledWindow &container) {
@@ -45,16 +44,6 @@ void CtrlColorTheme::init(Gtk::ScrolledWindow &container) {
     container.show_all_children();
 }
 
-moba::JsonThreeStatePtr CtrlColorTheme::getThreeState() const {
-    std::string str = m_Combo_Condition.get_active_text();
-    if(str == "on") {
-        return moba::toJsonThreeStatePtr(moba::JsonThreeState::ON);
-    }
-    if(str == "off") {
-        return moba::toJsonThreeStatePtr(moba::JsonThreeState::OFF);
-    }
-    if(str == "auto") {
-        return moba::toJsonThreeStatePtr(moba::JsonThreeState::AUTO);
-    }
-    return moba::toJsonThreeStatePtr(moba::JsonThreeState::UNSET);
+rapidjson::Value CtrlColorTheme::setText(const std::string &value, rapidjson::Document &d) const {
+    return rapidjson::Value(value.c_str(), value.length(), d.GetAllocator());
 }

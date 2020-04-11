@@ -21,8 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-
-#include <moba/jsonabstractitem.h>
+#include "moba/rapidjson/document.h"
 
 class CtrlConnectivity {
     public:
@@ -32,7 +31,7 @@ class CtrlConnectivity {
 
         void init(Gtk::ScrolledWindow &container);
 
-        moba::JsonStringPtr get_value() const;
+        void get_value(rapidjson::Document &d) const;
 
     protected:
         Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};

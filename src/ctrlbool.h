@@ -22,8 +22,6 @@
 
 #include <gtkmm.h>
 
-#include <moba/jsonabstractitem.h>
-
 class CtrlBool {
     public:
         CtrlBool() ;
@@ -32,7 +30,7 @@ class CtrlBool {
 
         void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
-        moba::JsonBoolPtr get_value() const;
+        bool get_value() const;
 
     protected:
         Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
