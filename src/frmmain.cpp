@@ -22,11 +22,13 @@
 
 #include <ctime>
 #include <sys/timeb.h>
+#include <string>
 
 #include <boost/algorithm/string.hpp>
 
-#include "moba/systemhandler.h"
-#include <moba/jsonabstractitem.h>
+#include "moba/systemmessage.h"
+#include "moba/rapidjson/ostreamwrapper.h"
+#include "moba/rapidjson/prettywriter.h"
 
 #include "frmmain.h"
 #include "config.h"
@@ -87,7 +89,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initIncomming();
 
     registry.registerHandler<SystemHardwareStateChanged>(std::bind(&FrmMain::setHardwareState, this, std::placeholders::_1));
-    registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2));
+    registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     m_Button_Send.set_sensitive(false);
     m_Button_Emegerency.set_sensitive(false);
@@ -151,22 +153,22 @@ void FrmMain::initTreeModel() {
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_RESET_CLIENT;
-    childrow[m_Columns_Messages.m_col_id] = "3.4";
+    childrow[m_Columns_Messages.m_col_id] = "3.3";
     childrow[m_Columns_Messages.m_col_name] = "SERVER_RESET_CLIENT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_INFO_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "3.5";
+    childrow[m_Columns_Messages.m_col_id] = "3.4";
     childrow[m_Columns_Messages.m_col_name] = "SERVER_INFO_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_CON_CLIENTS_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "3.7";
+    childrow[m_Columns_Messages.m_col_id] = "3.6";
     childrow[m_Columns_Messages.m_col_name] = "SERVER_CON_CLIENTS_REQ";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_SELF_TESTING_CLIENT;
-    childrow[m_Columns_Messages.m_col_id] = "3.9";
+    childrow[m_Columns_Messages.m_col_id] = "3.8";
     childrow[m_Columns_Messages.m_col_name] = "SERVER_SELF_TESTING_CLIENT";
 
     row = *(m_refTreeModel_Outgoing->append());
@@ -236,7 +238,7 @@ void FrmMain::initTreeModel() {
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED;
-    childrow[m_Columns_Messages.m_col_id] = "6.2";
+    childrow[m_Columns_Messages.m_col_id] = "6.1";
     childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_STATE_CHANGED";
 
     row = *(m_refTreeModel_Outgoing->append());
@@ -332,7 +334,8 @@ void FrmMain::initIncomming() {
     m_TreeView_Incomming.set_model(m_refTreeModel_Incomming);
 
     m_TreeView_Incomming.append_column("Timestamp", m_Columns_Incomming.m_col_timestamp);
-    m_TreeView_Incomming.append_column("Name",      m_Columns_Incomming.m_col_name);
+    m_TreeView_Incomming.append_column("Gruppe",    m_Columns_Incomming.m_col_grp_name);
+    m_TreeView_Incomming.append_column("Nachricht", m_Columns_Incomming.m_col_msg_name);
 
     m_VPaned_Incomming.add2(m_ScrolledWindow_Data);
 
@@ -438,20 +441,23 @@ bool FrmMain::on_timeout(int) {
     return true;
 }
 
-void FrmMain::msgHandler(const std::string &msgName, moba::JsonItemPtr data) {
-    std::stringstream ss;
+void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const rapidjson::Document &data) {
     timeb sTimeB;
     char buffer[25] = "";
 
     ftime(&sTimeB);
     strftime(buffer, 21, "%d.%m.%Y %H:%M:%S", localtime(&sTimeB.time));
-    moba::prettyPrint(data, ss);
+
+    rapidjson::StringBuffer sb;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
+    data.Accept(writer);
 
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
     row[m_Columns_Incomming.m_col_timestamp] = std::string(buffer);
-    row[m_Columns_Incomming.m_col_name     ] = msgName;
-    row[m_Columns_Incomming.m_col_data     ] = ss.str();
+    row[m_Columns_Incomming.m_col_grp_name ] = grpId;
+    row[m_Columns_Incomming.m_col_msg_name ] = msgId;
+    row[m_Columns_Incomming.m_col_data     ] = sb.GetString();
 
     if(m_Button_AutoCheckLast.get_active()) {
         Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
@@ -490,12 +496,17 @@ void FrmMain::on_selection_changed_outgoing() {
         m_ScrolledWindow_Outgoing_Data.remove_with_viewport();
         m_Button_Send.set_sensitive(false);
         return;
-
     }
+
+    auto str = std::string(row[m_Columns_Messages.m_col_id]);
+    auto pos = str.find(".");
+
     m_Button_Send.set_sensitive(true);
     msgSender.setActiveMessage(
         static_cast<MessageType>(row[m_Columns_Messages.m_col_msg_id]),
         std::string(row[m_Columns_Messages.m_col_name]),
+        std::stol(str.substr(0, pos)),
+        std::stol(str.substr(pos + 1)),
         m_ScrolledWindow_Outgoing_Data
     );
 }

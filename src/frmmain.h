@@ -22,10 +22,10 @@
 #include <gtkmm.h>
 
 #include "moba/endpoint.h"
-#include <moba/jsonabstractitem.h>
-
-#include "moba/systemhandler.h"
+#include "moba/rapidjson/document.h"
+#include "moba/systemmessage.h"
 #include "moba/registry.h"
+#include "moba/message.h"
 
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
@@ -73,8 +73,8 @@ class FrmMain : public Gtk::Window {
                 }
 
                 Gtk::TreeModelColumn<std::string> m_col_name;
-                Gtk::TreeModelColumn<Glib::ustring> m_col_id;
-                Gtk::TreeModelColumn<MessageType>   m_col_msg_id;
+                Gtk::TreeModelColumn<std::string> m_col_id;
+                Gtk::TreeModelColumn<MessageType> m_col_msg_id;
         };
 
         ModelColumnsMessages m_Columns_Messages;
@@ -98,12 +98,14 @@ class FrmMain : public Gtk::Window {
             public:
                 ModelColumnsIncomming() {
                     add(m_col_timestamp);
-                    add(m_col_name);
+                    add(m_col_grp_name);
+                    add(m_col_msg_name);
                     add(m_col_data);
                 }
 
                 Gtk::TreeModelColumn<Glib::ustring> m_col_timestamp;
-                Gtk::TreeModelColumn<Glib::ustring> m_col_name;
+                Gtk::TreeModelColumn<int> m_col_grp_name;
+                Gtk::TreeModelColumn<int> m_col_msg_name;
                 Gtk::TreeModelColumn<std::string>   m_col_data;
         };
 
@@ -120,7 +122,7 @@ class FrmMain : public Gtk::Window {
         MsgSender   msgSender;
         Registry    registry;
 
-        void msgHandler(const std::string &msgName, moba::JsonItemPtr data);
+        void msgHandler(std::uint32_t grpId, std::uint32_t msgId, const rapidjson::Document &data);
 
         // Signal handlers:
         bool on_timeout(int timer_number);

@@ -19,10 +19,10 @@
  */
 
 #include "msgsender.h"
-#include "moba/basemessage.h"
+#include "moba/message.h"
 
 void MsgSender::sendActiveMessage() {
-    Message message{activeGrpId, activeMsgId};
+    rapidjson::Document data;
 
     switch(activeMessage) {
         case MessageType::SERVER_RESET_CLIENT:
@@ -32,54 +32,54 @@ void MsgSender::sendActiveMessage() {
         case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
         case MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ:
-            message.data.SetInt(m_CtrlString.get_integer());
+            data.SetInt(m_CtrlString.get_integer());
             break;
 
         case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
         case MessageType::SYSTEM_SET_EMERGENCY_STOP:
         case MessageType::SYSTEM_SET_STANDBY_MODE:
-            message.data.SetBool(m_CtrlBool.get_value());
+            data.SetBool(m_CtrlBool.get_value());
             break;
 
         case MessageType::CLIENT_ECHO_REQ: {
             auto txt = m_CtrlString.get_text();
-            message.data.SetString(txt.c_str(), txt.length(), message.data.GetAllocator());
+            data.SetString(txt.c_str(), txt.length(), data.GetAllocator());
             break;
         }
 
         case MessageType::TIMER_SET_GLOBAL_TIMER:
-            m_CtrlGlobalTimer.get_value(message.data);
+            m_CtrlGlobalTimer.get_value(data);
             break;
 
         case MessageType::TIMER_SET_COLOR_THEME:
-            m_CtrlColorTheme.get_value(message.data);
+            m_CtrlColorTheme.get_value(data);
             break;
 
         case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
-            m_CtrlEnvironment.get_value(message.data);
+            m_CtrlEnvironment.get_value(data);
             break;
 
         case MessageType::ENVIRONMENT_SET_AMBIENCE:
-            m_CtrlAmbience.get_value(message.data);
+            m_CtrlAmbience.get_value(data);
             break;
 
         case MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT:
-            m_CtrlAmbientLight.get_value(message.data);
+            m_CtrlAmbientLight.get_value(data);
             break;
 
         case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
-            m_CtrlConnectivity.get_value(message.data);
+            m_CtrlConnectivity.get_value(data);
             break;
 
         case MessageType::LAYOUT_CREATE_LAYOUT_REQ:
         case MessageType::LAYOUT_UPDATE_LAYOUT:
-            m_CtrlTrackLayout.get_value(message.data);
+            m_CtrlTrackLayout.get_value(data);
             break;
 
         default:
             break;
     }
-    return msgep->sendMsg(message);
+    return msgep->sendMsg(activeGrpId, activeMsgId, data);
 }
 
 void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId, Gtk::ScrolledWindow &container) {
