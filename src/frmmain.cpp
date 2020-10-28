@@ -188,12 +188,12 @@ void FrmMain::initTreeModel() {
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_COLOR_THEME;
-    childrow[m_Columns_Messages.m_col_id] = "4.6";
+    childrow[m_Columns_Messages.m_col_id] = "4.4";
     childrow[m_Columns_Messages.m_col_name] = "TIMER_GET_COLOR_THEME";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_COLOR_THEME;
-    childrow[m_Columns_Messages.m_col_id] = "4.7";
+    childrow[m_Columns_Messages.m_col_id] = "4.5";
     childrow[m_Columns_Messages.m_col_name] = "TIMER_SET_COLOR_THEME";
 
     row = *(m_refTreeModel_Outgoing->append());
