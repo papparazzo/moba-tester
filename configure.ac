@@ -20,6 +20,7 @@ AX_CXX_COMPILE_STDCXX_17()
 AC_CONFIG_FILES([
     Makefile
     src/Makefile
+    pixmaps/Makefile
 ])
 
 AC_OUTPUT
