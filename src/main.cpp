@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
     frmMain.set_title(appData.appName);
     frmMain.set_border_width(10);
     frmMain.set_default_size(800, 600);
+    frmMain.set_icon_name("moba-tester");
 
     return app->run(frmMain);
 }

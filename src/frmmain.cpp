@@ -241,6 +241,21 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_id] = "6.1";
     childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_STATE_CHANGED";
 
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_BRAKE_VECTOR;
+    childrow[m_Columns_Messages.m_col_id] = "6.3";
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_BRAKE_VECTOR";
+/*
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_SPEED;
+    childrow[m_Columns_Messages.m_col_id] = "6.4";
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_SPEED";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_DIRECTION;
+    childrow[m_Columns_Messages.m_col_id] = "6.5";
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_DIRECTION";
+*/
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "7";

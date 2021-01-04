@@ -71,6 +71,10 @@ void MsgSender::sendActiveMessage() {
             m_CtrlConnectivity.get_value(data);
             break;
 
+        case MessageType::INTERFACE_SET_BRAKE_VECTOR:
+            m_CtrlSetBrakeVector.get_value(data);
+            break;
+
         case MessageType::LAYOUT_CREATE_LAYOUT_REQ:
         case MessageType::LAYOUT_UPDATE_LAYOUT:
             m_CtrlTrackLayout.get_value(data);
@@ -133,6 +137,12 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::
 
         case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
             m_CtrlConnectivity.init(container);
+            break;
+
+        case MessageType::INTERFACE_SET_BRAKE_VECTOR:
+        //case MessageType::INTERFACE_SET_LOCO_SPEED:
+        //case MessageType::INTERFACE_SET_LOCO_DIRECTION:
+            m_CtrlSetBrakeVector.init(container);
             break;
 
         case MessageType::LAYOUT_CREATE_LAYOUT_REQ:

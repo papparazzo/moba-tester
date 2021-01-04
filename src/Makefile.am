@@ -5,13 +5,14 @@ moba_tester_SOURCES = \
     main.cpp \
     msgsender.cpp \
     ctrlstring.cpp \
-    ctrlbool.cpp \
-    ctrlglobaltimer.cpp \
-    ctrlcolortheme.cpp \
-    ctrlenvironment.cpp \
     ctrlambience.cpp \
     ctrlambientlight.cpp \
+    ctrlbool.cpp \
+    ctrlcolortheme.cpp \
     ctrlconnectivity.cpp \
+    ctrlenvironment.cpp \
+    ctrlglobaltimer.cpp \
+    ctrlsetbrakevector.cpp \
     ctrltracklayout.cpp \
     frmmain.cpp
 

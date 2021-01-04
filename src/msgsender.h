@@ -34,6 +34,7 @@
 #include "ctrlambientlight.h"
 #include "ctrltracklayout.h"
 #include "ctrlconnectivity.h"
+#include "ctrlsetbrakevector.h"
 
 enum class MessageType {
     UNSET,
@@ -61,6 +62,10 @@ enum class MessageType {
     ENVIRONMENT_SET_AMBIENT_LIGHT,
 
     INTERFACE_CONNECTIVITY_STATE_CHANGED,
+    INTERFACE_SET_BRAKE_VECTOR,
+    //INTERFACE_SET_LOCO_SPEED,
+    //INTERFACE_SET_LOCO_DIRECTION,
+    //INTERFACE_SET_LOCO_FUNCTION,
 
     SYSTEM_SET_AUTOMATIC_MODE,
     SYSTEM_SET_EMERGENCY_STOP,
@@ -99,13 +104,14 @@ class MsgSender {
         std::uint32_t activeGrpId;
         std::uint32_t activeMsgId;
 
-        CtrlString        m_CtrlString;
-        CtrlBool          m_CtrlBool;
-        CtrlGlobalTimer   m_CtrlGlobalTimer;
-        CtrlColorTheme    m_CtrlColorTheme;
-        CtrlEnvironment   m_CtrlEnvironment;
-        CtrlAmbience      m_CtrlAmbience;
-        CtrlAmbientLight  m_CtrlAmbientLight;
-        CtrlConnectivity  m_CtrlConnectivity;
-        CtrlTrackLayout   m_CtrlTrackLayout;
+        CtrlString         m_CtrlString;
+        CtrlBool           m_CtrlBool;
+        CtrlGlobalTimer    m_CtrlGlobalTimer;
+        CtrlColorTheme     m_CtrlColorTheme;
+        CtrlEnvironment    m_CtrlEnvironment;
+        CtrlAmbience       m_CtrlAmbience;
+        CtrlAmbientLight   m_CtrlAmbientLight;
+        CtrlConnectivity   m_CtrlConnectivity;
+        CtrlTrackLayout    m_CtrlTrackLayout;
+        CtrlSetBrakeVector m_CtrlSetBrakeVector;
 };
