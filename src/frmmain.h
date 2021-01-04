@@ -23,7 +23,7 @@
 
 #include "moba/endpoint.h"
 #include "moba/rapidjson/document.h"
-#include "moba/systemmessage.h"
+#include "moba/systemmessages.h"
 #include "moba/registry.h"
 #include "moba/message.h"
 

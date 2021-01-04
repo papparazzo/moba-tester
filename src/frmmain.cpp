@@ -26,7 +26,7 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "moba/systemmessage.h"
+#include "moba/systemmessages.h"
 #include "moba/rapidjson/ostreamwrapper.h"
 #include "moba/rapidjson/prettywriter.h"
 
