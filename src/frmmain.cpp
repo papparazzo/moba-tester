@@ -105,6 +105,8 @@ void FrmMain::initAboutDialog() {
     m_Dialog.set_comments("This is just an application for testing purpose.");
     m_Dialog.set_license(license);
 
+    m_Dialog.set_logo(Gdk::Pixbuf::create_from_file(DATADIR "/icons/hicolor/scalable/apps/moba-tester.svg"));
+
     m_Dialog.set_website("<pappi-@gmx.de>");
     m_Dialog.set_website_label("pappi-@gmx.de");
 
@@ -335,6 +337,26 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ;
     childrow[m_Columns_Messages.m_col_id] = "8.14";
     childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_READ_ONLY_REQ";
+
+    row = *(m_refTreeModel_Outgoing->append());
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
+    row[m_Columns_Messages.m_col_id] = "10";
+    row[m_Columns_Messages.m_col_name] = "Control";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_CONTACT_LIST_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "10.1";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_CONTACT_LIST_REQ";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_SWITCH_STAND_LIST_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "10.3";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_SWITCH_STATE_LIST_REQ";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_TRAIN_LIST_REQ;
+    childrow[m_Columns_Messages.m_col_id] = "10.5";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_TRAIN_LIST_REQ";
 }
 
 void FrmMain::initIncomming() {
