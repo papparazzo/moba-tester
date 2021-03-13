@@ -80,6 +80,12 @@ void MsgSender::sendActiveMessage() {
             m_CtrlTrackLayout.get_value(data);
             break;
 
+        case MessageType::CONTROL_LOCK_BLOCK:
+        case MessageType::CONTROL_LOCK_BLOCK_WAITING:
+        case MessageType::CONTROL_UNLOCK_BLOCK:
+            m_CtrlBlockLock.get_value(data);
+            break;
+
         default:
             break;
     }
@@ -151,6 +157,12 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::
 
         case MessageType::LAYOUT_UPDATE_LAYOUT:
             m_CtrlTrackLayout.init(true, container);
+            break;
+
+        case MessageType::CONTROL_LOCK_BLOCK:
+        case MessageType::CONTROL_LOCK_BLOCK_WAITING:
+        case MessageType::CONTROL_UNLOCK_BLOCK:
+            m_CtrlBlockLock.init(container);
             break;
 
         default:

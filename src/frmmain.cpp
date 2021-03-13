@@ -357,6 +357,21 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_TRAIN_LIST_REQ;
     childrow[m_Columns_Messages.m_col_id] = "10.5";
     childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_TRAIN_LIST_REQ";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK;
+    childrow[m_Columns_Messages.m_col_id] = "10.7";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK_WAITING;
+    childrow[m_Columns_Messages.m_col_id] = "10.8";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK_WAITING";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_UNLOCK_BLOCK;
+    childrow[m_Columns_Messages.m_col_id] = "10.11";
+    childrow[m_Columns_Messages.m_col_name] = "CONTROL_UNLOCK_BLOCK";
 }
 
 void FrmMain::initIncomming() {

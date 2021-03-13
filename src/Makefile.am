@@ -8,6 +8,7 @@ moba_tester_SOURCES = \
     ctrlambience.cpp \
     ctrlambientlight.cpp \
     ctrlbool.cpp \
+    ctrlblocklock.cpp \
     ctrlcolortheme.cpp \
     ctrlconnectivity.cpp \
     ctrlenvironment.cpp \

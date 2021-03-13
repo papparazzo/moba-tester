@@ -35,6 +35,7 @@
 #include "ctrltracklayout.h"
 #include "ctrlconnectivity.h"
 #include "ctrlsetbrakevector.h"
+#include "ctrlblocklock.h"
 
 enum class MessageType {
     UNSET,
@@ -87,6 +88,9 @@ enum class MessageType {
     CONTROL_GET_CONTACT_LIST_REQ,
     CONTROL_GET_SWITCH_STAND_LIST_REQ,
     CONTROL_GET_TRAIN_LIST_REQ,
+    CONTROL_LOCK_BLOCK,
+    CONTROL_LOCK_BLOCK_WAITING,
+    CONTROL_UNLOCK_BLOCK
 };
 
 class MsgSender {
@@ -118,4 +122,5 @@ class MsgSender {
         CtrlConnectivity   m_CtrlConnectivity;
         CtrlTrackLayout    m_CtrlTrackLayout;
         CtrlSetBrakeVector m_CtrlSetBrakeVector;
+        CtrlBlockLock      m_CtrlBlockLock;
 };
