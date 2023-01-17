@@ -214,23 +214,13 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_ENVIRONMENT";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_AMBIENCE;
-    childrow[m_Columns_Messages.m_col_id] = "5.3";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_AMBIENCE";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENCE;
-    childrow[m_Columns_Messages.m_col_id] = "5.4";
+    childrow[m_Columns_Messages.m_col_id] = "5.3";
     childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENCE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_AMBIENT_LIGHT;
-    childrow[m_Columns_Messages.m_col_id] = "5.5";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_AMBIENT_LIGHT";
-
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT;
-    childrow[m_Columns_Messages.m_col_id] = "5.6";
+    childrow[m_Columns_Messages.m_col_id] = "5.4";
     childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENT_LIGHT";
 
     row = *(m_refTreeModel_Outgoing->append());
@@ -269,28 +259,43 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_AUTOMATIC_MODE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_EMERGENCY_STOP;
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_AUTOMATIC_MODE;
     childrow[m_Columns_Messages.m_col_id] = "7.2";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_EMERGENCY_STOP";
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_AUTOMATIC_MODE";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TRIGGER_EMERGENCY_STOP;
+    childrow[m_Columns_Messages.m_col_id] = "7.3";
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TRIGGER_EMERGENCY_STOP";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_RELEASE_EMERGENCY_STOP;
+    childrow[m_Columns_Messages.m_col_id] = "7.4";
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_RELEASE_EMERGENCY_STOP";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_STANDBY_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "7.3";
+    childrow[m_Columns_Messages.m_col_id] = "7.5";
     childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_STANDBY_MODE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_STANDBY_MODE;
+    childrow[m_Columns_Messages.m_col_id] = "7.6";
+    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_STANDBY_MODE";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_GET_HARDWARE_STATE;
-    childrow[m_Columns_Messages.m_col_id] = "7.4";
+    childrow[m_Columns_Messages.m_col_id] = "7.7";
     childrow[m_Columns_Messages.m_col_name] = "SYSTEM_GET_HARDWARE_STATE";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_SHUTDOWN;
-    childrow[m_Columns_Messages.m_col_id] = "7.6";
+    childrow[m_Columns_Messages.m_col_id] = "7.9";
     childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_SHUTDOWN";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_RESET;
-    childrow[m_Columns_Messages.m_col_id] = "7.7";
+    childrow[m_Columns_Messages.m_col_id] = "7.10";
     childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_RESET";
 
     row = *(m_refTreeModel_Outgoing->append());
