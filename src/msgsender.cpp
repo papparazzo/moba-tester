@@ -36,7 +36,6 @@ void MsgSender::sendActiveMessage() {
             break;
 
         case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
-        case MessageType::SYSTEM_SET_EMERGENCY_STOP:
         case MessageType::SYSTEM_SET_STANDBY_MODE:
             data.SetBool(m_CtrlBool.get_value());
             break;
@@ -112,7 +111,6 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::
             return;
 
         case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
-        case MessageType::SYSTEM_SET_EMERGENCY_STOP:
         case MessageType::SYSTEM_SET_STANDBY_MODE:
             m_CtrlBool.init("aktiv", container);
             break;
