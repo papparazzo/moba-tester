@@ -24,27 +24,27 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlSetBrakeVector {
-    public:
-        CtrlSetBrakeVector();
-        virtual ~CtrlSetBrakeVector();
+public:
+    CtrlSetBrakeVector();
+    virtual ~CtrlSetBrakeVector();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_ModulAddress{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_ContactNumber{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_LocalId{Gtk::ORIENTATION_HORIZONTAL, 6};
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_ModulAddress{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_ContactNumber{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_LocalId{Gtk::ORIENTATION_HORIZONTAL, 6};
 
-        Gtk::Entry m_Entry_ModulAddress;
-        Gtk::Label m_Label_ModulAddress;
+    Gtk::Entry m_Entry_ModulAddress;
+    Gtk::Label m_Label_ModulAddress;
 
-        Gtk::Entry m_Entry_ContactNumber;
-        Gtk::Label m_Label_ContactNumber;
+    Gtk::Entry m_Entry_ContactNumber;
+    Gtk::Label m_Label_ContactNumber;
 
-        Gtk::Entry m_Entry_LocalId;
-        Gtk::Label m_Label_LocalId;
+    Gtk::Entry m_Entry_LocalId;
+    Gtk::Label m_Label_LocalId;
 };
 

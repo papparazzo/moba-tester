@@ -24,27 +24,27 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlGlobalTimer {
-    public:
-        CtrlGlobalTimer() ;
+public:
+    CtrlGlobalTimer() ;
 
-        virtual ~CtrlGlobalTimer();
+    virtual ~CtrlGlobalTimer();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_CurModelDay{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_CurModelTime{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_Multiplicator{Gtk::ORIENTATION_HORIZONTAL, 6};
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_CurModelDay{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_CurModelTime{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_Multiplicator{Gtk::ORIENTATION_HORIZONTAL, 6};
 
-        Gtk::Entry m_Entry_CurModelDay;
-        Gtk::Label m_Label_CurModelDay;
+    Gtk::Entry m_Entry_CurModelDay;
+    Gtk::Label m_Label_CurModelDay;
 
-        Gtk::Entry m_Entry_CurModelTime;
-        Gtk::Label m_Label_CurModelTime;
+    Gtk::Entry m_Entry_CurModelTime;
+    Gtk::Label m_Label_CurModelTime;
 
-        Gtk::Entry m_Entry_Multiplicator;
-        Gtk::Label m_Label_Multiplicator;
+    Gtk::Entry m_Entry_Multiplicator;
+    Gtk::Label m_Label_Multiplicator;
 };

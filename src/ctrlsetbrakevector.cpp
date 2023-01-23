@@ -45,7 +45,6 @@ CtrlSetBrakeVector::~CtrlSetBrakeVector() {
 void CtrlSetBrakeVector::get_value(rapidjson::Document &d) const {
     d.SetArray();
 
-
     rapidjson::Value o;
 
     o.SetObject();
@@ -58,9 +57,6 @@ void CtrlSetBrakeVector::get_value(rapidjson::Document &d) const {
 
     o.AddMember("contact", v, d.GetAllocator());
     d.PushBack(o, d.GetAllocator());
-
-
-
 }
 
 void CtrlSetBrakeVector::init(Gtk::ScrolledWindow &container) {
