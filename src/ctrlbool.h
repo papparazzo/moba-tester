@@ -23,17 +23,17 @@
 #include <gtkmm.h>
 
 class CtrlBool {
-    public:
-        CtrlBool() ;
+public:
+    CtrlBool() ;
 
-        virtual ~CtrlBool();
+    virtual ~CtrlBool();
 
-        void init(const std::string &caption, Gtk::ScrolledWindow &container);
+    void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
-        bool get_value() const;
+    bool get_value() const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::CheckButton m_Check_Bool;
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::CheckButton m_Check_Bool;
 };
