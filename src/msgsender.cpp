@@ -70,6 +70,10 @@ void MsgSender::sendActiveMessage() {
             m_CtrlConnectivity.get_value(data);
             break;
 
+        case MessageType::INTERFACE_CONTACT_TRIGGERED:
+            m_CtrlContact.get_value(data);
+            break;
+
         case MessageType::INTERFACE_SET_BRAKE_VECTOR:
             m_CtrlSetBrakeVector.get_value(data);
             break;
@@ -141,6 +145,10 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::
 
         case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
             m_CtrlConnectivity.init(container);
+            break;
+
+        case MessageType::INTERFACE_CONTACT_TRIGGERED:
+            m_CtrlContact.init(container);
             break;
 
         case MessageType::INTERFACE_SET_BRAKE_VECTOR:

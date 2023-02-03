@@ -234,6 +234,11 @@ void FrmMain::initTreeModel() {
     childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_STATE_CHANGED";
 
     childrow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONTACT_TRIGGERED;
+    childrow[m_Columns_Messages.m_col_id] = "6.2";
+    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONTACT_TRIGGERED";
+
+    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
     childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_BRAKE_VECTOR;
     childrow[m_Columns_Messages.m_col_id] = "6.3";
     childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_BRAKE_VECTOR";

@@ -29,6 +29,7 @@
 #include "ctrlbool.h"
 #include "ctrlglobaltimer.h"
 #include "ctrlcolortheme.h"
+#include "ctrlcontact.h"
 #include "ctrlenvironment.h"
 #include "ctrlambience.h"
 #include "ctrlambientlight.h"
@@ -63,6 +64,7 @@ enum class MessageType {
     ENVIRONMENT_SET_AMBIENT_LIGHT,
 
     INTERFACE_CONNECTIVITY_STATE_CHANGED,
+    INTERFACE_CONTACT_TRIGGERED,
     INTERFACE_SET_BRAKE_VECTOR,
     //INTERFACE_SET_LOCO_SPEED,
     //INTERFACE_SET_LOCO_DIRECTION,
@@ -125,6 +127,7 @@ class MsgSender {
         CtrlAmbientLight   m_CtrlAmbientLight;
         CtrlConnectivity   m_CtrlConnectivity;
         CtrlTrackLayout    m_CtrlTrackLayout;
+        CtrlContact        m_CtrlContact;
         CtrlSetBrakeVector m_CtrlSetBrakeVector;
         CtrlBlockLock      m_CtrlBlockLock;
 };
