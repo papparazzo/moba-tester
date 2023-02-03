@@ -24,19 +24,19 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlBlockLock {
-    public:
-        CtrlBlockLock() ;
+public:
+    CtrlBlockLock() ;
 
-        virtual ~CtrlBlockLock();
+    virtual ~CtrlBlockLock();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_Blocks{Gtk::ORIENTATION_HORIZONTAL, 6};
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_Blocks{Gtk::ORIENTATION_HORIZONTAL, 6};
 
-        Gtk::Entry m_Entry_Blocks;
-        Gtk::Label m_Label_Blocks;
+    Gtk::Entry m_Entry_Blocks;
+    Gtk::Label m_Label_Blocks;
 };

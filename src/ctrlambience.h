@@ -24,26 +24,26 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlAmbience {
-    public:
-        CtrlAmbience() ;
+public:
+    CtrlAmbience() ;
 
-        virtual ~CtrlAmbience();
+    virtual ~CtrlAmbience();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        enum Entries {
-            CURTAIN_UP,
-            MAIN_LIGHT_ON,
-            LAST_ENTRY
-        };
+protected:
+    enum Entries {
+        CURTAIN_UP,
+        MAIN_LIGHT_ON,
+        LAST_ENTRY
+    };
 
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox[LAST_ENTRY];
-        Gtk::Label m_Label[LAST_ENTRY];
-        Gtk::ComboBoxText m_Combo[LAST_ENTRY];
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox[LAST_ENTRY];
+    Gtk::Label m_Label[LAST_ENTRY];
+    Gtk::ComboBoxText m_Combo[LAST_ENTRY];
 
-        rapidjson::Value getToggleState(Entries entry, rapidjson::Document &d) const;
+    rapidjson::Value getToggleState(Entries entry, rapidjson::Document &d) const;
 };

@@ -24,28 +24,28 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlAmbientLight {
-    public:
-        CtrlAmbientLight() ;
+public:
+    CtrlAmbientLight() ;
 
-        virtual ~CtrlAmbientLight();
+    virtual ~CtrlAmbientLight();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        enum Entries {
-            RED,
-            BLUE,
-            GREEN,
-            WHITE,
-            LAST_ENTRY
-        };
+protected:
+    enum Entries {
+        RED,
+        BLUE,
+        GREEN,
+        WHITE,
+        LAST_ENTRY
+    };
 
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox[LAST_ENTRY];
-        Gtk::Label m_Label[LAST_ENTRY];
-        Gtk::SpinButton m_SpinButton[LAST_ENTRY];
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox[LAST_ENTRY];
+    Gtk::Label m_Label[LAST_ENTRY];
+    Gtk::SpinButton m_SpinButton[LAST_ENTRY];
 
-        Glib::RefPtr<Gtk::Adjustment> m_adjustment[LAST_ENTRY];
+    Glib::RefPtr<Gtk::Adjustment> m_adjustment[LAST_ENTRY];
 };
