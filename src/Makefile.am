@@ -12,6 +12,7 @@ moba_tester_SOURCES = \
     ctrlblocklock.cpp \
     ctrlcolortheme.cpp \
     ctrlconnectivity.cpp \
+    ctrlcontact.cpp \
     ctrlenvironment.cpp \
     ctrlglobaltimer.cpp \
     ctrlsetbrakevector.cpp \
