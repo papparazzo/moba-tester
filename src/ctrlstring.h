@@ -23,20 +23,20 @@
 #include <gtkmm.h>
 
 class CtrlString {
-    public:
-        CtrlString() ;
+public:
+    CtrlString() ;
 
-        virtual ~CtrlString();
+    virtual ~CtrlString();
 
-        void init(const std::string &caption, Gtk::ScrolledWindow &container);
+    void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
-        long get_integer() const;
-        float get_float() const;
-        std::string get_text() const;
+    long get_integer() const;
+    float get_float() const;
+    std::string get_text() const;
 
-    protected:
-        Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box   m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Entry m_Entry_String;
-        Gtk::Label m_Label_String;
+protected:
+    Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box   m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Entry m_Entry_String;
+    Gtk::Label m_Label_String;
 };

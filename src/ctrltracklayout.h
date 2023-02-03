@@ -24,33 +24,33 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlTrackLayout {
-    public:
-        CtrlTrackLayout() ;
+public:
+    CtrlTrackLayout() ;
 
-        virtual ~CtrlTrackLayout();
+    virtual ~CtrlTrackLayout();
 
-        void init(bool enableIdSetting, Gtk::ScrolledWindow &container);
+    void init(bool enableIdSetting, Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_Id{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_Caption{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_Description{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_Active{Gtk::ORIENTATION_HORIZONTAL, 6};
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_Id{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_Caption{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_Description{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_Active{Gtk::ORIENTATION_HORIZONTAL, 6};
 
-        Gtk::Label m_Label_Id;
-        Gtk::Entry m_Entry_Id;
+    Gtk::Label m_Label_Id;
+    Gtk::Entry m_Entry_Id;
 
-        Gtk::Label m_Label_Caption;
-        Gtk::Entry m_Entry_Name;
+    Gtk::Label m_Label_Caption;
+    Gtk::Entry m_Entry_Name;
 
-        Gtk::Label m_Label_Description;
-        Gtk::Entry m_Entry_Description;
+    Gtk::Label m_Label_Description;
+    Gtk::Entry m_Entry_Description;
 
-        Gtk::Label m_Label_Active;
-        Gtk::CheckButton m_Check_Bool;
+    Gtk::Label m_Label_Active;
+    Gtk::CheckButton m_Check_Bool;
 
-        rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
+    rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
 };

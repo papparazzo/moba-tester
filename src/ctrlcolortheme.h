@@ -24,29 +24,29 @@
 #include "moba/rapidjson/document.h"
 
 class CtrlColorTheme {
-    public:
-        CtrlColorTheme() ;
+public:
+    CtrlColorTheme() ;
 
-        virtual ~CtrlColorTheme();
+    virtual ~CtrlColorTheme();
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
-        void get_value(rapidjson::Document &d) const;
+    void get_value(rapidjson::Document &d) const;
 
-    protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Box m_HBox_DimTime{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_BrightTime{Gtk::ORIENTATION_HORIZONTAL, 6};
-        Gtk::Box m_HBox_Condition{Gtk::ORIENTATION_HORIZONTAL, 6};
+protected:
+    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_HBox_DimTime{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_BrightTime{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_HBox_Condition{Gtk::ORIENTATION_HORIZONTAL, 6};
 
-        Gtk::Label m_Label_DimTime;
-        Gtk::Entry m_Entry_DimTime;
+    Gtk::Label m_Label_DimTime;
+    Gtk::Entry m_Entry_DimTime;
 
-        Gtk::Label m_Label_BrightTime;
-        Gtk::Entry m_Entry_BrightTime;
+    Gtk::Label m_Label_BrightTime;
+    Gtk::Entry m_Entry_BrightTime;
 
-        Gtk::Label m_Label_Condition;
-        Gtk::ComboBoxText m_Combo_Condition;
+    Gtk::Label m_Label_Condition;
+    Gtk::ComboBoxText m_Combo_Condition;
 
-        rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
+    rapidjson::Value setText(const std::string &value, rapidjson::Document &d) const;
 };
