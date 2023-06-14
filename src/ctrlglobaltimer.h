@@ -34,10 +34,10 @@ public:
     void get_value(rapidjson::Document &d) const;
 
 protected:
-    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-    Gtk::Box m_HBox_CurModelDay{Gtk::ORIENTATION_HORIZONTAL, 6};
-    Gtk::Box m_HBox_CurModelTime{Gtk::ORIENTATION_HORIZONTAL, 6};
-    Gtk::Box m_HBox_Multiplicator{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box m_HBox_CurModelDay{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Box m_HBox_CurModelTime{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Box m_HBox_Multiplicator{Gtk::Orientation::HORIZONTAL, 6};
 
     Gtk::Entry m_Entry_CurModelDay;
     Gtk::Label m_Label_CurModelDay;
