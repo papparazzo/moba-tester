@@ -35,8 +35,8 @@ public:
     std::string get_text() const;
 
 protected:
-    Gtk::Box   m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-    Gtk::Box   m_HBox_String{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box   m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box   m_HBox_String{Gtk::Orientation::HORIZONTAL, 6};
     Gtk::Entry m_Entry_String;
     Gtk::Label m_Label_String;
 };
