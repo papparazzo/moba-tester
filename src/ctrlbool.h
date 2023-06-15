@@ -33,7 +33,7 @@ public:
     bool get_value() const;
 
 protected:
-    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-    Gtk::Box m_HBox_Bool{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box m_HBox_Bool{Gtk::Orientation::VERTICAL, 6};
     Gtk::CheckButton m_Check_Bool;
 };
