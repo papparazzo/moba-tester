@@ -40,11 +40,11 @@ class FrmMain : public Gtk::Window {
         }
 
     protected:
-        Gtk::Box       m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::Paned     m_HPaned{Gtk::ORIENTATION_HORIZONTAL};
-        Gtk::ButtonBox m_ButtonBox;
+        Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
+        Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
+        Gtk::Box       m_ButtonBox;
         Gtk::Button    m_Button_Emegerency;
-        Gtk::Box       m_HBox{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box       m_HBox{Gtk::Orientation::HORIZONTAL, 6};
         Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
         Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
 
@@ -53,15 +53,15 @@ class FrmMain : public Gtk::Window {
         Gtk::AboutDialog m_Dialog;
 
         // Outgoing
-        Gtk::Paned          m_VPaned_Outgoing{Gtk::ORIENTATION_VERTICAL};
+        Gtk::Paned          m_VPaned_Outgoing{Gtk::Orientation::VERTICAL};
         Gtk::ScrolledWindow m_ScrolledWindow_Outgoing;
 
         Gtk::TreeView                m_TreeView_Outgoing;
         Glib::RefPtr<Gtk::TreeStore> m_refTreeModel_Outgoing;
 
         Gtk::ScrolledWindow m_ScrolledWindow_Outgoing_Data;
-        Gtk::Box            m_VBox_Outgoing{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::ButtonBox      m_ButtonBox_Outgoing;
+        Gtk::Box            m_VBox_Outgoing{Gtk::Orientation::VERTICAL, 6};
+        Gtk::Box            m_ButtonBox_Outgoing;
         Gtk::Button         m_Button_Send{"Senden..."};
 
         class ModelColumnsMessages : public Gtk::TreeModelColumnRecord {
@@ -80,7 +80,7 @@ class FrmMain : public Gtk::Window {
         ModelColumnsMessages m_Columns_Messages;
 
         // Incoming
-        Gtk::Paned                   m_VPaned_Incomming{Gtk::ORIENTATION_VERTICAL};
+        Gtk::Paned                   m_VPaned_Incomming{Gtk::Orientation::VERTICAL};
         Gtk::ScrolledWindow          m_ScrolledWindow_Incomming;
         Gtk::TreeView                m_TreeView_Incomming;
         Glib::RefPtr<Gtk::ListStore> m_refTreeModel_Incomming;
@@ -88,10 +88,10 @@ class FrmMain : public Gtk::Window {
         Gtk::Label          m_Label_Data;
         Gtk::ScrolledWindow m_ScrolledWindow_Data;
 
-        Gtk::Box         m_VBox_Incomming{Gtk::ORIENTATION_VERTICAL, 6};
-        Gtk::ButtonBox   m_ButtonBox_Incomming;
+        Gtk::Box         m_VBox_Incomming{Gtk::Orientation::VERTICAL, 6};
+        Gtk::Box         m_ButtonBox_Incomming;
         Gtk::Button      m_Button_ClearIncomming{"Leeren"};
-        Gtk::Box         m_HBox_CheckRow{Gtk::ORIENTATION_HORIZONTAL, 6};
+        Gtk::Box         m_HBox_CheckRow{Gtk::Orientation::HORIZONTAL, 6};
         Gtk::CheckButton m_Button_AutoCheckLast;
 
         class ModelColumnsIncomming : public Gtk::TreeModel::ColumnRecord {
