@@ -42,7 +42,7 @@ protected:
         LAST_ENTRY
     };
 
-    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
     Gtk::Box m_HBox[LAST_ENTRY];
     Gtk::Label m_Label[LAST_ENTRY];
     Gtk::SpinButton m_SpinButton[LAST_ENTRY];
