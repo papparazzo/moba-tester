@@ -33,10 +33,10 @@ public:
     void get_value(rapidjson::Document &d) const;
 
 private:
-    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-    Gtk::Box m_HBox_ModulAddress{Gtk::ORIENTATION_HORIZONTAL, 6};
-    Gtk::Box m_HBox_ContactNumber{Gtk::ORIENTATION_HORIZONTAL, 6};
-    Gtk::Box m_HBox_State{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box m_HBox_ModulAddress{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Box m_HBox_ContactNumber{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Box m_HBox_State{Gtk::Orientation::HORIZONTAL, 6};
 
     Gtk::Entry m_Entry_ModulAddress;
     Gtk::Label m_Label_ModulAddress;
