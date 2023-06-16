@@ -4,7 +4,7 @@
 
 CtrlEnvironment::CtrlEnvironment() {
     for(int i = 0; i < Entries::LAST_ENTRY; ++i) {
-        m_HBox[i].set_orientation(Gtk::ORIENTATION_HORIZONTAL);
+        m_HBox[i].set_orientation(Gtk::Orientation::HORIZONTAL);
         m_HBox[i].pack_start(m_Label[i], Gtk::PACK_SHRINK);
         m_HBox[i].pack_end(m_Combo[i], Gtk::PACK_SHRINK);
         m_VBox.pack_start(m_HBox[i], Gtk::PACK_SHRINK);
