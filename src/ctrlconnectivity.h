@@ -34,7 +34,7 @@ class CtrlConnectivity {
         void get_value(rapidjson::Document &d) const;
 
     protected:
-        Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
+        Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
         Gtk::Box m_HBox;
         Gtk::Label m_Label;
         Gtk::ComboBoxText m_Combo;

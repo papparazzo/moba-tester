@@ -3,9 +3,9 @@
 #include <string>
 
 CtrlConnectivity::CtrlConnectivity() {
-    m_VBox.pack_start(m_HBox, Gtk::PACK_SHRINK);
-    m_HBox.pack_start(m_Label, Gtk::PACK_SHRINK);
-    m_HBox.pack_end(m_Combo, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox);
+    m_HBox.append(m_Label);
+    m_HBox.append(m_Combo);
 
     m_Label.set_label("Connectivity");
 
@@ -23,6 +23,6 @@ void CtrlConnectivity::get_value(rapidjson::Document &d) const {
 
 void CtrlConnectivity::init(Gtk::ScrolledWindow &container) {
     m_Combo.set_active(1);
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+   // container.show_all_children();
 }
