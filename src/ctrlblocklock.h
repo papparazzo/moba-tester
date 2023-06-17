@@ -34,8 +34,8 @@ public:
     void get_value(rapidjson::Document &d) const;
 
 protected:
-    Gtk::Box m_VBox{Gtk::ORIENTATION_VERTICAL, 6};
-    Gtk::Box m_HBox_Blocks{Gtk::ORIENTATION_HORIZONTAL, 6};
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box m_HBox_Blocks{Gtk::Orientation::HORIZONTAL, 6};
 
     Gtk::Entry m_Entry_Blocks;
     Gtk::Label m_Label_Blocks;

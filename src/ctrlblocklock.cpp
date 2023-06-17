@@ -4,9 +4,9 @@
 #include <sstream>
 
 CtrlBlockLock::CtrlBlockLock() {
-    m_VBox.pack_start(m_HBox_Blocks, Gtk::PACK_SHRINK);
-    m_HBox_Blocks.pack_start(m_Label_Blocks, Gtk::PACK_SHRINK);
-    m_HBox_Blocks.pack_end(m_Entry_Blocks, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_Blocks);
+    m_HBox_Blocks.append(m_Label_Blocks);
+    m_HBox_Blocks.append(m_Entry_Blocks);
 
     m_Label_Blocks.set_label("BlockIds, Kommagetrennt");
 }
@@ -31,6 +31,6 @@ void CtrlBlockLock::get_value(rapidjson::Document &d) const {
 void CtrlBlockLock::init(Gtk::ScrolledWindow &container) {
     m_Entry_Blocks.set_text("");
 
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+    //container.show_all_children();
 }
