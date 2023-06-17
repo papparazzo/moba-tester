@@ -3,18 +3,18 @@
 #include <string>
 
 CtrlColorTheme::CtrlColorTheme() {
-    m_VBox.pack_start(m_HBox_DimTime, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_BrightTime, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_Condition, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_DimTime);
+    m_VBox.append(m_HBox_BrightTime);
+    m_VBox.append(m_HBox_Condition);
 
-    m_HBox_DimTime.pack_start(m_Label_DimTime, Gtk::PACK_SHRINK);
-    m_HBox_DimTime.pack_end(m_Entry_DimTime, Gtk::PACK_SHRINK);
+    m_HBox_DimTime.append(m_Label_DimTime);
+    m_HBox_DimTime.append(m_Entry_DimTime);
 
-    m_HBox_BrightTime.pack_start(m_Label_BrightTime, Gtk::PACK_SHRINK);
-    m_HBox_BrightTime.pack_end(m_Entry_BrightTime, Gtk::PACK_SHRINK);
+    m_HBox_BrightTime.append(m_Label_BrightTime);
+    m_HBox_BrightTime.append(m_Entry_BrightTime);
 
-    m_HBox_Condition.pack_start(m_Label_Condition, Gtk::PACK_SHRINK);
-    m_HBox_Condition.pack_end(m_Combo_Condition, Gtk::PACK_SHRINK);
+    m_HBox_Condition.append(m_Label_Condition);
+    m_HBox_Condition.append(m_Combo_Condition);
 
     m_Label_DimTime.set_label("Dim-Time (hh:mm)");
     m_Label_BrightTime.set_label("Bright-Time (hh:mm)");
@@ -40,8 +40,8 @@ void CtrlColorTheme::init(Gtk::ScrolledWindow &container) {
     m_Entry_DimTime.set_text("");
     m_Entry_BrightTime.set_text("");
     m_Combo_Condition.set_active(1);
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+    //container.show_all_children();
 }
 
 rapidjson::Value CtrlColorTheme::setText(const std::string &value, rapidjson::Document &d) const {
