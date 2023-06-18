@@ -9,7 +9,7 @@ CtrlAmbientLight::CtrlAmbientLight() {
         m_HBox[i].set_orientation(Gtk::Orientation::HORIZONTAL);
         m_HBox[i].append(m_Label[i]);
         m_HBox[i].append(m_SpinButton[i]);
-        m_VBox.pack_start(m_HBox[i], Gtk::PACK_SHRINK);
+        m_VBox.append(m_HBox[i]);
     }
     m_Label[RED  ].set_label("red");
     m_Label[BLUE ].set_label("blue");
@@ -29,7 +29,7 @@ void CtrlAmbientLight::get_value(rapidjson::Document &d) const {
 }
 
 void CtrlAmbientLight::init(Gtk::ScrolledWindow &container) {
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+    //container.show_all_children();
 }
 
