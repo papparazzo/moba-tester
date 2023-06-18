@@ -21,17 +21,17 @@
 #include "ctrlcontact.h"
 
 CtrlContact::CtrlContact() {
-    m_VBox.pack_start(m_HBox_ModulAddress, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_ContactNumber, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_State, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_ModulAddress);
+    m_VBox.append(m_HBox_ContactNumber);
+    m_VBox.append(m_HBox_State);
 
-    m_HBox_ModulAddress.pack_start(m_Label_ModulAddress, Gtk::PACK_SHRINK);
-    m_HBox_ModulAddress.pack_end(m_Entry_ModulAddress, Gtk::PACK_SHRINK);
+    m_HBox_ModulAddress.append(m_Label_ModulAddress);
+    m_HBox_ModulAddress.append(m_Entry_ModulAddress);
 
-    m_HBox_ContactNumber.pack_start(m_Label_ContactNumber, Gtk::PACK_SHRINK);
-    m_HBox_ContactNumber.pack_end(m_Entry_ContactNumber, Gtk::PACK_SHRINK);
+    m_HBox_ContactNumber.append(m_Label_ContactNumber);
+    m_HBox_ContactNumber.append(m_Entry_ContactNumber);
 
-    m_HBox_State.pack_start(m_Check_State, Gtk::PACK_SHRINK);
+    m_HBox_State.append(m_Check_State);
 
     m_Label_ModulAddress.set_label("Moduladresse");
     m_Label_ContactNumber.set_label("Kontaktnummer");
@@ -58,7 +58,7 @@ void CtrlContact::init(Gtk::ScrolledWindow &container) {
     m_Entry_ModulAddress.set_text("54");
     m_Entry_ContactNumber.set_text("");
 
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+    //container.show_all_children();
     m_Check_State.set_label("aktiv");
 }
