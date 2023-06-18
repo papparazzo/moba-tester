@@ -3,8 +3,8 @@
 #include <string>
 
 CtrlBool::CtrlBool() {
-    m_VBox.pack_start(m_HBox_Bool, Gtk::PACK_SHRINK);
-    m_HBox_Bool.pack_start(m_Check_Bool, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_Bool);
+    m_HBox_Bool.append(m_Check_Bool);
 }
 
 CtrlBool::~CtrlBool() {
@@ -17,6 +17,6 @@ bool CtrlBool::get_value() const {
 void CtrlBool::init(const std::string &caption, Gtk::ScrolledWindow &container) {
     m_Check_Bool.set_label(caption);
     m_Check_Bool.set_active(false);
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+  //  container.show_all_children();
 }
