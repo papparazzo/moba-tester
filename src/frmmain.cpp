@@ -24,7 +24,7 @@
 #include <sys/timeb.h>
 #include <string>
 
-#include <boost/algorithm/string.hpp>
+//#include <boost/algorithm/string.hpp>
 
 #include "moba/systemmessages.h"
 #include "moba/rapidjson/ostreamwrapper.h"
@@ -537,8 +537,23 @@ void FrmMain::on_selection_changed_incomming() {
 
     std::stringstream ss;
     std::string s = row[m_Columns_Incomming.m_col_data];
-    boost::replace_all(s, "<", "&lt;");
-    boost::replace_all(s, ">", "&gt;");
+  //  boost::replace_all(s, "<", "&lt;");
+  //  boost::replace_all(s, ">", "&gt;");
+
+/* FIXME: use this
+void myReplace(std::string& str,
+               const std::string& oldStr,
+               const std::string& newStr)
+{
+  std::string::size_type pos = 0u;
+  while((pos = str.find(oldStr, pos)) != std::string::npos){
+     str.replace(pos, oldStr.length(), newStr);
+     pos += newStr.length();
+  }
+}
+*/
+
+
     ss << "<span font_family=\"Courier New\">" << s << "</span>";
     m_Label_Data.set_markup(ss.str());
 }
