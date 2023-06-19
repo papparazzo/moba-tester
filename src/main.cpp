@@ -32,7 +32,7 @@
 namespace {
     moba::AppData appData = {
         PACKAGE_NAME,
-        moba::Version(PACKAGE_VERSION),
+        moba::Version{PACKAGE_VERSION},
         __DATE__,
         __TIME__,
         "::1",
@@ -41,11 +41,12 @@ namespace {
 }
 
 int main(int argc, char *argv[]) {
-
     auto socket = std::make_shared<Socket>(appData.host, appData.port);
     auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, appData.version);
-    auto app = Gtk::Application::create(argc, argv, "org.moba.tester");
+    auto app = Gtk::Application::create("org.moba.tester");
 
+    return app->make_window_and_run<FrmMain>(argc, argv, endpoint);
+/*
     FrmMain frmMain{endpoint};
     frmMain.set_title(appData.appName);
     frmMain.set_border_width(10);
@@ -53,4 +54,5 @@ int main(int argc, char *argv[]) {
     frmMain.set_icon_name("moba-tester");
 
     return app->run(frmMain);
+*/
 }
