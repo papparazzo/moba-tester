@@ -96,7 +96,7 @@ void MsgSender::sendActiveMessage() {
 }
 
 void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId, Gtk::ScrolledWindow &container) {
-    container.remove_with_viewport();
+    //container.remove_with_viewport();
     activeMessage = cmd;
     activeMessageName = name;
 
