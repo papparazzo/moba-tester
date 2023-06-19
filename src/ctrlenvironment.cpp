@@ -5,9 +5,9 @@
 CtrlEnvironment::CtrlEnvironment() {
     for(int i = 0; i < Entries::LAST_ENTRY; ++i) {
         m_HBox[i].set_orientation(Gtk::Orientation::HORIZONTAL);
-        m_HBox[i].pack_start(m_Label[i], Gtk::PACK_SHRINK);
-        m_HBox[i].pack_end(m_Combo[i], Gtk::PACK_SHRINK);
-        m_VBox.pack_start(m_HBox[i], Gtk::PACK_SHRINK);
+        m_HBox[i].append(m_Label[i]);
+        m_HBox[i].append(m_Combo[i]);
+        m_VBox.append(m_HBox[i]);
         m_Combo[i].append("ON");
         m_Combo[i].append("OFF");
         m_Combo[i].append("TRIGGER");
@@ -41,8 +41,8 @@ void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
     for(int i = 0; i < Entries::LAST_ENTRY; ++i) {
         m_Combo[i].set_active(1);
     }
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+   // container.show_all_children();
 }
 
 rapidjson::Value CtrlEnvironment::getSwitchState(CtrlEnvironment::Entries entry, rapidjson::Document &d) const {
