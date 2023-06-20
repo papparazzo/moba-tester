@@ -3,14 +3,14 @@
 #include <string>
 
 CtrlGlobalTimer::CtrlGlobalTimer() {
-    m_VBox.pack_start(m_HBox_CurModelTime, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_Multiplicator, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_CurModelTime);
+    m_VBox.append(m_HBox_Multiplicator);
 
-    m_HBox_CurModelTime.pack_start(m_Label_CurModelTime, Gtk::PACK_SHRINK);
-    m_HBox_CurModelTime.pack_end(m_Entry_CurModelTime, Gtk::PACK_SHRINK);
+    m_HBox_CurModelTime.append(m_Label_CurModelTime);
+    m_HBox_CurModelTime.append(m_Entry_CurModelTime);
 
-    m_HBox_Multiplicator.pack_start(m_Label_Multiplicator, Gtk::PACK_SHRINK);
-    m_HBox_Multiplicator.pack_end(m_Entry_Multiplicator, Gtk::PACK_SHRINK);
+    m_HBox_Multiplicator.append(m_Label_Multiplicator);
+    m_HBox_Multiplicator.append(m_Entry_Multiplicator);
 
             //Gtk::Entry m_Entry_CurModelDay;
 
@@ -35,6 +35,6 @@ void CtrlGlobalTimer::init(Gtk::ScrolledWindow &container) {
     m_Entry_CurModelTime.set_text("");
     m_Entry_Multiplicator.set_text("");
 
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+ //   container.show_all_children();
 }
