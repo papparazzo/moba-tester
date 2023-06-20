@@ -57,28 +57,28 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
     sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
     add(m_VBox);
-    m_VBox.pack_start(m_HPaned);
+    m_VBox.append(m_HPaned);
 
     // about-dialog
-    m_VBox.pack_start(m_HBox, Gtk::PACK_SHRINK);
-    m_HBox.pack_end(m_ButtonBox, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox);
+    m_HBox.append(m_ButtonBox);
 
-    m_HBox.pack_start(m_Label_Connectivity_HW, Gtk::PACK_SHRINK);
+    m_HBox.append(m_Label_Connectivity_HW);
     m_Label_Connectivity_HW.set_justify(Gtk::JUSTIFY_LEFT);
     m_Label_Connectivity_HW.override_color(Gdk::RGBA("Gray"), Gtk::STATE_FLAG_NORMAL);
     m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
-    m_HBox.pack_start(m_Label_Connectivity_SW, Gtk::PACK_SHRINK);
+    m_HBox.append(m_Label_Connectivity_SW);
     m_Label_Connectivity_SW.set_justify(Gtk::JUSTIFY_LEFT);
     m_Label_Connectivity_SW.override_color(Gdk::RGBA("Gray"), Gtk::STATE_FLAG_NORMAL);
     m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
     // about-dialog
-    m_ButtonBox.pack_start(m_Button_About, Gtk::PACK_EXPAND_WIDGET, 5);
+    m_ButtonBox.append(m_Button_About, Gtk::PACK_EXPAND_WIDGET, 5);
     m_ButtonBox.set_layout(Gtk::BUTTONBOX_END);
     m_Button_About.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_about_clicked));
 
-    m_ButtonBox.pack_start(m_Button_Emegerency, Gtk::PACK_EXPAND_WIDGET, 5);
+    m_ButtonBox.append(m_Button_Emegerency, Gtk::PACK_EXPAND_WIDGET, 5);
     m_Button_Emegerency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emegency_clicked));
     m_Button_Emegerency.set_label("Nothalt");
 
@@ -388,7 +388,7 @@ void FrmMain::initIncomming() {
     m_HPaned.add2(m_VPaned_Incomming);
     m_VPaned_Incomming.set_position(150);
     m_VPaned_Incomming.add1(m_VBox_Incomming);
-    m_VBox_Incomming.pack_start(m_ScrolledWindow_Incomming);
+    m_VBox_Incomming.append(m_ScrolledWindow_Incomming);
     m_ScrolledWindow_Incomming.add(m_TreeView_Incomming);
     m_ScrolledWindow_Incomming.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 
@@ -404,12 +404,12 @@ void FrmMain::initIncomming() {
     m_ScrolledWindow_Data.add(m_Label_Data);
     m_ScrolledWindow_Data.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
 
-    m_VBox_Incomming.pack_end(m_HBox_CheckRow, Gtk::PACK_SHRINK);
-    m_HBox_CheckRow.pack_start(m_Button_AutoCheckLast, Gtk::PACK_SHRINK);
-    m_HBox_CheckRow.pack_end(m_ButtonBox_Incomming, Gtk::PACK_SHRINK);
+    m_VBox_Incomming.append(m_HBox_CheckRow);
+    m_HBox_CheckRow.append(m_Button_AutoCheckLast);
+    m_HBox_CheckRow.append(m_ButtonBox_Incomming);
     m_Button_AutoCheckLast.set_label("letzten Eintrag markieren");
 
-    m_ButtonBox_Incomming.pack_start(m_Button_ClearIncomming, Gtk::PACK_EXPAND_WIDGET, 5);
+    m_ButtonBox_Incomming.append(m_Button_ClearIncomming, Gtk::PACK_EXPAND_WIDGET, 5);
     m_ButtonBox_Incomming.set_layout(Gtk::BUTTONBOX_END);
 
     Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView_Incomming.get_selection();
@@ -431,10 +431,10 @@ void FrmMain::initOutgoing() {
     refTreeSelection->signal_changed().connect(sigc::mem_fun(*this, &FrmMain::on_selection_changed_outgoing));
 
     m_VPaned_Outgoing.add2(m_VBox_Outgoing);
-    m_VBox_Outgoing.pack_start(m_ScrolledWindow_Outgoing_Data);
+    m_VBox_Outgoing.append(m_ScrolledWindow_Outgoing_Data);
     m_ScrolledWindow_Outgoing_Data.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
-    m_VBox_Outgoing.pack_start(m_ButtonBox_Outgoing, Gtk::PACK_SHRINK);
-    m_ButtonBox_Outgoing.pack_start(m_Button_Send, Gtk::PACK_EXPAND_WIDGET, 5);
+    m_VBox_Outgoing.append(m_ButtonBox_Outgoing);
+    m_ButtonBox_Outgoing.append(m_Button_Send, Gtk::PACK_EXPAND_WIDGET, 5);
     m_ButtonBox_Outgoing.set_layout(Gtk::BUTTONBOX_END);
     m_Button_Send.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_send_clicked));
 }
@@ -470,9 +470,10 @@ bool FrmMain::on_timeout(int) {
     try {
         if(!connected) {
             msgEndpoint->connect();
-            m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+            m_Label_Connectivity_HW.set_markup("<span style=\"italic\">\xe2\x96\x84</span>");
+            //m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
-            m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+            //m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
 
             msgEndpoint->sendMsg(SystemGetHardwareState{});
@@ -483,9 +484,9 @@ bool FrmMain::on_timeout(int) {
 
     } catch(std::exception &e) {
         if(connected) {
-            m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+            //m_Label_Connectivity_HW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
-            m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
+            //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gray"), Gtk::STATE_FLAG_NORMAL);
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
             m_Button_Emegerency.set_sensitive(false);
             Gtk::MessageDialog dialog(
@@ -594,8 +595,8 @@ void FrmMain::on_button_clear_incomming_clicked() {
 
 void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::ERROR) {
-        m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
-        m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+       // m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+       // m_Label_Connectivity_SW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Button_Emegerency.set_sensitive(false);
@@ -603,8 +604,8 @@ void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     }
     m_Button_Emegerency.set_sensitive(true);
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::EMERGENCY_STOP) {
-        m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
-        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("red"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Button_Emegerency.set_label("Freigabe");
@@ -612,18 +613,18 @@ void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     }
     m_Button_Emegerency.set_label("Nothalt");
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::STANDBY) {
-        m_Label_Connectivity_HW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
-        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
     } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::MANUEL) {
-        m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
-        m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> manuell");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> manuell");
     } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::AUTOMATIC) {
-        m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
-        m_Label_Connectivity_SW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> automatisch");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> automatisch");
     }
