@@ -3,22 +3,22 @@
 #include <string>
 
 CtrlTrackLayout::CtrlTrackLayout() {
-    m_VBox.pack_start(m_HBox_Id, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_Caption, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_Description, Gtk::PACK_SHRINK);
-    m_VBox.pack_start(m_HBox_Active, Gtk::PACK_SHRINK);
+    m_VBox.append(m_HBox_Id);
+    m_VBox.append(m_HBox_Caption);
+    m_VBox.append(m_HBox_Description);
+    m_VBox.append(m_HBox_Active);
 
-    m_HBox_Id.pack_start(m_Label_Id, Gtk::PACK_SHRINK);
-    m_HBox_Id.pack_end(m_Entry_Id, Gtk::PACK_SHRINK);
+    m_HBox_Id.append(m_Label_Id);
+    m_HBox_Id.append(m_Entry_Id);
 
-    m_HBox_Caption.pack_start(m_Label_Caption, Gtk::PACK_SHRINK);
-    m_HBox_Caption.pack_end(m_Entry_Name, Gtk::PACK_SHRINK);
+    m_HBox_Caption.append(m_Label_Caption);
+    m_HBox_Caption.append(m_Entry_Name);
 
-    m_HBox_Description.pack_start(m_Label_Description, Gtk::PACK_SHRINK);
-    m_HBox_Description.pack_end(m_Entry_Description, Gtk::PACK_SHRINK);
+    m_HBox_Description.append(m_Label_Description);
+    m_HBox_Description.append(m_Entry_Description);
 
-    m_HBox_Active.pack_start(m_Label_Active, Gtk::PACK_SHRINK);
-    m_HBox_Active.pack_end(m_Check_Bool, Gtk::PACK_SHRINK);
+    m_HBox_Active.append(m_Label_Active);
+    m_HBox_Active.append(m_Check_Bool);
 
     m_Label_Id.set_label("Id");
     m_Label_Caption.set_label("Name");
@@ -43,8 +43,8 @@ void CtrlTrackLayout::init(bool enableIdSetting, Gtk::ScrolledWindow &container)
     m_Entry_Id.set_text("");
     m_Entry_Name.set_text("");
     m_Entry_Description.set_text("");
-    container.add(m_VBox);
-    container.show_all_children();
+    container.set_child(m_VBox);
+   // container.show_all_children();
     m_Entry_Id.set_visible(enableIdSetting);
     m_Label_Id.set_visible(enableIdSetting);
 }
