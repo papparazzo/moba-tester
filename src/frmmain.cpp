@@ -597,8 +597,8 @@ void FrmMain::on_button_clear_incomming_clicked() {
 
 void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::ERROR) {
-       // m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
-       // m_Label_Connectivity_SW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_SW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Button_Emegerency.set_sensitive(false);
@@ -606,8 +606,8 @@ void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     }
     m_Button_Emegerency.set_sensitive(true);
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::EMERGENCY_STOP) {
-        //m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
-        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Button_Emegerency.set_label("Freigabe");
@@ -615,18 +615,18 @@ void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     }
     m_Button_Emegerency.set_label("Nothalt");
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::STANDBY) {
-        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
-        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
     } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::MANUEL) {
-        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
-        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("gold"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> manuell");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> manuell");
     } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::AUTOMATIC) {
-        //m_Label_Connectivity_HW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
-        //m_Label_Connectivity_SW.override_color(Gdk::RGBA("green"), Gtk::STATE_FLAG_NORMAL);
+        m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+        m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> automatisch");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> automatisch");
     }
