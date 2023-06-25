@@ -64,12 +64,12 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     m_HBox.append(m_ButtonBox);
 
     m_HBox.append(m_Label_Connectivity_HW);
-   // m_Label_Connectivity_HW.set_justify(Gtk::JUSTIFY_LEFT);
+    m_Label_Connectivity_HW.set_justify(Gtk::Justification::LEFT);
     m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
     m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
     m_HBox.append(m_Label_Connectivity_SW);
-    //m_Label_Connectivity_SW.set_justify(Gtk::JUSTIFY_LEFT);
+    m_Label_Connectivity_SW.set_justify(Gtk::Justification::LEFT);
     m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
     m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
