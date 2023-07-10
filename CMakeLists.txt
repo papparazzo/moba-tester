@@ -5,6 +5,9 @@ project(moba-tester VERSION 0.1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+find_package(PkgConfig)
+pkg_check_modules(GTKMM gtkmm-4.0) 
+
 configure_file(config.h.in config.h)
 
 add_executable(
@@ -36,7 +39,11 @@ target_include_directories(moba-tester PUBLIC "${PROJECT_BINARY_DIR}")
 target_link_libraries(moba-tester mobacommon)
 target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-msghandling/src/moba/libmsghandling.a)
 target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-tracklayout/src/moba/libtracklayout.a)
+target_link_libraries(moba-tester ${GTKMM_LIBRARIES})
 
+link_directories(${GTKMM_LIBRARY_DIRS})
+
+include_directories(${GTKMM_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/modules/lib-msghandling/src)
 include_directories(${CMAKE_SOURCE_DIR}/modules/lib-tracklayout/src)
 
