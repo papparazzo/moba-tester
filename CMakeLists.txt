@@ -37,12 +37,10 @@ set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 target_include_directories(moba-tester PUBLIC "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(moba-tester mobacommon)
-target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-msghandling/src/moba/libmsghandling.a)
-target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-tracklayout/src/moba/libtracklayout.a)
+target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-msghandling/libmoba-lib-msghandling.a)
 target_link_libraries(moba-tester ${GTKMM_LIBRARIES})
 
 link_directories(${GTKMM_LIBRARY_DIRS})
 
 include_directories(${GTKMM_INCLUDE_DIRS})
 include_directories(${CMAKE_SOURCE_DIR}/modules/lib-msghandling/src)
-include_directories(${CMAKE_SOURCE_DIR}/modules/lib-tracklayout/src)
