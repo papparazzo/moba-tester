@@ -28,9 +28,6 @@ CtrlString::CtrlString() {
     m_HBox_String.append(m_Entry_String);
 }
 
-CtrlString::~CtrlString() {
-}
-
 void CtrlString::init(const std::string &caption, Gtk::ScrolledWindow &container) {
     m_Entry_String.set_text("");
     m_Label_String.set_label(caption);

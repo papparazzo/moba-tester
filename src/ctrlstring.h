@@ -26,7 +26,7 @@ class CtrlString {
 public:
     CtrlString() ;
 
-    virtual ~CtrlString();
+    virtual ~CtrlString() = default;
 
     void init(const std::string &caption, Gtk::ScrolledWindow &container);
 
