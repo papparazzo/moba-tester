@@ -46,9 +46,6 @@ CtrlColorTheme::CtrlColorTheme() {
     m_Combo_Condition.append("UNSET");
 }
 
-CtrlColorTheme::~CtrlColorTheme() {
-}
-
 void CtrlColorTheme::get_value(rapidjson::Document &d) const {
     d.SetObject();
     d.AddMember("dimTime", setText(m_Entry_DimTime.get_text(), d), d.GetAllocator());

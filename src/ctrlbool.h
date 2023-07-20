@@ -26,7 +26,7 @@ class CtrlBool {
 public:
     CtrlBool() ;
 
-    virtual ~CtrlBool();
+    virtual ~CtrlBool() = default;
 
     void init(const std::string &caption, Gtk::ScrolledWindow &container);
 

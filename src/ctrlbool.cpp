@@ -27,9 +27,6 @@ CtrlBool::CtrlBool() {
     m_HBox_Bool.append(m_Check_Bool);
 }
 
-CtrlBool::~CtrlBool() {
-}
-
 bool CtrlBool::get_value() const {
     return m_Check_Bool.get_active();
 }

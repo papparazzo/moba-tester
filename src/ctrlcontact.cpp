@@ -37,9 +37,6 @@ CtrlContact::CtrlContact() {
     m_Label_ContactNumber.set_label("Kontaktnummer");
 }
 
-CtrlContact::~CtrlContact() {
-}
-
 void CtrlContact::get_value(rapidjson::Document &d) const {
 
     d.SetObject();

@@ -20,8 +20,6 @@
 
 #include "ctrlambience.h"
 
-#include <string>
-
 CtrlAmbience::CtrlAmbience() {
     for(int i = 0; i < LAST_ENTRY; ++i) {
         m_HBox[i].set_orientation(Gtk::Orientation::HORIZONTAL);

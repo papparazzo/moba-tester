@@ -26,7 +26,7 @@
 class CtrlContact {
 public:
     CtrlContact();
-    virtual ~CtrlContact();
+    virtual ~CtrlContact() = default;
 
     void init(Gtk::ScrolledWindow &container);
 

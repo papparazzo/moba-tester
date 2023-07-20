@@ -27,7 +27,7 @@ class CtrlConnectivity {
     public:
         CtrlConnectivity() ;
 
-        virtual ~CtrlConnectivity();
+        virtual ~CtrlConnectivity() = default;
 
         void init(Gtk::ScrolledWindow &container);
 

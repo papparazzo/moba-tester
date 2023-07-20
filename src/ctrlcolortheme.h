@@ -27,7 +27,7 @@ class CtrlColorTheme {
 public:
     CtrlColorTheme() ;
 
-    virtual ~CtrlColorTheme();
+    virtual ~CtrlColorTheme() = default;
 
     void init(Gtk::ScrolledWindow &container);
 
