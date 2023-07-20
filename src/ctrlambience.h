@@ -21,17 +21,17 @@
 #pragma once
 
 #include <gtkmm.h>
-#include "moba/rapidjson/document.h"
+#include "moba/nlohmann/json.hpp"
 
 class CtrlAmbience {
 public:
     CtrlAmbience() ;
 
-    virtual ~CtrlAmbience();
+    virtual ~CtrlAmbience() = default;
 
     void init(Gtk::ScrolledWindow &container);
 
-    void get_value(rapidjson::Document &d) const;
+    nlohmann::json get_value() const;
 
 protected:
     enum Entries {
