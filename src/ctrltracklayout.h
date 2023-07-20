@@ -27,7 +27,7 @@ class CtrlTrackLayout {
 public:
     CtrlTrackLayout() ;
 
-    virtual ~CtrlTrackLayout();
+    virtual ~CtrlTrackLayout() = default;
 
     void init(bool enableIdSetting, Gtk::ScrolledWindow &container);
 

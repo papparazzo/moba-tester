@@ -46,9 +46,6 @@ CtrlTrackLayout::CtrlTrackLayout() {
     m_Label_Active.set_label("Active");
 }
 
-CtrlTrackLayout::~CtrlTrackLayout() {
-}
-
 void CtrlTrackLayout::get_value(rapidjson::Document &d) const {
     d.SetObject();
     if(m_Entry_Id.get_visible()) {
