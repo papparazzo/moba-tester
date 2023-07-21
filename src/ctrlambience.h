@@ -44,6 +44,4 @@ protected:
     Gtk::Box m_HBox[LAST_ENTRY];
     Gtk::Label m_Label[LAST_ENTRY];
     Gtk::ComboBoxText m_Combo[LAST_ENTRY];
-
-    rapidjson::Value getToggleState(Entries entry, rapidjson::Document &d) const;
 };
