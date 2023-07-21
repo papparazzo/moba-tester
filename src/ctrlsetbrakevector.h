@@ -26,7 +26,7 @@
 class CtrlSetBrakeVector {
 public:
     CtrlSetBrakeVector();
-    virtual ~CtrlSetBrakeVector();
+    virtual ~CtrlSetBrakeVector() = default;
 
     void init(Gtk::ScrolledWindow &container);
 

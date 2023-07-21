@@ -43,9 +43,6 @@ CtrlEnvironment::CtrlEnvironment() {
     m_Label[Entries::AUX_03           ].set_label("aux 03");
 }
 
-CtrlEnvironment::~CtrlEnvironment() {
-}
-
 void CtrlEnvironment::get_value(rapidjson::Document &d) const {
     d.SetObject();
     d.AddMember("thunderStorm",     getSwitchState(Entries::THUNDER_STORM, d), d.GetAllocator());

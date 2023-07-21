@@ -39,9 +39,6 @@ CtrlSetBrakeVector::CtrlSetBrakeVector() {
     m_Label_LocalId.set_label("Lok-Id");
 }
 
-CtrlSetBrakeVector::~CtrlSetBrakeVector() {
-}
-
 void CtrlSetBrakeVector::get_value(rapidjson::Document &d) const {
     d.SetArray();
 

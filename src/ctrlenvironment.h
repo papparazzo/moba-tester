@@ -27,7 +27,7 @@ class CtrlEnvironment {
     public:
         CtrlEnvironment() ;
 
-        virtual ~CtrlEnvironment();
+        virtual ~CtrlEnvironment() = default;
 
         void init(Gtk::ScrolledWindow &container);
 
@@ -52,5 +52,3 @@ class CtrlEnvironment {
 
         rapidjson::Value getSwitchState(Entries entry, rapidjson::Document &d) const;
 };
-
-
