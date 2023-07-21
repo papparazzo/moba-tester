@@ -37,15 +37,14 @@ CtrlAmbientLight::CtrlAmbientLight() {
     m_Label[WHITE].set_label("white");
 }
 
-CtrlAmbientLight::~CtrlAmbientLight() {
-}
+nlohmann::json CtrlAmbientLight::get_value() const {
+    nlohmann::json data;
 
-void CtrlAmbientLight::get_value(rapidjson::Document &d) const {
-    d.SetObject();
-    d.AddMember("red",   m_SpinButton[RED  ].get_value_as_int(), d.GetAllocator());
-    d.AddMember("blue",  m_SpinButton[BLUE ].get_value_as_int(), d.GetAllocator());
-    d.AddMember("green", m_SpinButton[GREEN].get_value_as_int(), d.GetAllocator());
-    d.AddMember("white", m_SpinButton[WHITE].get_value_as_int(), d.GetAllocator());
+    data["red"] =  m_SpinButton[RED  ].get_value_as_int();
+    data["blue"] = m_SpinButton[BLUE ].get_value_as_int();
+    data["green"] = m_SpinButton[GREEN].get_value_as_int();
+    data["white"] = m_SpinButton[WHITE].get_value_as_int();
+    return data;
 }
 
 void CtrlAmbientLight::init(Gtk::ScrolledWindow &container) {
