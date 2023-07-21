@@ -27,7 +27,7 @@ class CtrlAmbientLight {
 public:
     CtrlAmbientLight() ;
 
-    virtual ~CtrlAmbientLight();
+    virtual ~CtrlAmbientLight() = default;
 
     void init(Gtk::ScrolledWindow &container);
 
