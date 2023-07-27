@@ -27,7 +27,7 @@ class CtrlBlockLock {
 public:
     CtrlBlockLock() ;
 
-    virtual ~CtrlBlockLock();
+    virtual ~CtrlBlockLock() = default;
 
     void init(Gtk::ScrolledWindow &container);
 
