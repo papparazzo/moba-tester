@@ -46,11 +46,13 @@ CtrlColorTheme::CtrlColorTheme() {
     m_Combo_Condition.append("UNSET");
 }
 
-void CtrlColorTheme::get_value(rapidjson::Document &d) const {
-    d.SetObject();
-    d.AddMember("dimTime", setText(m_Entry_DimTime.get_text(), d), d.GetAllocator());
-    d.AddMember("brightTime", setText(m_Entry_BrightTime.get_text(), d), d.GetAllocator());
-    d.AddMember("condition", setText(m_Combo_Condition.get_active_text(), d), d.GetAllocator());
+nlohmann::json CtrlColorTheme::get_value() const {
+    nlohmann::json data;
+
+    data["dimTime"] = m_Entry_DimTime.get_text();
+    data["brightTime"] = m_Entry_BrightTime.get_text();
+    data["condition"] = m_Combo_Condition.get_active_text();
+    return data;
 }
 
 void CtrlColorTheme::init(Gtk::ScrolledWindow &container) {
@@ -59,8 +61,4 @@ void CtrlColorTheme::init(Gtk::ScrolledWindow &container) {
     m_Combo_Condition.set_active(1);
     container.set_child(m_VBox);
     //container.show_all_children();
-}
-
-rapidjson::Value CtrlColorTheme::setText(const std::string &value, rapidjson::Document &d) const {
-    return rapidjson::Value(value.c_str(), value.length(), d.GetAllocator());
 }
