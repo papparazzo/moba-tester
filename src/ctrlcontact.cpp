@@ -37,18 +37,19 @@ CtrlContact::CtrlContact() {
     m_Label_ContactNumber.set_label("Kontaktnummer");
 }
 
-void CtrlContact::get_value(rapidjson::Document &d) const {
+nlohmann::json CtrlContact::get_value() const {
+    nlohmann::json data;
 
-    d.SetObject();
-    d.AddMember("state", m_Check_State.get_active(), d.GetAllocator());
-    d.AddMember("time", 2, d.GetAllocator());
+    data["state"] = m_Check_State.get_active();
+    data["time"] = 2;
 
-    rapidjson::Value v;
-    v.SetObject();
-    v.AddMember("modulAddr", rapidjson::Value(std::stol(m_Entry_ModulAddress.get_text())), d.GetAllocator());
-    v.AddMember("contactNb", rapidjson::Value(std::stol(m_Entry_ContactNumber.get_text())), d.GetAllocator());
+    nlohmann::json v;
+    v["modulAddr"] = std::stol(m_Entry_ModulAddress.get_text());
+    v["contactNb"] = std::stol(m_Entry_ContactNumber.get_text());
 
-    d.AddMember("contact", v, d.GetAllocator());
+    data["contact"] = v;
+
+    return data;
 }
 
 void CtrlContact::init(Gtk::ScrolledWindow &container) {
