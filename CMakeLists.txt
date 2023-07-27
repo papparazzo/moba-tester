@@ -1,9 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.25)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 
 project(moba-tester VERSION 0.1.0)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_package(PkgConfig)
 pkg_check_modules(GTKMM gtkmm-4.0) 
@@ -31,8 +32,6 @@ add_executable(
 )
 
 install(TARGETS moba-tester)
-
-set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 
 target_include_directories(moba-tester PUBLIC "${PROJECT_BINARY_DIR}")
 
