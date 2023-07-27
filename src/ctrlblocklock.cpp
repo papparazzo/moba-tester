@@ -31,21 +31,19 @@ CtrlBlockLock::CtrlBlockLock() {
     m_Label_Blocks.set_label("BlockIds, Kommagetrennt");
 }
 
-CtrlBlockLock::~CtrlBlockLock() {
-}
+nlohmann::json CtrlBlockLock::get_value() const {
+    nlohmann::json data;
 
-void CtrlBlockLock::get_value(rapidjson::Document &d) const {
     std::string str = m_Entry_Blocks.get_text();
-    d.SetArray();
-
     std::replace(str.begin(), str.end(), ',', ' ');
 
     std::stringstream ss(str);
 
     int temp;
     while(ss >> temp) {
-        d.PushBack(temp, d.GetAllocator());
+        data.push_back(temp);
     }
+    return data;
 }
 
 void CtrlBlockLock::init(Gtk::ScrolledWindow &container) {
