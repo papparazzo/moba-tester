@@ -27,7 +27,7 @@ class CtrlGlobalTimer {
 public:
     CtrlGlobalTimer() ;
 
-    virtual ~CtrlGlobalTimer();
+    virtual ~CtrlGlobalTimer() = default;
 
     void init(Gtk::ScrolledWindow &container);
 

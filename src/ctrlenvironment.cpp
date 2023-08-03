@@ -20,8 +20,6 @@
 
 #include "ctrlenvironment.h"
 
-#include <string>
-
 CtrlEnvironment::CtrlEnvironment() {
     for(int i = 0; i < Entries::LAST_ENTRY; ++i) {
         m_HBox[i].set_orientation(Gtk::Orientation::HORIZONTAL);
@@ -55,8 +53,8 @@ void CtrlEnvironment::get_value(rapidjson::Document &d) const {
 }
 
 void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
-    for(int i = 0; i < Entries::LAST_ENTRY; ++i) {
-        m_Combo[i].set_active(1);
+    for(auto & i : m_Combo) {
+        i.set_active(1);
     }
     container.set_child(m_VBox);
    // container.show_all_children();

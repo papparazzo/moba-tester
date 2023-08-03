@@ -35,8 +35,8 @@
 
 class FrmMain : public Gtk::Window {
     public:
-        FrmMain(EndpointPtr mhp);
-        virtual ~FrmMain() {
+        explicit FrmMain(EndpointPtr mhp);
+        ~FrmMain() override {
         }
 
     protected:
