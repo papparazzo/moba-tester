@@ -40,15 +40,12 @@ CtrlGlobalTimer::CtrlGlobalTimer() {
     m_Label_Multiplicator.set_label("Multiplikator");
 }
 
-CtrlGlobalTimer::~CtrlGlobalTimer() {
-}
-
-void CtrlGlobalTimer::get_value(rapidjson::Document &d) const {
-    std::string txt = m_Entry_CurModelTime.get_text();
-    d.SetObject();
-    d.AddMember("curModelDay", rapidjson::Value("SATURDAY", d.GetAllocator()), d.GetAllocator());
-    d.AddMember("curModelTime", rapidjson::Value(txt.c_str(), txt.length(), d.GetAllocator()), d.GetAllocator());
-    d.AddMember("multiplicator", rapidjson::Value(std::stol(m_Entry_Multiplicator.get_text())), d.GetAllocator());
+nlohmann::json CtrlGlobalTimer::get_value() const {
+    nlohmann::json data;
+    data["curModelDay"] = "SATURDAY";
+    data["curModelTime"] = m_Entry_CurModelTime.get_text();
+    data["multiplicator"] = std::stol(m_Entry_Multiplicator.get_text());
+    return data;
 }
 
 void CtrlGlobalTimer::init(Gtk::ScrolledWindow &container) {

@@ -33,9 +33,8 @@ CtrlConnectivity::CtrlConnectivity() {
     m_Combo.append("ERROR");
 }
 
-void CtrlConnectivity::get_value(rapidjson::Document &d) const {
-    std::string str = m_Combo.get_active_text();
-    d.SetString(str.c_str(), str.length(), d.GetAllocator());
+nlohmann::json CtrlConnectivity::get_value() const {
+    return nlohmann::json{m_Combo.get_active_text()};
 }
 
 void CtrlConnectivity::init(Gtk::ScrolledWindow &container) {
