@@ -23,12 +23,7 @@
 #include <ctime>
 #include <string>
 
-//#include <boost/algorithm/string.hpp>
-
 #include "moba/systemmessages.h"
-#include "moba/rapidjson/ostreamwrapper.h"
-#include "moba/rapidjson/prettywriter.h"
-
 #include "frmmain.h"
 #include "config.h"
 
@@ -87,7 +82,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initOutgoing();
     initIncomming();
 
-    registry.registerHandler<SystemHardwareStateChanged>(std::bind(&FrmMain::setHardwareState, this, std::placeholders::_1));
+    registry.registerHandler<SystemHardwareStateChanged>([this](auto && PH1) { setHardwareState(std::forward<decltype(PH1)>(PH1)); });
     registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     m_Button_Send.set_sensitive(false);
@@ -516,10 +511,10 @@ void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohman
 
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
-    row[m_Columns_Incomming.m_col_timestamp] = std::string(buffer);
-    row[m_Columns_Incomming.m_col_grp_name ] = grpId;
-    row[m_Columns_Incomming.m_col_msg_name ] = msgId;
-    row[m_Columns_Incomming.m_col_data     ] = sb.GetString();
+    row[m_Columns_Incomming.m_col_timestamp] = std::string(timeString);
+    row[m_Columns_Incomming.m_col_grp_name ] = static_cast<int>(grpId);
+    row[m_Columns_Incomming.m_col_msg_name ] = static_cast<int>(msgId);
+    //row[m_Columns_Incomming.m_col_data     ] = sb.GetString();
 
     if(m_Button_AutoCheckLast.get_active()) {
         Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
