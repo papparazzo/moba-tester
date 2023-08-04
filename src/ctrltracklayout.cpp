@@ -46,14 +46,17 @@ CtrlTrackLayout::CtrlTrackLayout() {
     m_Label_Active.set_label("Active");
 }
 
-void CtrlTrackLayout::get_value(rapidjson::Document &d) const {
-    d.SetObject();
+nlohmann::json CtrlTrackLayout::get_value() const {
+    nlohmann::json data;
+
     if(m_Entry_Id.get_visible()) {
-        d.AddMember("id", std::stol(m_Entry_Id.get_text()), d.GetAllocator());
+        data["id"] = std::stol(m_Entry_Id.get_text());
     }
-    d.AddMember("name", setText(m_Entry_Name.get_text(), d), d.GetAllocator());
-    d.AddMember("description", setText(m_Entry_Description.get_text(), d), d.GetAllocator());
-    d.AddMember("active", m_Check_Bool.get_active(), d.GetAllocator());
+    data["name"] = m_Entry_Name.get_text();
+    data["description"] = m_Entry_Description.get_text();
+    data["active"] = m_Check_Bool.get_active();
+
+    return data;
 }
 
 void CtrlTrackLayout::init(bool enableIdSetting, Gtk::ScrolledWindow &container) {
@@ -64,8 +67,4 @@ void CtrlTrackLayout::init(bool enableIdSetting, Gtk::ScrolledWindow &container)
    // container.show_all_children();
     m_Entry_Id.set_visible(enableIdSetting);
     m_Label_Id.set_visible(enableIdSetting);
-}
-
-rapidjson::Value CtrlTrackLayout::setText(const std::string &value, rapidjson::Document &d) const {
-    return rapidjson::Value(value.c_str(), value.length(), d.GetAllocator());
 }
