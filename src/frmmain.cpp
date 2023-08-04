@@ -21,7 +21,6 @@
 #include <iostream>
 
 #include <ctime>
-#include <sys/timeb.h>
 #include <string>
 
 //#include <boost/algorithm/string.hpp>
@@ -506,16 +505,14 @@ bool FrmMain::on_timeout(int) {
     return true;
 }
 
-void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const rapidjson::Document &data) {
-    timeb sTimeB;
-    char buffer[25] = "";
+void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data) {
+    std::time_t time = std::time({});
+    char timeString[std::size("yyyy-mm-dd hh:mm:ss")];
+    std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&time));
 
-    ftime(&sTimeB);
-    strftime(buffer, 21, "%d.%m.%Y %H:%M:%S", localtime(&sTimeB.time));
-
-    rapidjson::StringBuffer sb;
-    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
-    data.Accept(writer);
+    //rapidjson::StringBuffer sb;
+    //rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
+    //data.Accept(writer);
 
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;

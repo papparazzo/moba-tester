@@ -22,7 +22,7 @@
 #include <gtkmm.h>
 
 #include "moba/endpoint.h"
-#include "moba/rapidjson/document.h"
+#include "moba/nlohmann/json.hpp"
 #include "moba/systemmessages.h"
 #include "moba/registry.h"
 #include "moba/message.h"
@@ -122,7 +122,7 @@ class FrmMain : public Gtk::Window {
         MsgSender   msgSender;
         Registry    registry;
 
-        void msgHandler(std::uint32_t grpId, std::uint32_t msgId, const rapidjson::Document &data);
+        void msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data);
 
         // Signal handlers:
         bool on_timeout(int timer_number);
