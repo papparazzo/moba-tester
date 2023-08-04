@@ -41,15 +41,18 @@ CtrlEnvironment::CtrlEnvironment() {
     m_Label[Entries::AUX_03           ].set_label("aux 03");
 }
 
-void CtrlEnvironment::get_value(rapidjson::Document &d) const {
-    d.SetObject();
-    d.AddMember("thunderStorm",     getSwitchState(Entries::THUNDER_STORM, d), d.GetAllocator());
-    d.AddMember("wind",             getSwitchState(Entries::WIND, d), d.GetAllocator());
-    d.AddMember("rain",             getSwitchState(Entries::RAIN, d), d.GetAllocator());
-    d.AddMember("environmentSound", getSwitchState(Entries::ENVIRONMENT_SOUND, d), d.GetAllocator());
-    d.AddMember("aux01",            getSwitchState(Entries::AUX_01, d), d.GetAllocator());
-    d.AddMember("aux02",            getSwitchState(Entries::AUX_02, d), d.GetAllocator());
-    d.AddMember("aux03",            getSwitchState(Entries::AUX_03, d), d.GetAllocator());
+nlohmann::json CtrlEnvironment::get_value() const {
+    nlohmann::json data;
+
+    data["thunderStorm"    ] = m_Combo[Entries::THUNDER_STORM].get_active_text();
+    data["wind"            ] = m_Combo[Entries::WIND].get_active_text();
+    data["rain"            ] = m_Combo[Entries::RAIN].get_active_text();
+    data["environmentSound"] = m_Combo[Entries::ENVIRONMENT_SOUND].get_active_text();
+    data["aux01"           ] = m_Combo[Entries::AUX_01].get_active_text();
+    data["aux02"           ] = m_Combo[Entries::AUX_02].get_active_text();
+    data["aux03"           ] = m_Combo[Entries::AUX_03].get_active_text();
+
+    return data;
 }
 
 void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
@@ -58,9 +61,4 @@ void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
     }
     container.set_child(m_VBox);
    // container.show_all_children();
-}
-
-rapidjson::Value CtrlEnvironment::getSwitchState(CtrlEnvironment::Entries entry, rapidjson::Document &d) const {
-    std::string str = m_Combo[entry].get_active_text();
-    return rapidjson::Value{str.c_str(), static_cast<unsigned int>(str.length()), d.GetAllocator()};
 }
