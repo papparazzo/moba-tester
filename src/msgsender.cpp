@@ -22,7 +22,7 @@
 #include "moba/message.h"
 
 void MsgSender::sendActiveMessage() {
-    rapidjson::Document data;
+    nlohmann::json data;
 
     switch(activeMessage) {
         case MessageType::SERVER_RESET_CLIENT:
@@ -32,61 +32,60 @@ void MsgSender::sendActiveMessage() {
         case MessageType::LAYOUT_LOCK_LAYOUT:
         case MessageType::LAYOUT_GET_LAYOUT_REQ:
         case MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ:
-            data.SetInt(m_CtrlString.get_integer());
+            data = m_CtrlString.get_integer();
             break;
 
         case MessageType::SYSTEM_SET_AUTOMATIC_MODE:
         case MessageType::SYSTEM_SET_STANDBY_MODE:
-            data.SetBool(m_CtrlBool.get_value());
+            data = m_CtrlBool.get_value();
             break;
 
         case MessageType::CLIENT_ECHO_REQ: {
-            auto txt = m_CtrlString.get_text();
-            data.SetString(txt.c_str(), txt.length(), data.GetAllocator());
+            data = m_CtrlString.get_text();
             break;
         }
 
         case MessageType::TIMER_SET_GLOBAL_TIMER:
-            m_CtrlGlobalTimer.get_value(data);
+            data = m_CtrlGlobalTimer.get_value();
             break;
 
         case MessageType::TIMER_SET_COLOR_THEME:
-            m_CtrlColorTheme.get_value(data);
+            data = m_CtrlColorTheme.get_value();
             break;
 
         case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
-            m_CtrlEnvironment.get_value(data);
+            data = m_CtrlEnvironment.get_value();
             break;
 
         case MessageType::ENVIRONMENT_SET_AMBIENCE:
-            m_CtrlAmbience.get_value(data);
+            data = m_CtrlAmbience.get_value();
             break;
 
         case MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT:
-            m_CtrlAmbientLight.get_value(data);
+            data = m_CtrlAmbientLight.get_value();
             break;
 
         case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
-            m_CtrlConnectivity.get_value(data);
+            data = m_CtrlConnectivity.get_value();
             break;
 
         case MessageType::INTERFACE_CONTACT_TRIGGERED:
-            m_CtrlContact.get_value(data);
+            data = m_CtrlContact.get_value();
             break;
 
         case MessageType::INTERFACE_SET_BRAKE_VECTOR:
-            m_CtrlSetBrakeVector.get_value(data);
+            data = m_CtrlSetBrakeVector.get_value();
             break;
 
         case MessageType::LAYOUT_CREATE_LAYOUT_REQ:
         case MessageType::LAYOUT_UPDATE_LAYOUT:
-            m_CtrlTrackLayout.get_value(data);
+            data = m_CtrlTrackLayout.get_value();
             break;
 
         case MessageType::CONTROL_LOCK_BLOCK:
         case MessageType::CONTROL_LOCK_BLOCK_WAITING:
         case MessageType::CONTROL_UNLOCK_BLOCK:
-            m_CtrlBlockLock.get_value(data);
+            data = m_CtrlBlockLock.get_value();
             break;
 
         default:
