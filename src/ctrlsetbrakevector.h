@@ -21,7 +21,7 @@
 #pragma once
 
 #include <gtkmm.h>
-#include "moba/rapidjson/document.h"
+#include "moba/nlohmann/json.hpp"
 
 class CtrlSetBrakeVector {
 public:
@@ -30,7 +30,7 @@ public:
 
     void init(Gtk::ScrolledWindow &container);
 
-    void get_value(rapidjson::Document &d) const;
+    nlohmann::json get_value() const;
 
 protected:
     Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};

@@ -39,21 +39,21 @@ CtrlSetBrakeVector::CtrlSetBrakeVector() {
     m_Label_LocalId.set_label("Lok-Id");
 }
 
-void CtrlSetBrakeVector::get_value(rapidjson::Document &d) const {
-    d.SetArray();
+nlohmann::json CtrlSetBrakeVector::get_value() const {
+    nlohmann::json d;
+    nlohmann::json o;
 
-    rapidjson::Value o;
+    o["localId"] = std::stol(m_Entry_LocalId.get_text());
 
-    o.SetObject();
-    o.AddMember("localId", rapidjson::Value(std::stol(m_Entry_LocalId.get_text())), d.GetAllocator());
+    nlohmann::json v;
 
-    rapidjson::Value v;
-    v.SetObject();
-    v.AddMember("modulAddr", rapidjson::Value(std::stol(m_Entry_ModulAddress.get_text())), d.GetAllocator());
-    v.AddMember("contactNb", rapidjson::Value(std::stol(m_Entry_ContactNumber.get_text())), d.GetAllocator());
+    v["modulAddr"] = std::stol(m_Entry_ModulAddress.get_text());
+    v["contactNb"]= std::stol(m_Entry_ContactNumber.get_text());
 
-    o.AddMember("contact", v, d.GetAllocator());
-    d.PushBack(o, d.GetAllocator());
+    o["contact"] = v;
+    d.push_back(o);
+
+    return d;
 }
 
 void CtrlSetBrakeVector::init(Gtk::ScrolledWindow &container) {
