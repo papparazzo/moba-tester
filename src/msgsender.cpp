@@ -91,7 +91,7 @@ void MsgSender::sendActiveMessage() {
         default:
             break;
     }
-    return msgep->sendMsg(activeGrpId, activeMsgId, data);
+    return endpoint->sendMsg(activeGrpId, activeMsgId, data);
 }
 
 void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId, Gtk::ScrolledWindow &container) {
