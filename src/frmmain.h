@@ -36,8 +36,7 @@
 class FrmMain : public Gtk::Window {
     public:
         explicit FrmMain(EndpointPtr mhp);
-        ~FrmMain() override {
-        }
+        ~FrmMain() override = default;
 
     protected:
         Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
