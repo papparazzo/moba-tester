@@ -20,8 +20,6 @@
 
 #include "ctrlcolortheme.h"
 
-#include <string>
-
 CtrlColorTheme::CtrlColorTheme() {
     m_VBox.append(m_HBox_DimTime);
     m_VBox.append(m_HBox_BrightTime);

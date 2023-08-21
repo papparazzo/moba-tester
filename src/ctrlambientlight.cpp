@@ -20,8 +20,6 @@
 
 #include "ctrlambientlight.h"
 
-#include <string>
-
 CtrlAmbientLight::CtrlAmbientLight() {
     for(int i = 0; i < LAST_ENTRY; ++i) {
         m_adjustment[i] = Gtk::Adjustment::create(100.0, 0.0, 4095.0, 1.0, 1.0, 0.0);

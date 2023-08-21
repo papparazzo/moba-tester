@@ -20,8 +20,6 @@
 
 #include "ctrlconnectivity.h"
 
-#include <string>
-
 CtrlConnectivity::CtrlConnectivity() {
     m_VBox.append(m_HBox);
     m_HBox.append(m_Label);
