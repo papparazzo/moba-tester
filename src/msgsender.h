@@ -24,6 +24,7 @@
 
 #include <gtkmm.h>
 #include <string>
+#include <utility>
 
 #include "ctrlstring.h"
 #include "ctrlbool.h"
