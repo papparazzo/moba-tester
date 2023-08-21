@@ -72,9 +72,9 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     //m_ButtonBox.set_layout(Gtk::BUTTONBOX_END);
     m_Button_About.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_about_clicked));
 
-    m_ButtonBox.append(m_Button_Emegerency);
-    m_Button_Emegerency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emegency_clicked));
-    m_Button_Emegerency.set_label("Nothalt");
+    m_ButtonBox.append(m_Button_Emergency);
+    m_Button_Emergency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emegency_clicked));
+    m_Button_Emergency.set_label("Nothalt");
 
     m_HPaned.set_position(400);
     initAboutDialog();
@@ -86,7 +86,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     m_Button_Send.set_sensitive(false);
-    m_Button_Emegerency.set_sensitive(false);
+    m_Button_Emergency.set_sensitive(false);
     //show_all_children();
 }
 

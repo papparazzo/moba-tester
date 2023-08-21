@@ -43,7 +43,7 @@ class FrmMain : public Gtk::Window {
         Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
         Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
         Gtk::Box       m_ButtonBox;
-        Gtk::Button    m_Button_Emegerency;
+        Gtk::Button    m_Button_Emergency;
         Gtk::Box       m_HBox{Gtk::Orientation::HORIZONTAL, 6};
         Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
         Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
