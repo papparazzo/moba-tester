@@ -54,7 +54,7 @@ void MsgSender::sendActiveMessage() {
             break;
 
         case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
-            data = m_CtrlEnvironment.get_value();
+            m_CtrlEnvironment.get_value(data);
             break;
 
         case MessageType::ENVIRONMENT_SET_AMBIENCE:

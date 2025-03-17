@@ -31,7 +31,7 @@ public:
 
     void init(Gtk::ScrolledWindow &container);
 
-        nlohmann::json get_value() const;
+    void get_value(nlohmann::json &d) const;
 
 protected:
     enum Entries {
@@ -50,4 +50,5 @@ protected:
     Gtk::Label m_Label[LAST_ENTRY];
     Gtk::ComboBoxText m_Combo[LAST_ENTRY];
 
+    nlohmann::json getSwitchState(Entries entry) const;
 };

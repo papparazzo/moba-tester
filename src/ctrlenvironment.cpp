@@ -41,18 +41,14 @@ CtrlEnvironment::CtrlEnvironment() {
     m_Label[Entries::AUX_03           ].set_label("aux 03");
 }
 
-nlohmann::json CtrlEnvironment::get_value() const {
-    nlohmann::json data;
-
-    data["thunderStorm"    ] = m_Combo[Entries::THUNDER_STORM].get_active_text();
-    data["wind"            ] = m_Combo[Entries::WIND].get_active_text();
-    data["rain"            ] = m_Combo[Entries::RAIN].get_active_text();
-    data["environmentSound"] = m_Combo[Entries::ENVIRONMENT_SOUND].get_active_text();
-    data["aux01"           ] = m_Combo[Entries::AUX_01].get_active_text();
-    data["aux02"           ] = m_Combo[Entries::AUX_02].get_active_text();
-    data["aux03"           ] = m_Combo[Entries::AUX_03].get_active_text();
-
-    return data;
+void CtrlEnvironment::get_value(nlohmann::json &d) const {
+    d["thunderStorm"] = m_Combo[Entries::THUNDER_STORM].get_active_text();
+    d["wind"] = m_Combo[Entries::WIND].get_active_text();
+    d["rain"] = m_Combo[Entries::RAIN].get_active_text();
+    d["environmentSound"] = m_Combo[Entries::ENVIRONMENT_SOUND].get_active_text();
+    d["aux01"] = m_Combo[Entries::AUX_01].get_active_text();
+    d["aux02"] = m_Combo[Entries::AUX_02].get_active_text();
+    d["aux03"] = m_Combo[Entries::AUX_03].get_active_text();
 }
 
 void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
