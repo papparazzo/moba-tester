@@ -48,8 +48,8 @@ namespace {
 }
 
 FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
-  //  sigc::slot<bool> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
-  //  sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
+    sigc::slot<bool()> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
+    sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
     set_child(m_VBox);
     m_VBox.append(m_HPaned);
 
@@ -122,260 +122,260 @@ void FrmMain::initTreeModel() {
     row[m_Columns_Messages.m_col_id] = "2";
     row[m_Columns_Messages.m_col_name] = "Client";
 
-    Gtk::TreeModel::Row childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_VOID;
-    childrow[m_Columns_Messages.m_col_id] = "2.1";
-    childrow[m_Columns_Messages.m_col_name] = "CLIENT_VOID";
+    Gtk::TreeModel::Row childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_VOID;
+    childRow[m_Columns_Messages.m_col_id] = "2.1";
+    childRow[m_Columns_Messages.m_col_name] = "CLIENT_VOID";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_ECHO_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "2.2";
-    childrow[m_Columns_Messages.m_col_name] = "CLIENT_ECHO_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_ECHO_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "2.2";
+    childRow[m_Columns_Messages.m_col_name] = "CLIENT_ECHO_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_START;
-    childrow[m_Columns_Messages.m_col_id] = "2.5";
-    childrow[m_Columns_Messages.m_col_name] = "CLIENT_START";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_START;
+    childRow[m_Columns_Messages.m_col_id] = "2.5";
+    childRow[m_Columns_Messages.m_col_name] = "CLIENT_START";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_CLOSE;
-    childrow[m_Columns_Messages.m_col_id] = "2.7";
-    childrow[m_Columns_Messages.m_col_name] = "CLIENT_CLOSE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_CLOSE;
+    childRow[m_Columns_Messages.m_col_id] = "2.7";
+    childRow[m_Columns_Messages.m_col_name] = "CLIENT_CLOSE";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "3";
     row[m_Columns_Messages.m_col_name] = "Server";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_RESET_CLIENT;
-    childrow[m_Columns_Messages.m_col_id] = "3.3";
-    childrow[m_Columns_Messages.m_col_name] = "SERVER_RESET_CLIENT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_RESET_CLIENT;
+    childRow[m_Columns_Messages.m_col_id] = "3.3";
+    childRow[m_Columns_Messages.m_col_name] = "SERVER_RESET_CLIENT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_INFO_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "3.4";
-    childrow[m_Columns_Messages.m_col_name] = "SERVER_INFO_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_INFO_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "3.4";
+    childRow[m_Columns_Messages.m_col_name] = "SERVER_INFO_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_CON_CLIENTS_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "3.6";
-    childrow[m_Columns_Messages.m_col_name] = "SERVER_CON_CLIENTS_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_CON_CLIENTS_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "3.6";
+    childRow[m_Columns_Messages.m_col_name] = "SERVER_CON_CLIENTS_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_SELF_TESTING_CLIENT;
-    childrow[m_Columns_Messages.m_col_id] = "3.8";
-    childrow[m_Columns_Messages.m_col_name] = "SERVER_SELF_TESTING_CLIENT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SERVER_SELF_TESTING_CLIENT;
+    childRow[m_Columns_Messages.m_col_id] = "3.8";
+    childRow[m_Columns_Messages.m_col_name] = "SERVER_SELF_TESTING_CLIENT";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "4";
     row[m_Columns_Messages.m_col_name] = "Timer";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_GLOBAL_TIMER;
-    childrow[m_Columns_Messages.m_col_id] = "4.2";
-    childrow[m_Columns_Messages.m_col_name] = "TIMER_GET_GLOBAL_TIMER";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_GLOBAL_TIMER;
+    childRow[m_Columns_Messages.m_col_id] = "4.2";
+    childRow[m_Columns_Messages.m_col_name] = "TIMER_GET_GLOBAL_TIMER";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_GLOBAL_TIMER;
-    childrow[m_Columns_Messages.m_col_id] = "4.3";
-    childrow[m_Columns_Messages.m_col_name] = "TIMER_SET_GLOBAL_TIMER";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_GLOBAL_TIMER;
+    childRow[m_Columns_Messages.m_col_id] = "4.3";
+    childRow[m_Columns_Messages.m_col_name] = "TIMER_SET_GLOBAL_TIMER";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_COLOR_THEME;
-    childrow[m_Columns_Messages.m_col_id] = "4.4";
-    childrow[m_Columns_Messages.m_col_name] = "TIMER_GET_COLOR_THEME";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_COLOR_THEME;
+    childRow[m_Columns_Messages.m_col_id] = "4.4";
+    childRow[m_Columns_Messages.m_col_name] = "TIMER_GET_COLOR_THEME";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_COLOR_THEME;
-    childrow[m_Columns_Messages.m_col_id] = "4.5";
-    childrow[m_Columns_Messages.m_col_name] = "TIMER_SET_COLOR_THEME";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_COLOR_THEME;
+    childRow[m_Columns_Messages.m_col_id] = "4.5";
+    childRow[m_Columns_Messages.m_col_name] = "TIMER_SET_COLOR_THEME";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "5";
     row[m_Columns_Messages.m_col_name] = "Environment";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_ENVIRONMENT;
-    childrow[m_Columns_Messages.m_col_id] = "5.1";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_ENVIRONMENT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_GET_ENVIRONMENT;
+    childRow[m_Columns_Messages.m_col_id] = "5.1";
+    childRow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_GET_ENVIRONMENT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_ENVIRONMENT;
-    childrow[m_Columns_Messages.m_col_id] = "5.2";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_ENVIRONMENT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_ENVIRONMENT;
+    childRow[m_Columns_Messages.m_col_id] = "5.2";
+    childRow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_ENVIRONMENT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENCE;
-    childrow[m_Columns_Messages.m_col_id] = "5.3";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENCE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENCE;
+    childRow[m_Columns_Messages.m_col_id] = "5.3";
+    childRow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENCE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT;
-    childrow[m_Columns_Messages.m_col_id] = "5.4";
-    childrow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENT_LIGHT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::ENVIRONMENT_SET_AMBIENT_LIGHT;
+    childRow[m_Columns_Messages.m_col_id] = "5.4";
+    childRow[m_Columns_Messages.m_col_name] = "ENVIRONMENT_SET_AMBIENT_LIGHT";
 
     row = *(m_refTreeModel_Outgoing->append());
-    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;;
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "6";
     row[m_Columns_Messages.m_col_name] = "Interface";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED;
-    childrow[m_Columns_Messages.m_col_id] = "6.1";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_STATE_CHANGED";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED;
+    childRow[m_Columns_Messages.m_col_id] = "6.1";
+    childRow[m_Columns_Messages.m_col_name] = "INTERFACE_CONNECTIVITY_STATE_CHANGED";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONTACT_TRIGGERED;
-    childrow[m_Columns_Messages.m_col_id] = "6.2";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_CONTACT_TRIGGERED";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_CONTACT_TRIGGERED;
+    childRow[m_Columns_Messages.m_col_id] = "6.2";
+    childRow[m_Columns_Messages.m_col_name] = "INTERFACE_CONTACT_TRIGGERED";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_BRAKE_VECTOR;
-    childrow[m_Columns_Messages.m_col_id] = "6.3";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_BRAKE_VECTOR";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_BRAKE_VECTOR;
+    childRow[m_Columns_Messages.m_col_id] = "6.3";
+    childRow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_BRAKE_VECTOR";
 /*
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_SPEED;
-    childrow[m_Columns_Messages.m_col_id] = "6.4";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_SPEED";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_SPEED;
+    childRow[m_Columns_Messages.m_col_id] = "6.4";
+    childRow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_SPEED";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_DIRECTION;
-    childrow[m_Columns_Messages.m_col_id] = "6.5";
-    childrow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_DIRECTION";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::INTERFACE_SET_LOCO_DIRECTION;
+    childRow[m_Columns_Messages.m_col_id] = "6.5";
+    childRow[m_Columns_Messages.m_col_name] = "INTERFACE_SET_LOCO_DIRECTION";
 */
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "7";
     row[m_Columns_Messages.m_col_name] = "System";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_AUTOMATIC_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "7.1";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_AUTOMATIC_MODE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_AUTOMATIC_MODE;
+    childRow[m_Columns_Messages.m_col_id] = "7.1";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_AUTOMATIC_MODE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_AUTOMATIC_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "7.2";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_AUTOMATIC_MODE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_AUTOMATIC_MODE;
+    childRow[m_Columns_Messages.m_col_id] = "7.2";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_AUTOMATIC_MODE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TRIGGER_EMERGENCY_STOP;
-    childrow[m_Columns_Messages.m_col_id] = "7.3";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TRIGGER_EMERGENCY_STOP";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TRIGGER_EMERGENCY_STOP;
+    childRow[m_Columns_Messages.m_col_id] = "7.3";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_TRIGGER_EMERGENCY_STOP";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_RELEASE_EMERGENCY_STOP;
-    childrow[m_Columns_Messages.m_col_id] = "7.4";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_RELEASE_EMERGENCY_STOP";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_RELEASE_EMERGENCY_STOP;
+    childRow[m_Columns_Messages.m_col_id] = "7.4";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_RELEASE_EMERGENCY_STOP";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_STANDBY_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "7.5";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_STANDBY_MODE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_SET_STANDBY_MODE;
+    childRow[m_Columns_Messages.m_col_id] = "7.5";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_SET_STANDBY_MODE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_STANDBY_MODE;
-    childrow[m_Columns_Messages.m_col_id] = "7.6";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_STANDBY_MODE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_TOGGLE_STANDBY_MODE;
+    childRow[m_Columns_Messages.m_col_id] = "7.6";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_TOGGLE_STANDBY_MODE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_GET_HARDWARE_STATE;
-    childrow[m_Columns_Messages.m_col_id] = "7.7";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_GET_HARDWARE_STATE";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_GET_HARDWARE_STATE;
+    childRow[m_Columns_Messages.m_col_id] = "7.7";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_GET_HARDWARE_STATE";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_SHUTDOWN;
-    childrow[m_Columns_Messages.m_col_id] = "7.9";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_SHUTDOWN";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_SHUTDOWN;
+    childRow[m_Columns_Messages.m_col_id] = "7.9";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_SHUTDOWN";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_RESET;
-    childrow[m_Columns_Messages.m_col_id] = "7.10";
-    childrow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_RESET";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::SYSTEM_HARDWARE_RESET;
+    childRow[m_Columns_Messages.m_col_id] = "7.10";
+    childRow[m_Columns_Messages.m_col_name] = "SYSTEM_HARDWARE_RESET";
 
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "8";
     row[m_Columns_Messages.m_col_name] = "Layout";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUTS_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "8.1";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUTS_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUTS_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "8.1";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUTS_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_DEL_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "8.3";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_DELETE_LAYOUT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_DEL_LAYOUT;
+    childRow[m_Columns_Messages.m_col_id] = "8.3";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_DELETE_LAYOUT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_CREATE_LAYOUT_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "8.5";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_CREATE_LAYOUT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_CREATE_LAYOUT_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "8.5";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_CREATE_LAYOUT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UPDATE_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "8.7";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_UPDATE_LAYOUT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UPDATE_LAYOUT;
+    childRow[m_Columns_Messages.m_col_id] = "8.7";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_UPDATE_LAYOUT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UNLOCK_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "8.9";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_UNLOCK_LAYOUT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_UNLOCK_LAYOUT;
+    childRow[m_Columns_Messages.m_col_id] = "8.9";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_UNLOCK_LAYOUT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_LOCK_LAYOUT;
-    childrow[m_Columns_Messages.m_col_id] = "8.11";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_LOCK_LAYOUT";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_LOCK_LAYOUT;
+    childRow[m_Columns_Messages.m_col_id] = "8.11";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_LOCK_LAYOUT";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "8.13";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "8.13";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "8.14";
-    childrow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_READ_ONLY_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::LAYOUT_GET_LAYOUT_READ_ONLY_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "8.14";
+    childRow[m_Columns_Messages.m_col_name] = "LAYOUT_GET_LAYOUT_READ_ONLY_REQ";
 
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "10";
     row[m_Columns_Messages.m_col_name] = "Control";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_CONTACT_LIST_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "10.1";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_CONTACT_LIST_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_CONTACT_LIST_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "10.1";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_GET_CONTACT_LIST_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_SWITCH_STAND_LIST_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "10.3";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_SWITCH_STATE_LIST_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_SWITCH_STAND_LIST_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "10.3";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_GET_SWITCH_STATE_LIST_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_TRAIN_LIST_REQ;
-    childrow[m_Columns_Messages.m_col_id] = "10.5";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_GET_TRAIN_LIST_REQ";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_GET_TRAIN_LIST_REQ;
+    childRow[m_Columns_Messages.m_col_id] = "10.5";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_GET_TRAIN_LIST_REQ";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK;
-    childrow[m_Columns_Messages.m_col_id] = "10.7";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK;
+    childRow[m_Columns_Messages.m_col_id] = "10.7";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK_WAITING;
-    childrow[m_Columns_Messages.m_col_id] = "10.8";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK_WAITING";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_LOCK_BLOCK_WAITING;
+    childRow[m_Columns_Messages.m_col_id] = "10.8";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_LOCK_BLOCK_WAITING";
 
-    childrow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childrow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_UNLOCK_BLOCK;
-    childrow[m_Columns_Messages.m_col_id] = "10.11";
-    childrow[m_Columns_Messages.m_col_name] = "CONTROL_UNLOCK_BLOCK";
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CONTROL_UNLOCK_BLOCK;
+    childRow[m_Columns_Messages.m_col_id] = "10.11";
+    childRow[m_Columns_Messages.m_col_name] = "CONTROL_UNLOCK_BLOCK";
 }
 
 void FrmMain::initIncomming() {
