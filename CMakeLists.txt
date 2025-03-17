@@ -7,23 +7,23 @@ set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
 project(moba-tester VERSION 0.1.0)
 
 find_package(PkgConfig)
-pkg_check_modules(GTKMM gtkmm-4.0) 
+pkg_check_modules(GTKMM gtkmm-4.0)
 
 configure_file(config.h.in config.h)
 
 add_executable(
-    moba-tester 
+    moba-tester
 
-    src/ctrlambience.cpp     
-    src/ctrlambientlight.cpp  
-    src/ctrlblocklock.cpp     
-    src/ctrlbool.cpp          
-    src/ctrlcolortheme.cpp    
-    src/ctrlconnectivity.cpp  
-    src/ctrlcontact.cpp       
-    src/ctrlenvironment.cpp     
-    src/ctrlglobaltimer.cpp     
-    src/ctrlsetbrakevector.cpp  
+    src/ctrlambience.cpp
+    src/ctrlambientlight.cpp
+    src/ctrlblocklock.cpp
+    src/ctrlbool.cpp
+    src/ctrlcolortheme.cpp
+    src/ctrlconnectivity.cpp
+    src/ctrlcontact.cpp
+    src/ctrlenvironment.cpp
+    src/ctrlglobaltimer.cpp
+    src/ctrlsetbrakevector.cpp
     src/ctrlstring.cpp
     src/ctrltracklayout.cpp
     src/frmmain.cpp

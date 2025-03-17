@@ -56,9 +56,9 @@ nlohmann::json CtrlEnvironment::get_value() const {
 }
 
 void CtrlEnvironment::init(Gtk::ScrolledWindow &container) {
-    for(auto & i : m_Combo) {
+    for(auto &i: m_Combo) {
         i.set_active(1);
     }
     container.set_child(m_VBox);
-   // container.show_all_children();
+    // container.show_all_children();
 }

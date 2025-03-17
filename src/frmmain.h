@@ -34,102 +34,103 @@
 #include "msgsender.h"
 
 class FrmMain : public Gtk::Window {
+public:
+    explicit FrmMain(EndpointPtr mhp);
+
+    ~FrmMain() override = default;
+
+protected:
+    Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
+    Gtk::Box       m_ButtonBox;
+    Gtk::Button    m_Button_Emergency;
+    Gtk::Box       m_HBox{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
+    Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
+
+    // about
+    Gtk::Button      m_Button_About{"About..."};
+    Gtk::AboutDialog m_Dialog;
+
+    // Outgoing
+    Gtk::Paned          m_VPaned_Outgoing{Gtk::Orientation::VERTICAL};
+    Gtk::ScrolledWindow m_ScrolledWindow_Outgoing;
+
+    Gtk::TreeView                m_TreeView_Outgoing;
+    Glib::RefPtr<Gtk::TreeStore> m_refTreeModel_Outgoing;
+
+    Gtk::ScrolledWindow m_ScrolledWindow_Outgoing_Data;
+    Gtk::Box            m_VBox_Outgoing{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box            m_ButtonBox_Outgoing;
+    Gtk::Button         m_Button_Send{"Senden..."};
+
+    class ModelColumnsMessages : public Gtk::TreeModelColumnRecord {
     public:
-        explicit FrmMain(EndpointPtr mhp);
-        ~FrmMain() override = default;
+        ModelColumnsMessages() {
+            add(m_col_name);
+            add(m_col_id);
+            add(m_col_msg_id);
+        }
 
-    protected:
-        Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
-        Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
-        Gtk::Box       m_ButtonBox;
-        Gtk::Button    m_Button_Emergency;
-        Gtk::Box       m_HBox{Gtk::Orientation::HORIZONTAL, 6};
-        Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
-        Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
+        Gtk::TreeModelColumn<std::string> m_col_name;
+        Gtk::TreeModelColumn<std::string> m_col_id;
+        Gtk::TreeModelColumn<MessageType> m_col_msg_id;
+    };
 
-        // about
-        Gtk::Button      m_Button_About{"About..."};
-        Gtk::AboutDialog m_Dialog;
+    ModelColumnsMessages m_Columns_Messages;
 
-        // Outgoing
-        Gtk::Paned          m_VPaned_Outgoing{Gtk::Orientation::VERTICAL};
-        Gtk::ScrolledWindow m_ScrolledWindow_Outgoing;
+    // Incoming
+    Gtk::Paned                   m_VPaned_Incomming{Gtk::Orientation::VERTICAL};
+    Gtk::ScrolledWindow          m_ScrolledWindow_Incomming;
+    Gtk::TreeView                m_TreeView_Incomming;
+    Glib::RefPtr<Gtk::ListStore> m_refTreeModel_Incomming;
 
-        Gtk::TreeView                m_TreeView_Outgoing;
-        Glib::RefPtr<Gtk::TreeStore> m_refTreeModel_Outgoing;
+    Gtk::Label          m_Label_Data;
+    Gtk::ScrolledWindow m_ScrolledWindow_Data;
 
-        Gtk::ScrolledWindow m_ScrolledWindow_Outgoing_Data;
-        Gtk::Box            m_VBox_Outgoing{Gtk::Orientation::VERTICAL, 6};
-        Gtk::Box            m_ButtonBox_Outgoing;
-        Gtk::Button         m_Button_Send{"Senden..."};
+    Gtk::Box         m_VBox_Incomming{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box         m_ButtonBox_Incomming;
+    Gtk::Button      m_Button_ClearIncomming{"Leeren"};
+    Gtk::Box         m_HBox_CheckRow{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::CheckButton m_Button_AutoCheckLast;
 
-        class ModelColumnsMessages : public Gtk::TreeModelColumnRecord {
-            public:
-                ModelColumnsMessages() {
-                    add(m_col_name);
-                    add(m_col_id);
-                    add(m_col_msg_id);
-                }
+    class ModelColumnsIncomming : public Gtk::TreeModel::ColumnRecord {
+    public:
+        ModelColumnsIncomming() {
+            add(m_col_timestamp);
+            add(m_col_grp_name);
+            add(m_col_msg_name);
+            add(m_col_data);
+        }
 
-                Gtk::TreeModelColumn<std::string> m_col_name;
-                Gtk::TreeModelColumn<std::string> m_col_id;
-                Gtk::TreeModelColumn<MessageType> m_col_msg_id;
-        };
+        Gtk::TreeModelColumn<Glib::ustring> m_col_timestamp;
+        Gtk::TreeModelColumn<int>           m_col_grp_name;
+        Gtk::TreeModelColumn<int>           m_col_msg_name;
+        Gtk::TreeModelColumn<std::string>   m_col_data;
+    };
 
-        ModelColumnsMessages m_Columns_Messages;
+    ModelColumnsIncomming m_Columns_Incomming;
 
-        // Incoming
-        Gtk::Paned                   m_VPaned_Incomming{Gtk::Orientation::VERTICAL};
-        Gtk::ScrolledWindow          m_ScrolledWindow_Incomming;
-        Gtk::TreeView                m_TreeView_Incomming;
-        Glib::RefPtr<Gtk::ListStore> m_refTreeModel_Incomming;
+    void initAboutDialog();
+    void initTreeModel();
+    void initIncomming();
+    void initOutgoing();
 
-        Gtk::Label          m_Label_Data;
-        Gtk::ScrolledWindow m_ScrolledWindow_Data;
+    void setHardwareState(const SystemHardwareStateChanged &data);
 
-        Gtk::Box         m_VBox_Incomming{Gtk::Orientation::VERTICAL, 6};
-        Gtk::Box         m_ButtonBox_Incomming;
-        Gtk::Button      m_Button_ClearIncomming{"Leeren"};
-        Gtk::Box         m_HBox_CheckRow{Gtk::Orientation::HORIZONTAL, 6};
-        Gtk::CheckButton m_Button_AutoCheckLast;
+    EndpointPtr msgEndpoint;
+    MsgSender   msgSender;
+    Registry    registry;
 
-        class ModelColumnsIncomming : public Gtk::TreeModel::ColumnRecord {
-            public:
-                ModelColumnsIncomming() {
-                    add(m_col_timestamp);
-                    add(m_col_grp_name);
-                    add(m_col_msg_name);
-                    add(m_col_data);
-                }
+    void msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data);
 
-                Gtk::TreeModelColumn<Glib::ustring> m_col_timestamp;
-                Gtk::TreeModelColumn<int> m_col_grp_name;
-                Gtk::TreeModelColumn<int> m_col_msg_name;
-                Gtk::TreeModelColumn<std::string>   m_col_data;
-        };
-
-        ModelColumnsIncomming m_Columns_Incomming;
-
-        void initAboutDialog();
-        void initTreeModel();
-        void initIncomming();
-        void initOutgoing();
-
-        void setHardwareState(const SystemHardwareStateChanged &data);
-
-        EndpointPtr msgEndpoint;
-        MsgSender   msgSender;
-        Registry    registry;
-
-        void msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data);
-
-        // Signal handlers:
-        bool on_timeout(int timer_number);
-        void on_selection_changed_incomming();
-        void on_button_emegency_clicked();
-        void on_button_about_clicked();
-        void on_button_send_clicked();
-        void on_button_clear_incomming_clicked();
-        void on_about_dialog_response(int response_id);
-        void on_selection_changed_outgoing();
+    // Signal handlers:
+    bool on_timeout(int timer_number);
+    void on_selection_changed_incomming();
+    void on_button_emegency_clicked();
+    void on_button_about_clicked();
+    void on_button_send_clicked();
+    void on_button_clear_incomming_clicked();
+    void on_about_dialog_response(int response_id);
+    void on_selection_changed_outgoing();
 };

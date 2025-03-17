@@ -28,6 +28,7 @@
 #include "config.h"
 #include "moba/endpoint.h"
 #include "moba/socket.h"
+#include "moba/nlohmann/json.hpp"
 
 namespace {
     moba::AppData appData = {
@@ -46,13 +47,4 @@ int main(int argc, char *argv[]) {
     auto app = Gtk::Application::create("org.moba.tester");
 
     return app->make_window_and_run<FrmMain>(argc, argv, endpoint);
-/*
-    FrmMain frmMain{endpoint};
-    frmMain.set_title(appData.appName);
-    frmMain.set_border_width(10);
-    frmMain.set_default_size(800, 600);
-    frmMain.set_icon_name("moba-tester");
-
-    return app->run(frmMain);
-*/
 }

@@ -447,7 +447,7 @@ void FrmMain::on_button_about_clicked() {
 }
 
 void FrmMain::on_button_emegency_clicked() {
-    if(m_Button_Emegerency.get_label() == "Nothalt") {
+    if(m_Button_Emergency.get_label() == "Nothalt") {
         msgEndpoint->sendMsg(SystemTriggerEmergencyStop{});
     } else {
         msgEndpoint->sendMsg(SystemReleaseEmergencyStop{});
@@ -482,7 +482,7 @@ bool FrmMain::on_timeout(int) {
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
             m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zum Server");
-            m_Button_Emegerency.set_sensitive(false);
+            m_Button_Emergency.set_sensitive(false);
             /*
             Gtk::MessageDialog dialog(
                 *this,
@@ -593,19 +593,19 @@ void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
         m_Label_Connectivity_SW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
-        m_Button_Emegerency.set_sensitive(false);
+        m_Button_Emergency.set_sensitive(false);
         return;
     }
-    m_Button_Emegerency.set_sensitive(true);
+    m_Button_Emergency.set_sensitive(true);
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::EMERGENCY_STOP) {
         m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
-        m_Button_Emegerency.set_label("Freigabe");
+        m_Button_Emergency.set_label("Freigabe");
         return;
     }
-    m_Button_Emegerency.set_label("Nothalt");
+    m_Button_Emergency.set_label("Nothalt");
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::STANDBY) {
         m_Label_Connectivity_HW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");

@@ -94,7 +94,10 @@ void MsgSender::sendActiveMessage() {
     return endpoint->sendMsg(activeGrpId, activeMsgId, data);
 }
 
-void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId, Gtk::ScrolledWindow &container) {
+void MsgSender::setActiveMessage(
+    MessageType cmd, const std::string &name, std::uint32_t grpId, std::uint32_t msgId,
+    Gtk::ScrolledWindow &container
+) {
     //container.remove_with_viewport();
     activeMessage = cmd;
     activeMessageName = name;
@@ -151,8 +154,8 @@ void MsgSender::setActiveMessage(MessageType cmd, const std::string &name, std::
             break;
 
         case MessageType::INTERFACE_SET_BRAKE_VECTOR:
-        //case MessageType::INTERFACE_SET_LOCO_SPEED:
-        //case MessageType::INTERFACE_SET_LOCO_DIRECTION:
+            //case MessageType::INTERFACE_SET_LOCO_SPEED:
+            //case MessageType::INTERFACE_SET_LOCO_DIRECTION:
             m_CtrlSetBrakeVector.init(container);
             break;
 

@@ -24,30 +24,30 @@
 #include "moba/nlohmann/json.hpp"
 
 class CtrlEnvironment {
-    public:
-        CtrlEnvironment() ;
+public:
+    CtrlEnvironment();
 
-        virtual ~CtrlEnvironment() = default;
+    virtual ~CtrlEnvironment() = default;
 
-        void init(Gtk::ScrolledWindow &container);
+    void init(Gtk::ScrolledWindow &container);
 
         nlohmann::json get_value() const;
 
-    protected:
-        enum Entries {
-            THUNDER_STORM,
-            WIND,
-            RAIN,
-            ENVIRONMENT_SOUND,
-            AUX_01,
-            AUX_02,
-            AUX_03,
-            LAST_ENTRY
-        };
+protected:
+    enum Entries {
+        THUNDER_STORM,
+        WIND,
+        RAIN,
+        ENVIRONMENT_SOUND,
+        AUX_01,
+        AUX_02,
+        AUX_03,
+        LAST_ENTRY
+    };
 
-        Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
-        Gtk::Box m_HBox[LAST_ENTRY];
-        Gtk::Label m_Label[LAST_ENTRY];
-        Gtk::ComboBoxText m_Combo[LAST_ENTRY];
+    Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box m_HBox[LAST_ENTRY];
+    Gtk::Label m_Label[LAST_ENTRY];
+    Gtk::ComboBoxText m_Combo[LAST_ENTRY];
 
 };
