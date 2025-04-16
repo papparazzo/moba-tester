@@ -42,9 +42,13 @@ namespace {
 }
 
 int main(int argc, char *argv[]) {
+    if(argc == 2) {
+        appData.host = std::string(argv[1]);
+    }
+
     auto socket = std::make_shared<Socket>(appData.host, appData.port);
     auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, appData.version);
     auto app = Gtk::Application::create("org.moba.tester");
 
-    return app->make_window_and_run<FrmMain>(argc, argv, endpoint);
+    return app->make_window_and_run<FrmMain>(--argc, argv, endpoint);
 }
