@@ -33,6 +33,17 @@
 
 #include "msgsender.h"
 
+#include <atomic>
+
+enum class SystemState {
+    NO_CONNECT,
+    ERROR,
+    STANDBY,
+    EMERGENCY_STOP,
+    MANUEL,
+    AUTOMATIC
+};
+
 class FrmMain : public Gtk::Window {
 public:
     explicit FrmMain(EndpointPtr mhp);
@@ -40,17 +51,25 @@ public:
     ~FrmMain() override = default;
 
 protected:
-    Gtk::Box       m_VBox{Gtk::Orientation::VERTICAL, 6};
-    Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
-    Gtk::Box       m_ButtonBox;
-    Gtk::Button    m_Button_Emergency;
-    Gtk::Box       m_HBox{Gtk::Orientation::HORIZONTAL, 6};
-    Gtk::Label     m_Label_Connectivity_HW{" \xe2\x96\x84"};
-    Gtk::Label     m_Label_Connectivity_SW{" \xe2\x96\x84"};
+    std::atomic<SystemState> systemState;
 
     // about
     Gtk::Button      m_Button_About{"About..."};
     Gtk::AboutDialog m_Dialog;
+
+    // status
+    Gtk::Label       m_Label_Connectivity_HW{" \xe2\x96\x84"};
+    Gtk::Label       m_Label_Connectivity_SW{" \xe2\x96\x84"};
+
+    Gtk::Box         m_HBox_Expander{Gtk::Orientation::HORIZONTAL, 6};
+
+    Gtk::Box         m_HButtonBox{Gtk::Orientation::HORIZONTAL, 6};
+    Gtk::Box         m_VBox{Gtk::Orientation::VERTICAL, 6};
+    Gtk::Box         m_HBox_Status{Gtk::Orientation::HORIZONTAL, 6};
+
+    Gtk::Button    m_Button_Emergency{"Nothalt"};
+
+    Gtk::Paned     m_HPaned{Gtk::Orientation::HORIZONTAL};
 
     // Outgoing
     Gtk::Paned          m_VPaned_Outgoing{Gtk::Orientation::VERTICAL};
@@ -126,8 +145,9 @@ protected:
 
     // Signal handlers:
     bool on_timeout(int timer_number);
+    bool on_timeout_status(int);
     void on_selection_changed_incomming();
-    void on_button_emegency_clicked();
+    void on_button_emergency_clicked();
     void on_button_about_clicked();
     void on_button_send_clicked();
     void on_button_clear_incomming_clicked();

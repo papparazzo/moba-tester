@@ -45,38 +45,56 @@ namespace {
         "\n"
         "You should have received a copy of the GNU Affero General Public License\n"
         "along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.";
+
+    void replace(std::string& str, const std::string& oldStr, const std::string& newStr) {
+        std::string::size_type pos = 0u;
+        while((pos = str.find(oldStr, pos)) != std::string::npos) {
+            str.replace(pos, oldStr.length(), newStr);
+            pos += newStr.length();
+        }
+    }
 }
 
 FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     sigc::slot<bool()> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
     sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
+
+    sigc::slot<bool()> my_slot2 = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout_status), 1);
+    sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2, 850, Glib::PRIORITY_DEFAULT_IDLE); // 25 ms
+
+	m_VBox.set_margin(6);
     set_child(m_VBox);
+
+    m_HPaned.set_expand(true);
     m_VBox.append(m_HPaned);
 
-    // about-dialog
-    m_VBox.append(m_HBox);
-    m_HBox.append(m_ButtonBox);
-
-    m_HBox.append(m_Label_Connectivity_HW);
-    m_Label_Connectivity_HW.set_justify(Gtk::Justification::LEFT);
-    m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
-    m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
-
-    m_HBox.append(m_Label_Connectivity_SW);
+    m_HBox_Status.set_margin(6);
+    m_HBox_Status.append(m_Label_Connectivity_SW);
     m_Label_Connectivity_SW.set_justify(Gtk::Justification::LEFT);
     m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
     m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> unbekannt");
 
+    m_HBox_Status.append(m_Label_Connectivity_HW);
+    m_Label_Connectivity_HW.set_justify(Gtk::Justification::LEFT);
+    m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+    m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> unbekannt");
+
+    m_HBox_Status.append(m_HButtonBox);
+
+    m_HBox_Expander.set_hexpand();
+    m_HButtonBox.append(m_HBox_Expander);
+
     // about-dialog
-    m_ButtonBox.append(m_Button_About);
-    //m_ButtonBox.set_layout(Gtk::BUTTONBOX_END);
+    m_HButtonBox.append(m_Button_About);
     m_Button_About.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_about_clicked));
 
-    m_ButtonBox.append(m_Button_Emergency);
-    m_Button_Emergency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emegency_clicked));
-    m_Button_Emergency.set_label("Nothalt");
+    m_HButtonBox.append(m_Button_Emergency);
+    m_Button_Emergency.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_emergency_clicked));
 
-    m_HPaned.set_position(400);
+    m_Button_Emergency.set_sensitive(false);
+
+    m_VBox.append(m_HBox_Status);
+
     initAboutDialog();
     initTreeModel();
     initOutgoing();
@@ -86,7 +104,6 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
     m_Button_Send.set_sensitive(false);
-    m_Button_Emergency.set_sensitive(false);
     //show_all_children();
 }
 
@@ -393,6 +410,7 @@ void FrmMain::initIncomming() {
     m_VPaned_Incomming.set_position(150);
     m_VPaned_Incomming.set_start_child(m_VBox_Incomming);
     m_VBox_Incomming.append(m_ScrolledWindow_Incomming);
+    m_ScrolledWindow_Incomming.set_expand(true);
     m_ScrolledWindow_Incomming.set_child(m_TreeView_Incomming);
     m_ScrolledWindow_Incomming.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
 
@@ -423,7 +441,6 @@ void FrmMain::initIncomming() {
 
 void FrmMain::initOutgoing() {
     m_HPaned.set_start_child(m_VPaned_Outgoing);
-    m_VPaned_Outgoing.set_position(150);
     m_VPaned_Outgoing.set_start_child(m_ScrolledWindow_Outgoing);
     m_ScrolledWindow_Outgoing.set_child(m_TreeView_Outgoing);
     m_ScrolledWindow_Outgoing.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
@@ -436,10 +453,10 @@ void FrmMain::initOutgoing() {
 
     m_VPaned_Outgoing.set_end_child(m_VBox_Outgoing);
     m_VBox_Outgoing.append(m_ScrolledWindow_Outgoing_Data);
+    m_ScrolledWindow_Outgoing_Data.set_expand(true);
     m_ScrolledWindow_Outgoing_Data.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
     m_VBox_Outgoing.append(m_ButtonBox_Outgoing);
     m_ButtonBox_Outgoing.append(m_Button_Send);
-   // m_ButtonBox_Outgoing.set_layout(Gtk::BUTTONBOX_END);
     m_Button_Send.signal_clicked().connect(sigc::mem_fun(*this, &FrmMain::on_button_send_clicked));
 }
 
@@ -456,7 +473,7 @@ void FrmMain::on_button_about_clicked() {
     m_Dialog.present();
 }
 
-void FrmMain::on_button_emegency_clicked() {
+void FrmMain::on_button_emergency_clicked() {
     if(m_Button_Emergency.get_label() == "Nothalt") {
         msgEndpoint->sendMsg(SystemTriggerEmergencyStop{});
     } else {
@@ -515,16 +532,12 @@ void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohman
     char timeString[std::size("yyyy-mm-dd hh:mm:ss")];
     std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&time));
 
-    //rapidjson::StringBuffer sb;
-    //rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(sb);
-    //data.Accept(writer);
-
     Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
     row[m_Columns_Incomming.m_col_timestamp] = std::string(timeString);
     row[m_Columns_Incomming.m_col_grp_name ] = static_cast<int>(grpId);
     row[m_Columns_Incomming.m_col_msg_name ] = static_cast<int>(msgId);
-    //row[m_Columns_Incomming.m_col_data     ] = sb.GetString();
+    row[m_Columns_Incomming.m_col_data     ] = data.dump(2);
 
     if(m_Button_AutoCheckLast.get_active()) {
         Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
@@ -542,22 +555,9 @@ void FrmMain::on_selection_changed_incomming() {
 
     std::stringstream ss;
     std::string s = row[m_Columns_Incomming.m_col_data];
-  //  boost::replace_all(s, "<", "&lt;");
-  //  boost::replace_all(s, ">", "&gt;");
 
-/* FIXME: use this
-void myReplace(std::string& str,
-               const std::string& oldStr,
-               const std::string& newStr)
-{
-  std::string::size_type pos = 0u;
-  while((pos = str.find(oldStr, pos)) != std::string::npos){
-     str.replace(pos, oldStr.length(), newStr);
-     pos += newStr.length();
-  }
-}
-*/
-
+    replace(s, "<", "&lt;");
+    replace(s, ">", "&gt;");
 
     ss << "<span font_family=\"Courier New\">" << s << "</span>";
     m_Label_Data.set_markup(ss.str());
@@ -599,37 +599,106 @@ void FrmMain::on_button_clear_incomming_clicked() {
 
 void FrmMain::setHardwareState(const SystemHardwareStateChanged &data) {
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::ERROR) {
-        m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
-        m_Label_Connectivity_SW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Keine Verbindung zur Hardware");
+        systemState = SystemState::ERROR;
         m_Button_Emergency.set_sensitive(false);
         return;
     }
     m_Button_Emergency.set_sensitive(true);
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::EMERGENCY_STOP) {
-        m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
-        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Nohalt ausgelöst");
+        systemState = SystemState::EMERGENCY_STOP;
         m_Button_Emergency.set_label("Freigabe");
         return;
     }
     m_Button_Emergency.set_label("Nothalt");
     if(data.hardwareState == SystemHardwareStateChanged::HardwareState::STANDBY) {
-        m_Label_Connectivity_HW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
-        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> Energiesparmodus");
-    } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::MANUEL) {
-        m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
-        m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
+        systemState = SystemState::STANDBY;
+        m_Button_Emergency.set_sensitive(false);
+    }
+
+    if(data.hardwareState == SystemHardwareStateChanged::HardwareState::MANUEL) {
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> manuell");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> manuell");
-    } else if(data.hardwareState == SystemHardwareStateChanged::HardwareState::AUTOMATIC) {
-        m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
-        m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+        systemState = SystemState::MANUEL;
+    }
+    if(data.hardwareState == SystemHardwareStateChanged::HardwareState::AUTOMATIC) {
         m_Label_Connectivity_HW.set_tooltip_markup("<b>Status:</b> automatisch");
         m_Label_Connectivity_SW.set_tooltip_markup("<b>Status:</b> automatisch");
+        systemState = SystemState::AUTOMATIC;
     }
 }
+
+bool FrmMain::on_timeout_status(int) {
+    static bool on = false;
+
+    on = !on;
+    switch(systemState) {
+        case SystemState::NO_CONNECT:
+            if(on) {
+                m_Label_Connectivity_SW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
+            } else {
+                m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            }
+            m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            break;
+
+        case SystemState::ERROR:
+            m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            if(on) {
+                m_Label_Connectivity_HW.set_markup("<span color=\"red\"> \xe2\x96\x84</span>");
+            } else {
+                m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            }
+            break;
+
+        case SystemState::STANDBY:
+            m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            if(on) {
+                m_Label_Connectivity_HW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
+            } else {
+                m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            }
+            break;
+
+        case SystemState::EMERGENCY_STOP:
+            if(on) {
+                m_Label_Connectivity_HW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
+                m_Label_Connectivity_SW.set_markup("<span color=\"gold\"> \xe2\x96\x84</span>");
+            } else {
+                m_Label_Connectivity_HW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+                m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            }
+            break;
+
+        case SystemState::MANUEL:
+            m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            if(on) {
+                m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            } else {
+                m_Label_Connectivity_SW.set_markup("<span color=\"gray\"> \xe2\x96\x84</span>");
+            }
+            break;
+
+        case SystemState::AUTOMATIC:
+            m_Label_Connectivity_HW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            m_Label_Connectivity_SW.set_markup("<span color=\"green\"> \xe2\x96\x84</span>");
+            break;
+    }
+    return true;
+
+    /*
+                SW              HW
+    -           rot / blink     grau
+    ERROR       grün            rot / blink
+    STANDBY     grün            gelb / blink
+    EMERGENCY   gelb / blink    gelb / blink
+    MANUELL     grün / blink    grün
+    AUTOMATIC   grün            grün
+     */
+}
+

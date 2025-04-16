@@ -32,7 +32,7 @@ CtrlConnectivity::CtrlConnectivity() {
 }
 
 nlohmann::json CtrlConnectivity::get_value() const {
-    return nlohmann::json{m_Combo.get_active_text()};
+    return m_Combo.get_active_text();
 }
 
 void CtrlConnectivity::init(Gtk::ScrolledWindow &container) {
