@@ -26,6 +26,7 @@ add_executable(
     src/ctrlsetbrakevector.cpp
     src/ctrlstring.cpp
     src/ctrltracklayout.cpp
+    src/ctrltestmessage.cpp
     src/frmmain.cpp
     src/main.cpp
     src/msgsender.cpp

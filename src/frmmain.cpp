@@ -119,10 +119,20 @@ void FrmMain::initTreeModel() {
 
     Gtk::TreeModel::Row row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
+    row[m_Columns_Messages.m_col_id] = "0";
+    row[m_Columns_Messages.m_col_name] = "[Test]";
+
+    Gtk::TreeModel::Row childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TEST_MESSAGE;
+    childRow[m_Columns_Messages.m_col_id] = "0.0";
+    childRow[m_Columns_Messages.m_col_name] = "TEST_MESSAGE";
+
+    row = *(m_refTreeModel_Outgoing->append());
+    row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "2";
     row[m_Columns_Messages.m_col_name] = "Client";
 
-    Gtk::TreeModel::Row childRow = *(m_refTreeModel_Outgoing->append(row.children()));
+    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
     childRow[m_Columns_Messages.m_col_msg_id] = MessageType::CLIENT_VOID;
     childRow[m_Columns_Messages.m_col_id] = "2.1";
     childRow[m_Columns_Messages.m_col_name] = "CLIENT_VOID";

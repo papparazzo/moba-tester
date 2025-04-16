@@ -25,6 +25,10 @@ void MsgSender::sendActiveMessage() {
     nlohmann::json data;
 
     switch(activeMessage) {
+        case MessageType::TEST_MESSAGE:
+            m_CtrlTestMessage.send(endpoint);
+            return;
+
         case MessageType::SERVER_RESET_CLIENT:
         case MessageType::SERVER_SELF_TESTING_CLIENT:
         case MessageType::LAYOUT_DEL_LAYOUT:
@@ -106,6 +110,10 @@ void MsgSender::setActiveMessage(
     activeMsgId = msgId;
 
     switch(cmd) {
+        case MessageType::TEST_MESSAGE:
+            m_CtrlTestMessage.init(container);
+            return;
+
         case MessageType::SERVER_RESET_CLIENT:
         case MessageType::SERVER_SELF_TESTING_CLIENT:
         case MessageType::LAYOUT_DEL_LAYOUT:

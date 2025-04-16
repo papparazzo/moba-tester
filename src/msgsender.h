@@ -38,9 +38,12 @@
 #include "ctrlconnectivity.h"
 #include "ctrlsetbrakevector.h"
 #include "ctrlblocklock.h"
+#include "ctrltestmessage.h"
 
 enum class MessageType {
     UNSET,
+
+    TEST_MESSAGE,
 
     CLIENT_VOID,
     CLIENT_ECHO_REQ,
@@ -130,4 +133,5 @@ class MsgSender {
         CtrlContact        m_CtrlContact;
         CtrlSetBrakeVector m_CtrlSetBrakeVector;
         CtrlBlockLock      m_CtrlBlockLock;
+        CtrlTestMessage    m_CtrlTestMessage;
 };
