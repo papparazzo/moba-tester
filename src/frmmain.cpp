@@ -44,7 +44,7 @@ namespace {
         "GNU Affero General Public License for more details.\n"
         "\n"
         "You should have received a copy of the GNU Affero General Public License\n"
-        "along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.";
+        "along with this program. If not, see <https://www.gnu.org/licenses/agpl.txt>.";
 
     void replace(std::string& str, const std::string& oldStr, const std::string& newStr) {
         std::string::size_type pos = 0u;
