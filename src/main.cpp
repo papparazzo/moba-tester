@@ -18,8 +18,6 @@
  *
  */
 
-#include <iostream>
-
 #include <gtkmm/application.h>
 
 #include <moba-common/helper.h>
@@ -47,7 +45,7 @@ int main(int argc, char *argv[]) {
     }
 
     auto socket = std::make_shared<Socket>(appData.host, appData.port);
-    auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, appData.version);
+    auto endpoint = std::make_shared<Endpoint>(socket, appData.appName, "tester", appData.version);
     auto app = Gtk::Application::create("org.moba.tester");
 
     return app->make_window_and_run<FrmMain>(--argc, argv, endpoint);

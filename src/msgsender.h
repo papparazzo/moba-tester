@@ -29,7 +29,6 @@
 #include "ctrlstring.h"
 #include "ctrlbool.h"
 #include "ctrlglobaltimer.h"
-#include "ctrlcolortheme.h"
 #include "ctrlcontact.h"
 #include "ctrlenvironment.h"
 #include "ctrlambience.h"
@@ -45,15 +44,19 @@ enum class MessageType {
 
     TEST_MESSAGE,
 
-    CLIENT_VOID,
+    CLIENT_PING,
     CLIENT_ECHO_REQ,
     CLIENT_START,
-    CLIENT_CLOSE,
+    CLIENT_CLOSING,
 
     SERVER_RESET_CLIENT,
+    SERVER_RESET_CLIENT_HARDWARE,
     SERVER_INFO_REQ,
     SERVER_CON_CLIENTS_REQ,
     SERVER_SELF_TESTING_CLIENT,
+    SERVER_ADD_ALLOWED_IP,
+    SERVER_GET_ALLOWED_IP_LIST,
+    SERVER_SET_ALLOWED_IP_LIST,
 
     TIMER_GET_GLOBAL_TIMER,
     TIMER_SET_GLOBAL_TIMER,
@@ -65,6 +68,8 @@ enum class MessageType {
     ENVIRONMENT_GET_AMBIENT_LIGHT,
     ENVIRONMENT_SET_AMBIENT_LIGHT,
 
+    INTERFACE_CONNECTED,
+    INTERFACE_CONNECTION_LOST,
     INTERFACE_CONNECTIVITY_STATE_CHANGED,
     INTERFACE_CONTACT_TRIGGERED,
     INTERFACE_SET_BRAKE_VECTOR,

@@ -19,7 +19,6 @@
  */
 
 #include "msgsender.h"
-#include "moba/message.h"
 
 void MsgSender::sendActiveMessage() {
     nlohmann::json data;
@@ -65,8 +64,8 @@ void MsgSender::sendActiveMessage() {
             data = m_CtrlAmbientLight.get_value();
             break;
 
-        case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
-            data = m_CtrlConnectivity.get_value();
+        case MessageType::INTERFACE_CONNECTED:
+            data = m_CtrlBool.get_value();
             break;
 
         case MessageType::INTERFACE_CONTACT_TRIGGERED:
@@ -145,8 +144,8 @@ void MsgSender::setActiveMessage(
             m_CtrlAmbientLight.init(container);
             break;
 
-        case MessageType::INTERFACE_CONNECTIVITY_STATE_CHANGED:
-            m_CtrlConnectivity.init(container);
+        case MessageType::INTERFACE_CONNECTED:
+            m_CtrlBool.init("Initialisierung", container);
             break;
 
         case MessageType::INTERFACE_CONTACT_TRIGGERED:

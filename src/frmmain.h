@@ -25,10 +25,8 @@
 #include "moba/nlohmann/json.hpp"
 #include "moba/systemmessages.h"
 #include "moba/registry.h"
-#include "moba/message.h"
 
 #include <gtkmm/window.h>
-#include <gtkmm/comboboxtext.h>
 #include <gtkmm/liststore.h>
 
 #include "msgsender.h"
@@ -36,12 +34,14 @@
 #include <atomic>
 
 enum class SystemState {
-    NO_CONNECT,
-    ERROR,
+    INITIALIZING,
+    INCIDENT,
+    NO_CONNECTION,
     STANDBY,
-    EMERGENCY_STOP,
-    MANUEL,
-    AUTOMATIC
+    MANUAL,
+    READY,
+    AUTOMATIC,
+    SHUTDOWN
 };
 
 class FrmMain : public Gtk::Window {
@@ -145,6 +145,7 @@ protected:
 
     // Signal handlers:
     bool on_timeout(int timer_number);
+    void on_window_closing() const;
     bool on_timeout_status(int);
     void on_selection_changed_incomming();
     void on_button_emergency_clicked();
