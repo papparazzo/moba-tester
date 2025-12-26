@@ -53,10 +53,6 @@ void MsgSender::sendActiveMessage() {
             data = m_CtrlGlobalTimer.get_value();
             break;
 
-        case MessageType::TIMER_SET_COLOR_THEME:
-            data = m_CtrlColorTheme.get_value();
-            break;
-
         case MessageType::ENVIRONMENT_SET_ENVIRONMENT:
             m_CtrlEnvironment.get_value(data);
             break;
@@ -135,10 +131,6 @@ void MsgSender::setActiveMessage(
 
         case MessageType::TIMER_SET_GLOBAL_TIMER:
             m_CtrlGlobalTimer.init(container);
-            break;
-
-        case MessageType::TIMER_SET_COLOR_THEME:
-            m_CtrlColorTheme.init(container);
             break;
 
         case MessageType::ENVIRONMENT_SET_ENVIRONMENT:

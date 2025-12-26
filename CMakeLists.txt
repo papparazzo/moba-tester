@@ -18,7 +18,6 @@ add_executable(
     src/ctrlambientlight.cpp
     src/ctrlblocklock.cpp
     src/ctrlbool.cpp
-    src/ctrlcolortheme.cpp
     src/ctrlconnectivity.cpp
     src/ctrlcontact.cpp
     src/ctrlenvironment.cpp

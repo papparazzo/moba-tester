@@ -209,16 +209,6 @@ void FrmMain::initTreeModel() {
     childRow[m_Columns_Messages.m_col_id] = "4.3";
     childRow[m_Columns_Messages.m_col_name] = "TIMER_SET_GLOBAL_TIMER";
 
-    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_GET_COLOR_THEME;
-    childRow[m_Columns_Messages.m_col_id] = "4.4";
-    childRow[m_Columns_Messages.m_col_name] = "TIMER_GET_COLOR_THEME";
-
-    childRow = *(m_refTreeModel_Outgoing->append(row.children()));
-    childRow[m_Columns_Messages.m_col_msg_id] = MessageType::TIMER_SET_COLOR_THEME;
-    childRow[m_Columns_Messages.m_col_id] = "4.5";
-    childRow[m_Columns_Messages.m_col_name] = "TIMER_SET_COLOR_THEME";
-
     row = *(m_refTreeModel_Outgoing->append());
     row[m_Columns_Messages.m_col_msg_id] = MessageType::UNSET;
     row[m_Columns_Messages.m_col_id] = "5";

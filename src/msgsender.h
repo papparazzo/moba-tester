@@ -57,8 +57,6 @@ enum class MessageType {
 
     TIMER_GET_GLOBAL_TIMER,
     TIMER_SET_GLOBAL_TIMER,
-    TIMER_GET_COLOR_THEME,
-    TIMER_SET_COLOR_THEME,
 
     ENVIRONMENT_GET_ENVIRONMENT,
     ENVIRONMENT_SET_ENVIRONMENT,
@@ -124,7 +122,6 @@ class MsgSender {
         CtrlString         m_CtrlString;
         CtrlBool           m_CtrlBool;
         CtrlGlobalTimer    m_CtrlGlobalTimer;
-        CtrlColorTheme     m_CtrlColorTheme;
         CtrlEnvironment    m_CtrlEnvironment;
         CtrlAmbience       m_CtrlAmbience;
         CtrlAmbientLight   m_CtrlAmbientLight;
