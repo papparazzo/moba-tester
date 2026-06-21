@@ -23,7 +23,7 @@
 #include <gtkmm.h>
 #include "moba/nlohmann/json.hpp"
 
-class CtrlAmbientLight {
+class CtrlAmbientLight final {
 public:
     CtrlAmbientLight() ;
 
