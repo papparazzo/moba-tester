@@ -31,13 +31,20 @@ public:
 
     void init(Gtk::ScrolledWindow &container);
 
-    void send(EndpointPtr endpoint) const;
+    void send(const EndpointPtr& endpoint) const;
 
 protected:
 
     Gtk::Box m_VBox{Gtk::Orientation::VERTICAL, 6};
-    Gtk::Box m_HBox[3];
+    Gtk::Box m_HBox[2];
 
-    Gtk::Label m_Label[3];
-    Gtk::Entry m_Entry[3];
+    Gtk::Label m_Label[2];
+    Gtk::Entry m_Entry[2];
+
+    Gtk::Label    m_LabelMessage;
+    Gtk::TextView m_TextViewMessage;
+
+    Gtk::ScrolledWindow m_ScrolledWindow;
+
+    Glib::RefPtr<Gtk::TextBuffer> m_refTextBuffer;
 };
