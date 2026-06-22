@@ -37,7 +37,6 @@ target_include_directories(moba-tester PUBLIC "${PROJECT_BINARY_DIR}")
 
 target_link_libraries(moba-tester ncurses)
 target_link_libraries(moba-tester mobacommon)
-target_link_libraries(moba-tester ncurses)
 target_link_libraries(moba-tester ${CMAKE_SOURCE_DIR}/modules/lib-msghandling/libmoba-lib-msghandling.a)
 target_link_libraries(moba-tester ${GTKMM_LIBRARIES})
 

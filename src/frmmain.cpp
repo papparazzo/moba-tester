@@ -29,7 +29,7 @@
 #include "config.h"
 
 namespace {
-    const char license[] =
+    constexpr char license[] =
         "Project:    moba-systemmanager\n"
         "\n"
         "Copyright (C) 2018 Stefan Paproth <pappi-@gmx.de>\n"
@@ -56,11 +56,11 @@ namespace {
     }
 }
 
-FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
-    sigc::slot<bool()> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
+FrmMain::FrmMain(const EndpointPtr& mhp) : msgEndpoint{mhp}, msgSender{mhp} {
+    const sigc::slot<bool()> my_slot = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout), 1);
     sigc::connection conn = Glib::signal_timeout().connect(my_slot, 25); // 25 ms
 
-    sigc::slot<bool()> my_slot2 = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout_status), 1);
+    const sigc::slot<bool()> my_slot2 = sigc::bind(sigc::mem_fun(*this, &FrmMain::on_timeout_status), 1);
     sigc::connection conn2 = Glib::signal_timeout().connect(my_slot2, 850, Glib::PRIORITY_DEFAULT_IDLE); // 25 ms
 
     this->signal_destroy().connect(sigc::mem_fun(*this, &FrmMain::on_window_closing));
@@ -101,7 +101,7 @@ FrmMain::FrmMain(EndpointPtr mhp) : msgEndpoint{mhp}, msgSender{mhp} {
     initAboutDialog();
     initTreeModel();
     initOutgoing();
-    initIncomming();
+    initIncoming();
 
     registry.registerHandler<SystemHardwareStateChanged>([this](auto && PH1) { setHardwareState(std::forward<decltype(PH1)>(PH1)); });
     registry.registerAuxiliaryHandler(std::bind(&FrmMain::msgHandler, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
@@ -125,7 +125,7 @@ void FrmMain::initAboutDialog() {
     m_Dialog.set_website_label("pappi-@gmx.de");
 
     std::vector<Glib::ustring> list_authors;
-    list_authors.push_back("Stefan Paproth");
+    list_authors.emplace_back("Stefan Paproth");
     m_Dialog.set_authors(list_authors);
 
     //m_Dialog.signal_response().connect(sigc::mem_fun(*this, &FrmMain::on_about_dialog_response));
@@ -418,7 +418,7 @@ void FrmMain::initTreeModel() {
     childRow[m_Columns_Messages.m_col_name] = "CONTROL_UNLOCK_BLOCK";
 }
 
-void FrmMain::initIncomming() {
+void FrmMain::initIncoming() {
     m_HPaned.set_end_child(m_VPaned_Incomming);
     m_VPaned_Incomming.set_position(150);
     m_VPaned_Incomming.set_start_child(m_VBox_Incomming);
@@ -427,12 +427,12 @@ void FrmMain::initIncomming() {
     m_ScrolledWindow_Incomming.set_child(m_TreeView_Incomming);
     m_ScrolledWindow_Incomming.set_policy(Gtk::PolicyType::AUTOMATIC, Gtk::PolicyType::AUTOMATIC);
 
-    m_refTreeModel_Incomming = Gtk::ListStore::create(m_Columns_Incomming);
+    m_refTreeModel_Incomming = Gtk::ListStore::create(m_Columns_Incoming);
     m_TreeView_Incomming.set_model(m_refTreeModel_Incomming);
 
-    m_TreeView_Incomming.append_column("Timestamp", m_Columns_Incomming.m_col_timestamp);
-    m_TreeView_Incomming.append_column("Gruppe",    m_Columns_Incomming.m_col_grp_name);
-    m_TreeView_Incomming.append_column("Nachricht", m_Columns_Incomming.m_col_msg_name);
+    m_TreeView_Incomming.append_column("Timestamp", m_Columns_Incoming.m_col_timestamp);
+    m_TreeView_Incomming.append_column("Gruppe",    m_Columns_Incoming.m_col_grp_name);
+    m_TreeView_Incomming.append_column("Nachricht", m_Columns_Incoming.m_col_msg_name);
 
     m_VPaned_Incomming.set_end_child(m_ScrolledWindow_Data);
 
@@ -445,7 +445,7 @@ void FrmMain::initIncomming() {
     m_Button_AutoCheckLast.set_label("letzten Eintrag markieren");
 
     m_ButtonBox_Incomming.append(m_Button_ClearIncomming);
-   // m_ButtonBox_Incomming.set_layout(Gtk::BUTTONBOX_END);
+   // m_ButtonBox_Incoming.set_layout(Gtk::BUTTONBOX_END);
 
     Glib::RefPtr<Gtk::TreeSelection> refTreeSelection = m_TreeView_Incomming.get_selection();
     refTreeSelection->signal_changed().connect(sigc::mem_fun(*this, &FrmMain::on_selection_changed_incomming));
@@ -486,7 +486,7 @@ void FrmMain::on_button_about_clicked() {
     m_Dialog.present();
 }
 
-void FrmMain::on_button_emergency_clicked() {
+void FrmMain::on_button_emergency_clicked() const {
     if(m_Button_Emergency.get_label() == "Nothalt") {
         msgEndpoint->sendMsg(SystemTriggerEmergencyStop{});
     } else {
@@ -517,7 +517,7 @@ bool FrmMain::on_timeout(int) {
         }
         registry.handleMsg(msgEndpoint->receiveMsg());
 
-    } catch(std::exception &e) {
+    } catch(std::exception) {
         if(connected) {
             m_Label_Connectivity_HW.set_tooltip_markup("<b>Status Hardware:</b> Keine Verbindung zum Server");
             m_Label_Connectivity_SW.set_tooltip_markup("<b>Status Software:</b> Keine Verbindung zum Server");
@@ -542,21 +542,23 @@ bool FrmMain::on_timeout(int) {
     return true;
 }
 
-void FrmMain::msgHandler(std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data) {
-    std::time_t time = std::time({});
+void FrmMain::msgHandler(const std::uint32_t grpId, std::uint32_t msgId, const nlohmann::json &data) {
+    const std::time_t time = std::time({});
     char timeString[std::size("yyyy-mm-dd hh:mm:ss")];
     std::strftime(std::data(timeString), std::size(timeString), "%FT%TZ", std::gmtime(&time));
 
-    Gtk::TreeModel::iterator iter = m_refTreeModel_Incomming->append();
+    const auto iter = m_refTreeModel_Incomming->append();
     Gtk::TreeModel::Row row = *iter;
-    row[m_Columns_Incomming.m_col_timestamp] = std::string(timeString);
-    row[m_Columns_Incomming.m_col_grp_name ] = static_cast<int>(grpId);
-    row[m_Columns_Incomming.m_col_msg_name ] = static_cast<int>(msgId);
-    row[m_Columns_Incomming.m_col_data     ] = data.dump(2);
+    row[m_Columns_Incoming.m_col_timestamp] = std::string(timeString);
+    row[m_Columns_Incoming.m_col_grp_name ] = static_cast<int>(grpId);
+    row[m_Columns_Incoming.m_col_msg_name ] = static_cast<int>(msgId);
+    row[m_Columns_Incoming.m_col_data     ] = data.dump(2);
 
     if(m_Button_AutoCheckLast.get_active()) {
-        Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
+        const Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Incomming.get_selection();
         selection->select(iter);
+        const Gtk::TreeModel::Path path = m_refTreeModel_Incomming->get_path(iter);
+        m_TreeView_Incomming.scroll_to_row(path);
     }
 }
 
@@ -569,7 +571,7 @@ void FrmMain::on_selection_changed_incomming() {
     Gtk::TreeModel::Row row = *iter;
 
     std::stringstream ss;
-    std::string s = row[m_Columns_Incomming.m_col_data];
+    std::string s = row[m_Columns_Incoming.m_col_data];
 
     replace(s, "<", "&lt;");
     replace(s, ">", "&gt;");
@@ -580,7 +582,7 @@ void FrmMain::on_selection_changed_incomming() {
 
 void FrmMain::on_selection_changed_outgoing() {
     Glib::RefPtr<Gtk::TreeSelection> selection = m_TreeView_Outgoing.get_selection();
-    Gtk::TreeModel::iterator iter = selection->get_selected();
+    const auto iter = selection->get_selected();
 
     if(!iter) {
         m_Button_Send.set_sensitive(false);
@@ -596,11 +598,11 @@ void FrmMain::on_selection_changed_outgoing() {
     }
 
     auto str = std::string(row[m_Columns_Messages.m_col_id]);
-    auto pos = str.find(".");
+    const auto pos = str.find('.');
 
     m_Button_Send.set_sensitive(true);
     msgSender.setActiveMessage(
-        static_cast<MessageType>(row[m_Columns_Messages.m_col_msg_id]),
+        row[m_Columns_Messages.m_col_msg_id],
         std::string(row[m_Columns_Messages.m_col_name]),
         std::stol(str.substr(0, pos)),
         std::stol(str.substr(pos + 1)),
@@ -608,7 +610,7 @@ void FrmMain::on_selection_changed_outgoing() {
     );
 }
 
-void FrmMain::on_button_clear_incomming_clicked() {
+void FrmMain::on_button_clear_incomming_clicked() const {
     m_refTreeModel_Incomming->clear();
 }
 

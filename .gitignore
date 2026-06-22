@@ -51,6 +51,7 @@ core
 !.gitkeep
 
 # cmake
+.cmake
 cmake-build-debug
 CMakeLists.txt.user
 CMakeCache.txt

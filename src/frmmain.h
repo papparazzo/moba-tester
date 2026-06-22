@@ -44,9 +44,9 @@ enum class SystemState {
     SHUTDOWN
 };
 
-class FrmMain : public Gtk::Window {
+class FrmMain final: public Gtk::Window {
 public:
-    explicit FrmMain(EndpointPtr mhp);
+    explicit FrmMain(const EndpointPtr& mhp);
 
     ~FrmMain() override = default;
 
@@ -83,7 +83,7 @@ protected:
     Gtk::Box            m_ButtonBox_Outgoing;
     Gtk::Button         m_Button_Send{"Senden..."};
 
-    class ModelColumnsMessages : public Gtk::TreeModelColumnRecord {
+    class ModelColumnsMessages final: public Gtk::TreeModelColumnRecord {
     public:
         ModelColumnsMessages() {
             add(m_col_name);
@@ -113,9 +113,9 @@ protected:
     Gtk::Box         m_HBox_CheckRow{Gtk::Orientation::HORIZONTAL, 6};
     Gtk::CheckButton m_Button_AutoCheckLast;
 
-    class ModelColumnsIncomming : public Gtk::TreeModel::ColumnRecord {
+    class ModelColumnsIncoming final: public Gtk::TreeModel::ColumnRecord {
     public:
-        ModelColumnsIncomming() {
+        ModelColumnsIncoming() {
             add(m_col_timestamp);
             add(m_col_grp_name);
             add(m_col_msg_name);
@@ -128,11 +128,11 @@ protected:
         Gtk::TreeModelColumn<std::string>   m_col_data;
     };
 
-    ModelColumnsIncomming m_Columns_Incomming;
+    ModelColumnsIncoming m_Columns_Incoming;
 
     void initAboutDialog();
     void initTreeModel();
-    void initIncomming();
+    void initIncoming();
     void initOutgoing();
 
     void setHardwareState(const SystemHardwareStateChanged &data);
@@ -148,10 +148,10 @@ protected:
     void on_window_closing() const;
     bool on_timeout_status(int);
     void on_selection_changed_incomming();
-    void on_button_emergency_clicked();
+    void on_button_emergency_clicked() const;
     void on_button_about_clicked();
     void on_button_send_clicked();
-    void on_button_clear_incomming_clicked();
+    void on_button_clear_incomming_clicked() const;
     void on_about_dialog_response(int response_id);
     void on_selection_changed_outgoing();
 };
