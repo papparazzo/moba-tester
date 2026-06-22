@@ -2,10 +2,10 @@
 Version=1.0
 Type=Application
 Name=MoBa-Tester
-Exec=moba-tester
+Exec=/usr/local/bin/moba-tester
 Comment=Testprogramm
 Icon=moba-tester
-Terminal=0
-Categories=System-manager
-Encoding=UTF-8
+Terminal=false
+Categories=System
+StartupWMClass=org.moba.tester
 
