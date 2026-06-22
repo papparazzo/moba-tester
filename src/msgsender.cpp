@@ -173,6 +173,7 @@ void MsgSender::setActiveMessage(
             break;
 
         default:
+            container.unset_child();
             break;
     }
 }
